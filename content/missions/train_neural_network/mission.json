@@ -1,0 +1,36 @@
+{
+  "id": "train_neural_network",
+  "entry_file": "solution.py",
+  "test_file": "tests.py",
+  "submission_format": "A single Python module named solution.py",
+  "evaluation": {
+    "weights": {
+      "correctness": 0.5,
+      "reliability": 0.25,
+      "performance": 0.1,
+      "quality": 0.15
+    },
+    "pass_rule": "All correctness tests pass and the weighted score is at least 0.7"
+  },
+  "time_limit_s": 20,
+  "title": "Train a Neural Network",
+  "difficulty": "intermediate",
+  "district": "deep_learning",
+  "order": 4,
+  "concepts": [
+    "dl.forward_backprop",
+    "dl.neurons_activations"
+  ],
+  "prerequisites": [
+    "dl.neurons_activations",
+    "math.derivatives"
+  ],
+  "summary": "Implement forward and backward propagation for a two-layer network and solve XOR.",
+  "requirements": [
+    "init_params(n_in, n_hidden, n_out, seed) returns W1 (n_in, n_hidden), b1 (n_hidden,), W2 (n_hidden, n_out), b2 (n_out,)",
+    "forward(params, X) uses tanh in the hidden layer and sigmoid at the output; returns (probs, cache)",
+    "backward(params, cache, y) returns gradients of the mean binary cross-entropy with the same keys as params",
+    "train(X, y, n_hidden, lr, epochs, seed) returns trained params; with n_hidden=8 it must classify XOR perfectly for at least 2 of 3 seeds"
+  ],
+  "description": "Use the row convention `Z = X @ W + b`. Your backward pass is gradient-checked against finite differences, then trained on XOR."
+}
