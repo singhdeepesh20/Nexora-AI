@@ -1,0 +1,18 @@
+{
+  "name": "nexora",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NEXORA - the open-world university for AI engineers",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.9",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "bash scripts/dev.sh",
+    "build": "pnpm --filter @nexora/web build",
+    "start": "bash scripts/start.sh",
+    "test": "pnpm -r test && pnpm test:backend",
+    "test:backend": "cd backend && uv run pytest -q",
+    "typecheck": "pnpm -r typecheck",
+    "lint:backend": "cd backend && uv run ruff check nexora tests"
+  }
+}
