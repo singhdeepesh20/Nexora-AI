@@ -1,0 +1,39 @@
+{
+  "id": "python.basics",
+  "district": "foundation",
+  "order": 1,
+  "title": "Python Fundamentals",
+  "summary": "Names, types, functions, control flow and collections - the working language of AI engineering.",
+  "prerequisites": [],
+  "objectives": [
+    "Explain the difference between mutable and immutable values",
+    "Write and test small pure functions",
+    "Choose the right built-in collection for a task",
+    "Read a traceback to locate a bug"
+  ],
+  "simulations": [],
+  "missions": [
+    "python_fundamentals",
+    "dataset_explorer"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": "python_fundamentals"
+  },
+  "skills": [
+    "python_programming"
+  ],
+  "socratic_prompts": [
+    "What happens to x if you append to y after writing y = x?",
+    "Why is a function that returns a value easier to test than one that prints it?",
+    "When would a dict be a better choice than a list?"
+  ],
+  "examples": [
+    {
+      "title": "Pure function",
+      "code": "def mean(values):\n    return sum(values) / len(values)\n\nassert mean([1, 2, 3]) == 2"
+    }
+  ],
+  "lesson": "python.basics.md",
+  "assessment": "python.basics.json"
+}

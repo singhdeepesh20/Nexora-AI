@@ -1,0 +1,67 @@
+{
+  "concept_id": "python.basics",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "prompt": "What does [x * x for x in range(4)] evaluate to?",
+      "options": [
+        "[0, 1, 4, 9]",
+        "[1, 4, 9, 16]",
+        "[0, 1, 2, 3]",
+        "It raises an error"
+      ],
+      "answer": 0,
+      "explanation": "range(4) yields 0..3 and each is squared."
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "prompt": "def f(a, b=2): return a * b. What is f(3)?",
+      "options": [
+        "5",
+        "6",
+        "32",
+        "TypeError"
+      ],
+      "answer": 1,
+      "explanation": "b defaults to 2, so 3 * 2 = 6."
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "What is len({'a': 1, 'b': 2, 'a': 3})?",
+      "answer": 2,
+      "tolerance": 0,
+      "explanation": "Duplicate keys collapse; only 'a' and 'b' remain."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Which built-in gives average O(1) lookup by key?",
+      "options": [
+        "list",
+        "tuple",
+        "dict",
+        "str"
+      ],
+      "answer": 2,
+      "explanation": "dict is a hash table."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "x = [1, 2]; y = x; y.append(3). What is len(x)?",
+      "options": [
+        "2",
+        "3",
+        "It raises an error",
+        "None"
+      ],
+      "answer": 1,
+      "explanation": "x and y reference the same list object."
+    }
+  ]
+}
