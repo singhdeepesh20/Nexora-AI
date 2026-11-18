@@ -1,0 +1,57 @@
+{
+  "concept_id": "math.derivatives",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "f(x) = x^2. What is f'(3)?",
+      "answer": 6,
+      "tolerance": 0,
+      "explanation": "f'(x) = 2x."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "f(x, y) = x^2 + 3y. What is the partial derivative with respect to y?",
+      "answer": 3,
+      "tolerance": 0,
+      "explanation": "x^2 is constant with respect to y."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "The gradient of a function points in the direction of...",
+      "options": [
+        "steepest decrease",
+        "steepest increase",
+        "zero change",
+        "the origin"
+      ],
+      "answer": 1,
+      "explanation": "Gradient descent therefore moves along the negative gradient."
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "f(x) = (2x + 1)^2. What is f'(1)?",
+      "answer": 12,
+      "tolerance": 0,
+      "explanation": "Chain rule: 2(2x + 1) * 2 = 12 at x = 1."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "Which is the central difference approximation of f'(x)?",
+      "options": [
+        "(f(x+h) - f(x)) / h",
+        "(f(x+h) - f(x-h)) / (2h)",
+        "f(x+h) / f(x)",
+        "(f(x) - f(x-h)) / (2h)"
+      ],
+      "answer": 1,
+      "explanation": "Its error shrinks with h^2."
+    }
+  ]
+}

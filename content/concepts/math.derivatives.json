@@ -1,0 +1,38 @@
+{
+  "id": "math.derivatives",
+  "district": "foundation",
+  "order": 3,
+  "title": "Derivatives and Gradients",
+  "summary": "Slopes, the chain rule, gradients and numerical differentiation.",
+  "prerequisites": [
+    "math.vectors"
+  ],
+  "objectives": [
+    "Differentiate polynomials and compositions",
+    "Explain what the gradient vector points to",
+    "Approximate derivatives numerically"
+  ],
+  "simulations": [
+    "gradient_descent"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "mathematical_foundations"
+  ],
+  "socratic_prompts": [
+    "If the derivative at a point is negative, which way should you move x to decrease f?",
+    "Why is the central difference more accurate than the forward difference?"
+  ],
+  "examples": [
+    {
+      "title": "Gradient check",
+      "code": "f = lambda x: x ** 2\nh = 1e-5\nprint((f(3 + h) - f(3 - h)) / (2 * h))  # ~6.0"
+    }
+  ],
+  "lesson": "math.derivatives.md",
+  "assessment": "math.derivatives.json"
+}
