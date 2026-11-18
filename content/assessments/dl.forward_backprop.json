@@ -1,0 +1,62 @@
+{
+  "concept_id": "dl.forward_backprop",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "prompt": "X has shape (n, 4) and the layer has 3 neurons (Z = X W + b). Shape of W?",
+      "options": [
+        "(3, 4)",
+        "(4, 3)",
+        "(n, 3)",
+        "(4, n)"
+      ],
+      "answer": 1,
+      "explanation": "inputs x outputs."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Sigmoid output p = 0.8, target y = 1, binary cross-entropy. dL/dz = ?",
+      "answer": -0.2,
+      "tolerance": 0.001,
+      "explanation": "dL/dz = p - y."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "Why is backpropagation efficient?",
+      "options": [
+        "It avoids derivatives",
+        "It reuses intermediate results while applying the chain rule backwards",
+        "It only updates the last layer",
+        "It uses random gradients"
+      ],
+      "answer": 1,
+      "explanation": "All gradients cost about one extra forward pass."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "A gradient check compares...",
+      "options": [
+        "training and test loss",
+        "analytical gradients with finite-difference estimates",
+        "two optimisers",
+        "weights before and after training"
+      ],
+      "answer": 1,
+      "explanation": "Relative error near 1e-7 indicates a correct implementation."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "z = 3x and y = z^2. dy/dx at x = 1?",
+      "answer": 18,
+      "tolerance": 0.001,
+      "explanation": "2z * 3 = 18."
+    }
+  ]
+}

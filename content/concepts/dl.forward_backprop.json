@@ -1,0 +1,41 @@
+{
+  "id": "dl.forward_backprop",
+  "district": "deep_learning",
+  "order": 2,
+  "title": "Forward Propagation and Backpropagation",
+  "summary": "Layers as matrix operations, the chain rule through a network, and gradient checking.",
+  "prerequisites": [
+    "dl.neurons_activations",
+    "math.derivatives"
+  ],
+  "objectives": [
+    "Track tensor shapes through a forward pass",
+    "Derive layer gradients with the chain rule",
+    "Verify gradients with finite differences"
+  ],
+  "simulations": [
+    "neural_network"
+  ],
+  "missions": [
+    "train_neural_network"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": "train_neural_network"
+  },
+  "skills": [
+    "neural_networks"
+  ],
+  "socratic_prompts": [
+    "Why do we store activations during the forward pass?",
+    "If your gradient check fails only for biases, where would you look?"
+  ],
+  "examples": [
+    {
+      "title": "Sigmoid + BCE gradient",
+      "code": "import numpy as np\nz, y = 1.386, 1.0\np = 1 / (1 + np.exp(-z))\nprint(p - y)  # about -0.2"
+    }
+  ],
+  "lesson": "dl.forward_backprop.md",
+  "assessment": "dl.forward_backprop.json"
+}
