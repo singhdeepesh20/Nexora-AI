@@ -1,0 +1,35 @@
+{
+  "id": "build_classifier",
+  "entry_file": "solution.py",
+  "test_file": "tests.py",
+  "submission_format": "A single Python module named solution.py",
+  "evaluation": {
+    "weights": {
+      "correctness": 0.5,
+      "reliability": 0.25,
+      "performance": 0.1,
+      "quality": 0.15
+    },
+    "pass_rule": "All correctness tests pass and the weighted score is at least 0.7"
+  },
+  "time_limit_s": 20,
+  "title": "Build a Classifier",
+  "difficulty": "intermediate",
+  "district": "machine_learning",
+  "order": 3,
+  "concepts": [
+    "ml.classification"
+  ],
+  "prerequisites": [
+    "ml.linear_regression"
+  ],
+  "summary": "Implement logistic regression from scratch with NumPy and reach at least 93% test accuracy on a real medical dataset.",
+  "requirements": [
+    "sigmoid(z) must be numerically stable for very large |z| (no overflow, no NaN)",
+    "predict_proba(X, w, b) returns probabilities of class 1",
+    "gradients(X, y, w, b) returns (dw, db) of the mean binary cross-entropy",
+    "train(X, y, lr, epochs) returns (w, b) using batch gradient descent",
+    "Test accuracy on the standardised breast-cancer dataset must be at least 0.93"
+  ],
+  "description": "The hidden tests standardise scikit-learn's bundled breast-cancer dataset, split it with a fixed seed, train with your code and check accuracy. They also gradient-check your `gradients` function against finite differences."
+}
