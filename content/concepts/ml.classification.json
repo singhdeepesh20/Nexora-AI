@@ -1,0 +1,40 @@
+{
+  "id": "ml.classification",
+  "district": "machine_learning",
+  "order": 3,
+  "title": "Classification",
+  "summary": "Logistic regression, cross-entropy, k-NN, trees, forests and honest train/test evaluation.",
+  "prerequisites": [
+    "ml.linear_regression"
+  ],
+  "objectives": [
+    "Compute sigmoid probabilities and binary cross-entropy",
+    "Describe how k-NN and decision trees overfit",
+    "Explain data leakage and why we split before fitting"
+  ],
+  "simulations": [
+    "ml_lab"
+  ],
+  "missions": [
+    "build_classifier"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": "build_classifier"
+  },
+  "skills": [
+    "classical_ml"
+  ],
+  "socratic_prompts": [
+    "Why is a confident wrong prediction punished more than an uncertain one?",
+    "What happens to a k-NN decision boundary as k grows?"
+  ],
+  "examples": [
+    {
+      "title": "Scikit-learn baseline",
+      "code": "from sklearn.datasets import load_iris\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nX, y = load_iris(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, random_state=0)\nprint(LogisticRegression(max_iter=500).fit(Xtr, ytr).score(Xte, yte))"
+    }
+  ],
+  "lesson": "ml.classification.md",
+  "assessment": "ml.classification.json"
+}

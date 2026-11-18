@@ -1,0 +1,62 @@
+{
+  "concept_id": "ml.classification",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "sigmoid(0) = ?",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "explanation": "1 / (1 + e^0)."
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "prompt": "True label 0, predicted probability 0.99. The cross-entropy loss is...",
+      "options": [
+        "close to 0",
+        "about 0.01",
+        "large (about 4.6)",
+        "exactly 1"
+      ],
+      "answer": 2,
+      "explanation": "-ln(1 - 0.99) = -ln(0.01)."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "Which k-NN setting is most prone to overfitting?",
+      "options": [
+        "k = 1",
+        "k = 15",
+        "k = n (all points)",
+        "k does not matter"
+      ],
+      "answer": 0,
+      "explanation": "k = 1 memorises every noisy point."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Why do we evaluate on a held-out test set?",
+      "options": [
+        "To speed up training",
+        "To estimate generalisation to unseen data",
+        "To increase training accuracy",
+        "Because scikit-learn requires it"
+      ],
+      "answer": 1,
+      "explanation": "Training accuracy measures memorisation."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Binary cross-entropy for y = 1 and p = 0.5? (natural log)",
+      "answer": 0.693,
+      "tolerance": 0.01,
+      "explanation": "-ln(0.5) = ln 2."
+    }
+  ]
+}
