@@ -1,0 +1,57 @@
+{
+  "concept_id": "dl.attention_intro",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "softmax([0, 0]) - what is the first element?",
+      "answer": 0.5,
+      "tolerance": 0.001,
+      "explanation": "Equal scores give equal weights."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "d_k = 64. What is the scaling factor sqrt(d_k)?",
+      "answer": 8,
+      "tolerance": 0,
+      "explanation": "sqrt(64)."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "Why do transformers need positional information?",
+      "options": [
+        "Attention is permutation-invariant",
+        "To reduce memory",
+        "Tokens have no embeddings",
+        "Softmax requires it"
+      ],
+      "answer": 0,
+      "explanation": "Without it, word order is invisible."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Each row of attention weights...",
+      "options": [
+        "sums to 1",
+        "sums to 0",
+        "is always one-hot",
+        "contains negative values"
+      ],
+      "answer": 0,
+      "explanation": "Softmax produces a probability distribution."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Query [1, 0], keys [1, 0] and [0, 1], d_k = 2. Attention weight on the first key?",
+      "answer": 0.67,
+      "tolerance": 0.01,
+      "explanation": "Scores 0.707 and 0; softmax gives about 0.67."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "dl.attention_intro",
+  "district": "deep_learning",
+  "order": 4,
+  "title": "Tokens, Embeddings and Attention",
+  "summary": "Tokenisation, embeddings, positional encoding, scaled dot-product and multi-head attention.",
+  "prerequisites": [
+    "dl.forward_backprop",
+    "math.vectors"
+  ],
+  "objectives": [
+    "Compute scaled dot-product attention by hand",
+    "Explain why positional information is needed",
+    "Describe the structure of a transformer block"
+  ],
+  "simulations": [
+    "transformer",
+    "rag"
+  ],
+  "missions": [
+    "build_rag"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "transformers",
+    "retrieval_systems"
+  ],
+  "socratic_prompts": [
+    "What would attention compute if you shuffled the tokens and used no positional encoding?",
+    "Why must each row of attention weights sum to one?"
+  ],
+  "examples": [
+    {
+      "title": "Attention weights",
+      "code": "import numpy as np\nq = np.array([1., 0.]); K = np.array([[1., 0.], [0., 1.]])\ns = K @ q / np.sqrt(2)\nprint(np.exp(s) / np.exp(s).sum())"
+    }
+  ],
+  "lesson": "dl.attention_intro.md",
+  "assessment": "dl.attention_intro.json"
+}
