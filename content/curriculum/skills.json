@@ -1,0 +1,49 @@
+{
+  "skills": [
+    {
+      "id": "python_programming",
+      "name": "Python Programming",
+      "description": "Write, test and debug Python programs."
+    },
+    {
+      "id": "mathematical_foundations",
+      "name": "Mathematical Foundations",
+      "description": "Linear algebra, calculus, probability and statistics for AI."
+    },
+    {
+      "id": "data_analysis",
+      "name": "Data Analysis",
+      "description": "Summarise, clean and reason about datasets."
+    },
+    {
+      "id": "optimization",
+      "name": "Optimisation",
+      "description": "Gradient-based optimisation and its failure modes."
+    },
+    {
+      "id": "classical_ml",
+      "name": "Classical Machine Learning",
+      "description": "Train, evaluate and debug classical ML models."
+    },
+    {
+      "id": "neural_networks",
+      "name": "Neural Networks",
+      "description": "Build, train and debug neural networks from first principles."
+    },
+    {
+      "id": "transformers",
+      "name": "Transformers",
+      "description": "Understand tokenisation, embeddings and attention."
+    },
+    {
+      "id": "retrieval_systems",
+      "name": "Retrieval Systems",
+      "description": "Chunk, index, retrieve and evaluate document search for RAG."
+    },
+    {
+      "id": "ai_infrastructure",
+      "name": "AI Infrastructure",
+      "description": "Reason about memory, throughput and latency of model serving."
+    }
+  ]
+}

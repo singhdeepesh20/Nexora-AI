@@ -1,0 +1,270 @@
+{
+  "id": "nexora-core",
+  "title": "NEXORA Core Curriculum",
+  "version": "2026.11.0",
+  "world": {
+    "bounds": {
+      "min_x": -68,
+      "max_x": 68,
+      "min_z": -76,
+      "max_z": 44
+    },
+    "spawn": {
+      "x": 0,
+      "z": 18,
+      "heading": 3.14159
+    },
+    "plaza_radius": 13
+  },
+  "districts": [
+    {
+      "id": "foundation",
+      "number": 1,
+      "title": "Foundation City",
+      "status": "active",
+      "professor": "atlas",
+      "color": "#2dd4bf",
+      "subjects": [
+        "Python",
+        "C++",
+        "Mathematics",
+        "Linear algebra",
+        "Calculus",
+        "Probability",
+        "Statistics",
+        "Data structures",
+        "Algorithms",
+        "SQL"
+      ],
+      "building": {
+        "x": -27,
+        "z": -4,
+        "w": 14,
+        "d": 14,
+        "h": 11,
+        "door": {
+          "x": -18.2,
+          "z": -4
+        },
+        "label": "Foundation Hall"
+      }
+    },
+    {
+      "id": "machine_learning",
+      "number": 2,
+      "title": "Machine Learning District",
+      "status": "active",
+      "professor": "newton",
+      "color": "#38bdf8",
+      "subjects": [
+        "Regression",
+        "Classification",
+        "Clustering",
+        "Decision trees",
+        "Random forests",
+        "SVM",
+        "Ensemble learning",
+        "Feature engineering",
+        "Model evaluation"
+      ],
+      "building": {
+        "x": 0,
+        "z": -33,
+        "w": 18,
+        "d": 12,
+        "h": 15,
+        "door": {
+          "x": 0,
+          "z": -25.2
+        },
+        "label": "Learning Systems Institute"
+      }
+    },
+    {
+      "id": "deep_learning",
+      "number": 3,
+      "title": "Deep Learning Center",
+      "status": "active",
+      "professor": "neural",
+      "color": "#a78bfa",
+      "subjects": [
+        "Neural networks",
+        "Forward propagation",
+        "Backpropagation",
+        "Activation functions",
+        "Loss functions",
+        "Optimization",
+        "CNNs",
+        "RNNs",
+        "Transformers",
+        "PyTorch"
+      ],
+      "building": {
+        "x": 27,
+        "z": -4,
+        "w": 14,
+        "d": 14,
+        "h": 13,
+        "door": {
+          "x": 18.2,
+          "z": -4
+        },
+        "label": "Neural Center"
+      }
+    },
+    {
+      "id": "generative_ai",
+      "number": 4,
+      "title": "Generative AI District",
+      "status": "planned",
+      "professor": "nova",
+      "color": "#f472b6",
+      "subjects": [
+        "LLM fundamentals",
+        "Tokenization",
+        "Embeddings",
+        "Vector databases",
+        "RAG",
+        "Fine-tuning",
+        "Prompt engineering",
+        "AI agents",
+        "Agent orchestration",
+        "Model evaluation"
+      ],
+      "building": {
+        "x": -30,
+        "z": 28,
+        "w": 9,
+        "d": 9,
+        "h": 7,
+        "door": {
+          "x": -24.7,
+          "z": 28
+        },
+        "label": "Generative AI Gate"
+      }
+    },
+    {
+      "id": "ai_engineering",
+      "number": 5,
+      "title": "AI Engineering Studio",
+      "status": "planned",
+      "professor": "ada",
+      "color": "#facc15",
+      "subjects": [
+        "Python backend",
+        "FastAPI",
+        "API design",
+        "PostgreSQL concepts",
+        "SQL",
+        "System design",
+        "Authentication",
+        "Testing",
+        "Deployment",
+        "Software architecture"
+      ],
+      "building": {
+        "x": 30,
+        "z": 28,
+        "w": 9,
+        "d": 9,
+        "h": 7,
+        "door": {
+          "x": 24.7,
+          "z": 28
+        },
+        "label": "Engineering Studio Gate"
+      }
+    },
+    {
+      "id": "ai_infrastructure",
+      "number": 6,
+      "title": "AI Infrastructure Center",
+      "status": "planned",
+      "professor": "orion",
+      "color": "#fb923c",
+      "subjects": [
+        "CPU and GPU architecture",
+        "GPU memory",
+        "Inference",
+        "Quantization",
+        "Model serving",
+        "Distributed computing",
+        "Docker",
+        "Kubernetes",
+        "MLOps",
+        "Monitoring"
+      ],
+      "building": {
+        "x": -50,
+        "z": -30,
+        "w": 9,
+        "d": 9,
+        "h": 7,
+        "door": {
+          "x": -44.7,
+          "z": -30
+        },
+        "label": "Infrastructure Gate"
+      }
+    },
+    {
+      "id": "robotics",
+      "number": 7,
+      "title": "Robotics World",
+      "status": "planned",
+      "professor": "tesla",
+      "color": "#4ade80",
+      "subjects": [
+        "Robotics",
+        "ROS 2",
+        "Kinematics",
+        "Computer vision",
+        "Reinforcement learning",
+        "Autonomous systems",
+        "Robot simulation"
+      ],
+      "building": {
+        "x": 50,
+        "z": -30,
+        "w": 9,
+        "d": 9,
+        "h": 7,
+        "door": {
+          "x": 44.7,
+          "z": -30
+        },
+        "label": "Robotics Gate"
+      }
+    },
+    {
+      "id": "innovation",
+      "number": 8,
+      "title": "Innovation City",
+      "status": "planned",
+      "professor": "turing",
+      "color": "#e2e8f0",
+      "subjects": [
+        "Research methodology",
+        "Literature review",
+        "Experiment design",
+        "Paper reproduction",
+        "Open-source contribution",
+        "Research publication",
+        "Advanced AI systems"
+      ],
+      "building": {
+        "x": 0,
+        "z": -62,
+        "w": 10,
+        "d": 9,
+        "h": 8,
+        "door": {
+          "x": 0,
+          "z": -56.7
+        },
+        "label": "Innovation Gate"
+      }
+    }
+  ]
+}
