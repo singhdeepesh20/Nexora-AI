@@ -1,0 +1,57 @@
+{
+  "concept_id": "math.vectors",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Compute the dot product of [1, 2, 3] and [4, 5, 6].",
+      "answer": 32,
+      "tolerance": 0,
+      "explanation": "4 + 10 + 18 = 32."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "What is the Euclidean norm of [3, 4]?",
+      "answer": 5,
+      "tolerance": 0,
+      "explanation": "sqrt(9 + 16) = 5."
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "What is the cosine similarity of [1, 0] and [0, 1]?",
+      "answer": 0,
+      "tolerance": 0.001,
+      "explanation": "They are orthogonal."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "A 3x2 matrix multiplies a 2-vector. The result is a...",
+      "options": [
+        "2-vector",
+        "3-vector",
+        "3x2 matrix",
+        "undefined"
+      ],
+      "answer": 1,
+      "explanation": "An (m, n) matrix maps n-vectors to m-vectors."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "Two embeddings have cosine similarity 0.98. This means they...",
+      "options": [
+        "have equal length",
+        "point in nearly the same direction",
+        "are orthogonal",
+        "are identical vectors"
+      ],
+      "answer": 1,
+      "explanation": "Cosine similarity measures direction, not length."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "math.vectors",
+  "district": "foundation",
+  "order": 2,
+  "title": "Vectors and the Dot Product",
+  "summary": "Vectors, norms, cosine similarity and matrix-vector products - the language of embeddings and neurons.",
+  "prerequisites": [],
+  "objectives": [
+    "Compute dot products and norms",
+    "Interpret cosine similarity",
+    "Predict the output shape of a matrix-vector product"
+  ],
+  "simulations": [
+    "transformer"
+  ],
+  "missions": [
+    "build_rag"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "mathematical_foundations"
+  ],
+  "socratic_prompts": [
+    "Why does cosine similarity ignore vector length?",
+    "What does a dot product of zero tell you geometrically?"
+  ],
+  "examples": [
+    {
+      "title": "Cosine similarity",
+      "code": "import numpy as np\na, b = np.array([1., 2.]), np.array([2., 4.])\nprint(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))  # 1.0"
+    }
+  ],
+  "lesson": "math.vectors.md",
+  "assessment": "math.vectors.json"
+}
