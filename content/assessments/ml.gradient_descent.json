@@ -1,0 +1,62 @@
+{
+  "concept_id": "ml.gradient_descent",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "L(x) = x^2, x = 4, learning rate 0.25. What is x after one gradient descent step?",
+      "answer": 2,
+      "tolerance": 0.001,
+      "explanation": "4 - 0.25 * 8 = 2."
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "prompt": "The loss grows larger every iteration and soon becomes inf. Most likely cause?",
+      "options": [
+        "learning rate too small",
+        "learning rate too large",
+        "too few iterations",
+        "the function is convex"
+      ],
+      "answer": 1,
+      "explanation": "Steps overshoot the minimum by more each time."
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "For L(x) = 5x^2, what is the largest stable learning rate for plain gradient descent?",
+      "answer": 0.2,
+      "tolerance": 0.001,
+      "explanation": "eta < 2 / L'' = 2 / 10."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "What is the main purpose of momentum?",
+      "options": [
+        "To increase the loss",
+        "To damp zig-zags and accelerate along consistent directions",
+        "To compute second derivatives",
+        "To randomise parameters"
+      ],
+      "answer": 1,
+      "explanation": "Velocity averages successive gradients."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "On a non-convex loss, gradient descent...",
+      "options": [
+        "always finds the global minimum",
+        "may converge to a local minimum that depends on the start point",
+        "never converges",
+        "requires a closed-form solution"
+      ],
+      "answer": 1,
+      "explanation": "Try Himmelblau from different starts in the lab."
+    }
+  ]
+}

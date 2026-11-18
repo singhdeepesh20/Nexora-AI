@@ -1,0 +1,39 @@
+{
+  "id": "ml.gradient_descent",
+  "district": "machine_learning",
+  "order": 1,
+  "title": "Gradient Descent",
+  "summary": "The optimisation engine of machine learning: update rule, learning-rate stability, momentum and Adam.",
+  "prerequisites": [
+    "math.derivatives"
+  ],
+  "objectives": [
+    "Perform gradient descent updates by hand",
+    "Derive the stable learning-rate bound for a quadratic",
+    "Diagnose divergence and oscillation from loss curves",
+    "Compare momentum and Adam with plain gradient descent"
+  ],
+  "simulations": [
+    "gradient_descent"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "optimization"
+  ],
+  "socratic_prompts": [
+    "What would you expect if the learning rate is exactly at the stability limit?",
+    "Why does an elongated valley make plain gradient descent zig-zag?"
+  ],
+  "examples": [
+    {
+      "title": "Gradient descent on x^2",
+      "code": "x, lr = 4.0, 0.25\nfor _ in range(5):\n    x -= lr * 2 * x\n    print(x)"
+    }
+  ],
+  "lesson": "ml.gradient_descent.md",
+  "assessment": "ml.gradient_descent.json"
+}
