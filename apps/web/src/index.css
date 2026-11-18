@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-950: #07090c;
+  --color-ink-900: #0d1117;
+  --color-ink-800: #141a22;
+  --color-ink-700: #1c242f;
+  --color-ink-600: #2a3441;
+  --color-ink-400: #6b7a8c;
+  --color-ink-200: #c6d0db;
+  --color-teal: #2dd4bf;
+  --color-sky: #38bdf8;
+  --color-violet: #a78bfa;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html, body, #root { height: 100%; margin: 0; background: var(--color-ink-950); color: #e6edf3; }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+::selection { background: color-mix(in srgb, var(--color-teal) 40%, transparent); }
+
+.glass {
+  background: color-mix(in srgb, var(--color-ink-900) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in srgb, white 9%, transparent);
+}
+.scroll-thin { scrollbar-width: thin; scrollbar-color: var(--color-ink-600) transparent; }
+
+.prose-nx { line-height: 1.65; color: #d5dde6; font-size: 0.95rem; }
+.prose-nx h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 1rem; color: white; }
+.prose-nx h2 { font-size: 1.15rem; font-weight: 650; margin: 1.6rem 0 0.6rem; color: var(--color-teal); }
+.prose-nx h3 { font-size: 1rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
+.prose-nx p { margin: 0.6rem 0; }
+.prose-nx ul, .prose-nx ol { margin: 0.5rem 0 0.5rem 1.3rem; }
+.prose-nx ul { list-style: disc; } .prose-nx ol { list-style: decimal; }
+.prose-nx code { font-family: var(--font-mono); font-size: 0.85em; background: var(--color-ink-700); padding: 0.1em 0.35em; border-radius: 4px; }
+.prose-nx pre { background: var(--color-ink-950); border: 1px solid var(--color-ink-700); padding: 0.9rem 1rem; border-radius: 10px; overflow-x: auto; margin: 0.8rem 0; }
+.prose-nx pre code { background: none; padding: 0; }
+.prose-nx table { border-collapse: collapse; margin: 0.8rem 0; font-size: 0.88rem; }
+.prose-nx th, .prose-nx td { border: 1px solid var(--color-ink-600); padding: 0.35rem 0.6rem; text-align: left; }
+.prose-nx th { background: var(--color-ink-800); }
+.prose-nx blockquote { border-left: 3px solid var(--color-sky); padding-left: 0.9rem; color: var(--color-ink-200); margin: 0.8rem 0; }
+.prose-nx strong { color: white; }
+
+@keyframes nx-fade-in { from { opacity: 0; transform: translateY(6px) } to { opacity: 1; transform: none } }
+.animate-in { animation: nx-fade-in 0.22s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .animate-in { animation: none; } }
