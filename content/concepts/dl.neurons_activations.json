@@ -1,0 +1,38 @@
+{
+  "id": "dl.neurons_activations",
+  "district": "deep_learning",
+  "order": 1,
+  "title": "Neurons and Activation Functions",
+  "summary": "Artificial neurons, sigmoid, tanh and ReLU, why nonlinearity matters, and the XOR problem.",
+  "prerequisites": [
+    "ml.classification"
+  ],
+  "objectives": [
+    "Compute a neuron's output by hand",
+    "Compare activation functions and their derivatives",
+    "Explain why XOR needs a hidden layer"
+  ],
+  "simulations": [
+    "neural_network"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "neural_networks"
+  ],
+  "socratic_prompts": [
+    "What does a network with no activation functions reduce to?",
+    "How can a ReLU neuron die permanently?"
+  ],
+  "examples": [
+    {
+      "title": "A neuron",
+      "code": "import numpy as np\nw, b, x = np.array([1., -2.]), 0.5, np.array([3., 1.])\nprint(max(0.0, w @ x + b))  # 1.5"
+    }
+  ],
+  "lesson": "dl.neurons_activations.md",
+  "assessment": "dl.neurons_activations.json"
+}

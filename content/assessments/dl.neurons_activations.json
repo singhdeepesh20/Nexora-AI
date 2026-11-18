@@ -1,0 +1,57 @@
+{
+  "concept_id": "dl.neurons_activations",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "w = [1, -2], b = 0.5, x = [3, 1], activation ReLU. Output?",
+      "answer": 1.5,
+      "tolerance": 0.001,
+      "explanation": "3 - 2 + 0.5 = 1.5, and ReLU keeps positives."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "What is the maximum value of the derivative of the sigmoid?",
+      "answer": 0.25,
+      "tolerance": 0.001,
+      "explanation": "sigma'(z) = sigma(z)(1 - sigma(z)), maximised at z = 0."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "A deep network with no activation functions is equivalent to...",
+      "options": [
+        "a decision tree",
+        "a single linear transformation",
+        "a k-NN model",
+        "a random forest"
+      ],
+      "answer": 1,
+      "explanation": "Products of matrices are a matrix."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Why can't a single neuron learn XOR?",
+      "options": [
+        "XOR is not linearly separable",
+        "XOR has too many samples",
+        "The sigmoid is too slow",
+        "XOR requires dropout"
+      ],
+      "answer": 0,
+      "explanation": "No single line separates the classes."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "ReLU(-3) = ?",
+      "answer": 0,
+      "tolerance": 0,
+      "explanation": "max(0, -3)."
+    }
+  ]
+}
