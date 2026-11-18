@@ -1,0 +1,37 @@
+{
+  "id": "build_rag",
+  "entry_file": "solution.py",
+  "test_file": "tests.py",
+  "submission_format": "A single Python module named solution.py",
+  "evaluation": {
+    "weights": {
+      "correctness": 0.5,
+      "reliability": 0.25,
+      "performance": 0.1,
+      "quality": 0.15
+    },
+    "pass_rule": "All correctness tests pass and the weighted score is at least 0.7"
+  },
+  "time_limit_s": 20,
+  "title": "Build a RAG Retriever",
+  "difficulty": "intermediate",
+  "district": "deep_learning",
+  "order": 5,
+  "concepts": [
+    "dl.attention_intro",
+    "math.vectors"
+  ],
+  "prerequisites": [
+    "python.basics",
+    "math.vectors"
+  ],
+  "summary": "Build the retrieval half of a RAG system: chunking plus a TF-IDF cosine-similarity index.",
+  "requirements": [
+    "chunk_text(text, chunk_size, overlap) splits into word chunks; raises ValueError if overlap >= chunk_size or chunk_size < 1",
+    "tokenize(text) returns lowercase alphanumeric tokens",
+    "TfidfIndex.add(doc_id, text) and TfidfIndex.search(query, k) -> list of (doc_id, score), best first",
+    "Scores are cosine similarities of TF-IDF vectors with idf = log((1 + N) / (1 + df)) + 1",
+    "Search over 2,000 documents must answer in well under a second"
+  ],
+  "description": "Retrieval quality decides RAG quality. No embedding model is required: lexical TF-IDF retrieval is a strong, transparent baseline. Hidden tests check ranking on a labelled corpus."
+}
