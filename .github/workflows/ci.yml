@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: astral-sh/setup-uv@v5
+      - run: npx pnpm@9.15.9 install --frozen-lockfile
+      - run: npx pnpm@9.15.9 -r test
+      - run: npx pnpm@9.15.9 typecheck
+      - run: npx pnpm@9.15.9 build
+      - working-directory: backend
+        run: uv sync --frozen && uv run ruff check nexora tests && uv run pytest -q
