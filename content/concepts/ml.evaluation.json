@@ -1,0 +1,38 @@
+{
+  "id": "ml.evaluation",
+  "district": "machine_learning",
+  "order": 4,
+  "title": "Model Evaluation",
+  "summary": "Confusion matrices, precision, recall, F1, class imbalance, over- and underfitting.",
+  "prerequisites": [
+    "ml.classification"
+  ],
+  "objectives": [
+    "Compute precision, recall and F1 from a confusion matrix",
+    "Recognise when accuracy is misleading",
+    "Diagnose overfitting from train/test gaps"
+  ],
+  "simulations": [
+    "ml_lab"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "classical_ml"
+  ],
+  "socratic_prompts": [
+    "In medical screening, would you prioritise precision or recall? Why?",
+    "What does a large gap between training and test accuracy suggest?"
+  ],
+  "examples": [
+    {
+      "title": "Metrics",
+      "code": "from sklearn.metrics import precision_score, recall_score\nprint(precision_score([1,1,0,0],[1,0,1,0]), recall_score([1,1,0,0],[1,0,1,0]))"
+    }
+  ],
+  "lesson": "ml.evaluation.md",
+  "assessment": "ml.evaluation.json"
+}

@@ -1,0 +1,57 @@
+{
+  "concept_id": "ml.evaluation",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "TP=40, FP=10, FN=20, TN=30. Precision?",
+      "answer": 0.8,
+      "tolerance": 0.001,
+      "explanation": "40 / 50."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Same matrix. Recall?",
+      "answer": 0.667,
+      "tolerance": 0.002,
+      "explanation": "40 / 60."
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Same matrix. F1 score?",
+      "answer": 0.727,
+      "tolerance": 0.003,
+      "explanation": "2 * 0.8 * 0.667 / 1.467."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "99% of samples are negative and the model always predicts negative. Which is true?",
+      "options": [
+        "Accuracy 0.99 and recall 0",
+        "Accuracy 0.5",
+        "Precision 1 and recall 1",
+        "The model is excellent"
+      ],
+      "answer": 0,
+      "explanation": "Accuracy hides the complete failure on positives."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "Train accuracy 1.00, test accuracy 0.62. Diagnosis?",
+      "options": [
+        "Underfitting",
+        "Overfitting",
+        "Perfect generalisation",
+        "Data is too easy"
+      ],
+      "answer": 1,
+      "explanation": "A large train/test gap indicates memorisation."
+    }
+  ]
+}
