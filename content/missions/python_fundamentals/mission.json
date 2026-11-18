@@ -1,0 +1,31 @@
+{
+  "id": "python_fundamentals",
+  "entry_file": "solution.py",
+  "test_file": "tests.py",
+  "submission_format": "A single Python module named solution.py",
+  "evaluation": {
+    "weights": {
+      "correctness": 0.5,
+      "reliability": 0.25,
+      "performance": 0.1,
+      "quality": 0.15
+    },
+    "pass_rule": "All correctness tests pass and the weighted score is at least 0.7"
+  },
+  "time_limit_s": 20,
+  "title": "Python Fundamentals",
+  "difficulty": "beginner",
+  "district": "foundation",
+  "order": 1,
+  "concepts": [
+    "python.basics"
+  ],
+  "prerequisites": [],
+  "summary": "Build a tiny text-analytics toolkit: word counts, top-k ranking and min-max normalisation.",
+  "requirements": [
+    "word_frequencies(text) counts lowercase words; any non-letter character separates words",
+    "top_k(freqs, k) returns (word, count) pairs sorted by count descending, ties alphabetically",
+    "normalize(values) rescales numbers to [0, 1]; a constant list maps to all 0.0; an empty list returns []"
+  ],
+  "description": "Every data pipeline starts with small, reliable functions. Implement the three functions in `solution.py`. Hidden tests check correctness, edge cases (empty input, punctuation, ties) and performance on a large text."
+}
