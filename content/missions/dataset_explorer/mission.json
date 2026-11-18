@@ -1,0 +1,35 @@
+{
+  "id": "dataset_explorer",
+  "entry_file": "solution.py",
+  "test_file": "tests.py",
+  "submission_format": "A single Python module named solution.py",
+  "evaluation": {
+    "weights": {
+      "correctness": 0.5,
+      "reliability": 0.25,
+      "performance": 0.1,
+      "quality": 0.15
+    },
+    "pass_rule": "All correctness tests pass and the weighted score is at least 0.7"
+  },
+  "time_limit_s": 20,
+  "title": "Dataset Explorer",
+  "difficulty": "beginner",
+  "district": "foundation",
+  "order": 2,
+  "concepts": [
+    "stats.probability",
+    "python.basics"
+  ],
+  "prerequisites": [
+    "python.basics"
+  ],
+  "summary": "Compute robust descriptive statistics on a dataset with missing values.",
+  "requirements": [
+    "column_stats(rows, column) returns count, missing, mean, median and population std, ignoring None values",
+    "If every value is missing, mean/median/std are None",
+    "group_mean(rows, by, column) returns the mean of column per group, ignoring missing values",
+    "Do not modify the input rows"
+  ],
+  "description": "Rows are dictionaries, e.g. `{'city': 'Pune', 'temp': 31.5}`. Values may be `None` (missing). Implement `column_stats` and `group_mean` in plain Python (no pandas)."
+}
