@@ -1,0 +1,39 @@
+{
+  "id": "dl.training_dynamics",
+  "district": "deep_learning",
+  "order": 3,
+  "title": "Training Dynamics",
+  "summary": "Loss curves, learning rates, batch size, initialisation, regularisation and optimisers.",
+  "prerequisites": [
+    "dl.forward_backprop"
+  ],
+  "objectives": [
+    "Diagnose training problems from loss curves",
+    "Choose initialisation and regularisation strategies",
+    "Run reproducible experiments"
+  ],
+  "simulations": [
+    "neural_network",
+    "infrastructure"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "neural_networks"
+  ],
+  "socratic_prompts": [
+    "Your training loss is NaN after 3 epochs. What do you change first?",
+    "Why does all-zero initialisation fail?"
+  ],
+  "examples": [
+    {
+      "title": "L2 penalty",
+      "code": "import numpy as np\nprint(0.01 * np.sum(np.array([3., 4.]) ** 2))  # 0.25"
+    }
+  ],
+  "lesson": "dl.training_dynamics.md",
+  "assessment": "dl.training_dynamics.json"
+}

@@ -1,0 +1,67 @@
+{
+  "concept_id": "dl.training_dynamics",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "prompt": "Training loss falls while validation loss rises. Diagnosis?",
+      "options": [
+        "Underfitting",
+        "Overfitting",
+        "Learning rate too small",
+        "Perfect training"
+      ],
+      "answer": 1,
+      "explanation": "The model is fitting noise in the training set."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "L2 penalty with lambda = 0.01 and weights [3, 4]?",
+      "answer": 0.25,
+      "tolerance": 0.001,
+      "explanation": "0.01 * (9 + 16)."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "Why does all-zero weight initialisation fail?",
+      "options": [
+        "Gradients become NaN",
+        "Every neuron in a layer stays identical (symmetry)",
+        "The loss is always zero",
+        "It uses too much memory"
+      ],
+      "answer": 1,
+      "explanation": "Identical neurons receive identical updates."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Loss becomes NaN after a few epochs. First thing to try?",
+      "options": [
+        "Increase the learning rate",
+        "Lower the learning rate",
+        "Add more layers",
+        "Remove the test set"
+      ],
+      "answer": 1,
+      "explanation": "Exploding updates are the usual cause."
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "prompt": "What makes an experiment reproducible?",
+      "options": [
+        "Running it at night",
+        "Fixed seeds, recorded configuration and saved results",
+        "Using a GPU",
+        "Using more data"
+      ],
+      "answer": 1,
+      "explanation": "NEXORA saves every lab run with its configuration."
+    }
+  ]
+}
