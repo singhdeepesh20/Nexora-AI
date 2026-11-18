@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
+.no-static/
+test-results/
+playwright-report/
+apps/desktop/src-tauri/target/
+.claude/launch.json
+tsconfig.tsbuildinfo
