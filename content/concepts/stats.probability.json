@@ -1,0 +1,39 @@
+{
+  "id": "stats.probability",
+  "district": "foundation",
+  "order": 4,
+  "title": "Probability and Statistics",
+  "summary": "Summaries of data, probability rules, Bayes' theorem and the normal distribution.",
+  "prerequisites": [
+    "python.basics"
+  ],
+  "objectives": [
+    "Compute mean, median, variance and standard deviation",
+    "Apply Bayes' theorem with base rates",
+    "Explain why the median is robust to outliers"
+  ],
+  "simulations": [],
+  "missions": [
+    "dataset_explorer"
+  ],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "mathematical_foundations",
+    "data_analysis"
+  ],
+  "socratic_prompts": [
+    "A test is 90% accurate - why might a positive result still be unlikely to be true?",
+    "When would you report the median instead of the mean?"
+  ],
+  "examples": [
+    {
+      "title": "Standardisation",
+      "code": "import numpy as np\nx = np.array([2, 4, 4, 4, 5, 5, 7, 9], dtype=float)\nprint((x - x.mean()) / x.std())"
+    }
+  ],
+  "lesson": "stats.probability.md",
+  "assessment": "stats.probability.json"
+}

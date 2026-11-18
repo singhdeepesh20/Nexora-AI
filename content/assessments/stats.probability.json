@@ -1,0 +1,52 @@
+{
+  "concept_id": "stats.probability",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Mean of [2, 4, 4, 4, 5, 5, 7, 9]?",
+      "answer": 5,
+      "tolerance": 0,
+      "explanation": "40 / 8 = 5."
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Population standard deviation of [2, 4, 4, 4, 5, 5, 7, 9]?",
+      "answer": 2,
+      "tolerance": 0.001,
+      "explanation": "Variance is 4, so the standard deviation is 2."
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Probability that two fair coin flips are both heads?",
+      "answer": 0.25,
+      "tolerance": 0.001,
+      "explanation": "Independent: 0.5 * 0.5."
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "prompt": "Which statistic is most robust to a single extreme outlier?",
+      "options": [
+        "mean",
+        "median",
+        "variance",
+        "maximum"
+      ],
+      "answer": 1,
+      "explanation": "The median depends only on the middle of the sorted data."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Prevalence 1%, sensitivity 90%, false positive rate 10%. P(disease | positive test)? (decimal)",
+      "answer": 0.0833,
+      "tolerance": 0.005,
+      "explanation": "0.009 / (0.009 + 0.099) is about 0.083."
+    }
+  ]
+}
