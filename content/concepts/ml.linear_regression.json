@@ -1,0 +1,40 @@
+{
+  "id": "ml.linear_regression",
+  "district": "machine_learning",
+  "order": 2,
+  "title": "Linear Regression",
+  "summary": "Weighted sums, mean squared error, gradients, normal equations and feature scaling.",
+  "prerequisites": [
+    "ml.gradient_descent",
+    "stats.probability"
+  ],
+  "objectives": [
+    "Compute MSE and its gradients",
+    "Explain why feature scaling speeds up training",
+    "Interpret R squared"
+  ],
+  "simulations": [
+    "gradient_descent",
+    "ml_lab"
+  ],
+  "missions": [],
+  "completion": {
+    "assessment_pass_score": 0.8,
+    "required_mission": null
+  },
+  "skills": [
+    "classical_ml"
+  ],
+  "socratic_prompts": [
+    "What does a negative R squared tell you about a model?",
+    "How does an outlier affect a squared loss?"
+  ],
+  "examples": [
+    {
+      "title": "Fit with NumPy",
+      "code": "import numpy as np\nX = np.c_[np.ones(4), [0, 1, 2, 3]]\ny = np.array([1, 3, 5, 7])\nprint(np.linalg.lstsq(X, y, rcond=None)[0])  # [1, 2]"
+    }
+  ],
+  "lesson": "ml.linear_regression.md",
+  "assessment": "ml.linear_regression.json"
+}

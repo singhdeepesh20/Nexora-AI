@@ -1,0 +1,57 @@
+{
+  "concept_id": "ml.linear_regression",
+  "version": "1",
+  "pass_score": 0.8,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Predictions [2, 4], targets [3, 3]. What is the MSE?",
+      "answer": 1,
+      "tolerance": 0.001,
+      "explanation": "((-1)^2 + 1^2) / 2 = 1."
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "prompt": "Which is dMSE/dw for y_hat = w x + b?",
+      "options": [
+        "(2/n) sum (y_hat - y) x",
+        "(1/n) sum y x",
+        "sum (y_hat - y)",
+        "(2/n) sum (y_hat - y)"
+      ],
+      "answer": 0,
+      "explanation": "Chain rule through the square and w x."
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "prompt": "Why standardise features before gradient descent?",
+      "options": [
+        "It changes the optimal predictions",
+        "It makes curvature similar across directions, so convergence is faster",
+        "It removes outliers",
+        "It is required for the normal equations"
+      ],
+      "answer": 1,
+      "explanation": "Stretched valleys force tiny learning rates."
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "What R squared does a model get if it always predicts the mean of y?",
+      "answer": 0,
+      "tolerance": 0.001,
+      "explanation": "SS_residual equals SS_total."
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "w = 2, b = 1, x = 3. Prediction?",
+      "answer": 7,
+      "tolerance": 0,
+      "explanation": "2 * 3 + 1."
+    }
+  ]
+}
