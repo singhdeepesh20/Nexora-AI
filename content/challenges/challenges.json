@@ -459,6 +459,47 @@
       ],
       "explanation": "Margin-based linear models with standardised inputs separate this dataset well; F1 rewards getting both classes right.",
       "xp": 50
+    },
+    {
+      "id": "rag.break",
+      "version": "1",
+      "lab": "rag",
+      "difficulty": "easy",
+      "title": "Push the answer out of first place",
+      "description": "For the question 'what is the stability limit for the learning rate', the Gradient Descent lesson holds the answer and currently ranks first. Change chunking and BM25 settings until a different lesson takes rank 1.",
+      "objective": "See how chunking and scoring choices put the wrong passage in front of a generator.",
+      "initial_config": {
+        "corpus": "curriculum",
+        "query": "what is the stability limit for the learning rate",
+        "chunk_size": 80,
+        "overlap": 20,
+        "top_k": 3,
+        "k1": 1.5,
+        "b": 0.75,
+        "remove_stopwords": true,
+        "evaluate": true
+      },
+      "allowed": [
+        "chunk_size",
+        "overlap",
+        "b",
+        "k1",
+        "remove_stopwords"
+      ],
+      "target": [
+        {
+          "metric": "top_doc",
+          "op": "!=",
+          "value": "ml.gradient_descent",
+          "label": "Rank 1 is not the Gradient Descent lesson"
+        }
+      ],
+      "hints": [
+        "Very small chunks lose the context that makes a passage relevant.",
+        "Try 8-word chunks, keep stopwords, and exaggerate BM25: b = 1, k1 = 5."
+      ],
+      "explanation": "Eight-word chunks cut the sentence that answers the question into fragments, while b = 1 and k1 = 5 over-reward short fragments that repeat a query word. A Linear Regression fragment wins rank 1. In a RAG system the generator would now answer from the wrong passage.",
+      "xp": 30
     }
   ]
 }
