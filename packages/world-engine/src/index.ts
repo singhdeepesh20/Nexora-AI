@@ -59,7 +59,7 @@ export function buildLayout(
   return {
     bounds,
     colliders: [...districts.map((d) => buildingBox(d.building)), ...extraColliders],
-    interactables: districts.map((d) => ({
+    interactables: [...extraInteractables, ...districts.map((d): Interactable => ({
       id: d.id,
       kind: d.status === 'active' ? 'building' : 'gate',
       label: d.building.label,
