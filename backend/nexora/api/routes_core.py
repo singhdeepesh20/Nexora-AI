@@ -73,7 +73,7 @@ def list_students(session: Session = Depends(get_session)) -> list[dict[str, Any
 @router.post("/students", status_code=201)
 def create_student(body: StudentCreate, ctx: AppContext = Depends(get_ctx),
                    session: Session = Depends(get_session)) -> dict[str, Any]:
-    s = Student(display_name=body.display_name, settings={"graphics": "medium", "mentor_mode": "auto"})
+    s = Student(display_name=body.display_name, settings={"graphics": "medium", "mentor_mode": "auto", "onboarding": "pending"})
     session.add(s)
     session.flush()
     a = Avatar(student_id=s.id, body_color=body.body_color, accent_color=body.accent_color,
