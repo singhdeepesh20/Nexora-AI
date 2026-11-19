@@ -96,3 +96,35 @@ def get_progression(tz: str | None = Query(None, max_length=64), student: Studen
     return progression.summary(session, ctx.rules, student.id, states, learning.skill_levels(ctx.catalog, states), tz)
 
 
+# ------------------------------------------------------------------ Debug of the Day
+def _local_day(raw: str) -> date:
+    try:
+        d = date.fromisoformat(raw)
+    except ValueError as exc:
+        raise bad_request("date must be YYYY-MM-DD") from exc
+    today = utcnow().date()
+    if abs((d - today).days) > 1:  # time zones span at most +/-1 day from UTC
+        raise bad_request("Only today's puzzle is available")
+    return d
+
+
+def _daily_state(session: Session, student_id: str, number: int) -> tuple[DailySession | None, list[ChallengeAttempt]]:
+    ds = session.scalar(select(DailySession).where(DailySession.student_id == student_id, DailySession.puzzle_number == number))
+    rows = session.scalars(select(ChallengeAttempt).where(ChallengeAttempt.student_id == student_id,
+                                                          ChallengeAttempt.kind == "daily",
+                                                          ChallengeAttempt.challenge_id == f"daily-{number}")
+                           .order_by(ChallengeAttempt.created_at)).all()
+    return ds, list(rows)
+
+
+def _daily_view(number: int, p: dict, ds: DailySession | None, rows: list[ChallengeAttempt]) -> dict[str, Any]:
+    solved = bool(ds and ds.solved_at)
+    grid = [r.result["outcomes"] for r in rows if not ds or not ds.solved_at or r.created_at <= ds.solved_at]
+    secs = int((ds.solved_at - ds.started_at).total_seconds()) if solved else None
+    return {"number": number, "puzzle_id": p["id"], "version": p["version"], "title": p["title"], "topic": p["topic"],
+            "description": p["description"], "starter_code": p["broken"], "hidden_tests": daily.test_count(p),
+            "started_at": ds.started_at.isoformat() if ds else None, "solved": solved, "seconds": secs,
+            "attempts": grid, "explanation": p["explanation"] if solved else None,
+            "share_text": daily.share_text(number, grid, solved, secs) if solved else None}
+
+
