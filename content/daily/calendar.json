@@ -1,0 +1,14 @@
+{
+  "version": "1",
+  "epoch": "2026-01-01",
+  "order": [
+    "leaky_scaler",
+    "exploding_lr",
+    "stale_gradient",
+    "shape_mismatch",
+    "broken_bce",
+    "chunk_gap",
+    "trusting_api"
+  ],
+  "note": "Puzzle number = days since epoch + 1 (local date). Puzzle = order[(number-1) % len(order)]. Local clocks are not a trusted global competition clock."
+}
