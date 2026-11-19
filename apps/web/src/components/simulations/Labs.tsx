@@ -33,7 +33,7 @@ function useSim(simId: string) {
       setRes(r)
       await applyResult(r as SimulationResponse<R> & { events: SimEvent[]; xp: XPAward[] })
     } catch (e) { setError(e) } finally { setBusy(false) }
-  }, [simId, student, celebrate])
+  }, [simId, student, applyResult])
   return { res, error, busy, run }
 }
 
