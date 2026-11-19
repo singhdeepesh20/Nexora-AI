@@ -1,0 +1,9 @@
+{
+  "id": "exploding_lr",
+  "version": "1",
+  "title": "The exploding learning rate",
+  "topic": "Optimisation",
+  "description": "`fit_slope` fits y = w x with gradient descent but returns `inf` or `nan`. The maths of the gradient is correct. What is wrong?",
+  "explanation": "For MSE on this data the curvature is 2 * mean(x^2) = 28, so gradient descent is stable only for lr < 2/28 = 0.071. With lr = 0.5 every step overshoots further. Lower the learning rate.",
+  "time_limit_s": 15
+}
