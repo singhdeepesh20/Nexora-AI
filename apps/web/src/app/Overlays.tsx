@@ -6,6 +6,12 @@ import { MentorChat } from '../components/mentors/MentorChat'
 import { MissionBoard, MissionWorkspace } from '../components/missions/Missions'
 import { ProjectsPanel } from '../components/missions/Projects'
 import { LabPanel } from '../components/simulations/Labs'
+import { ChallengeBoard, ChallengePanel } from '../components/engagement/Challenges'
+import { DailyDebug } from '../components/engagement/Daily'
+import { Onboarding } from '../components/engagement/Onboarding'
+import { ProfessorDialog } from '../components/engagement/ProfessorDialog'
+import { ProgressPanel } from '../components/engagement/Progress'
+import { ShareDialog } from '../components/engagement/ShareDialog'
 
 /** Renders the top-most overlay. 2D professional interfaces layered over the 3D campus. */
 export default function Overlays() {
