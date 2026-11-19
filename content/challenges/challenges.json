@@ -548,6 +548,43 @@
       ],
       "explanation": "Focused chunks and length normalisation put the passage that answers the question at rank 1.",
       "xp": 50
+    },
+    {
+      "id": "infra.oom",
+      "version": "1",
+      "lab": "infrastructure",
+      "difficulty": "easy",
+      "title": "Run out of GPU memory",
+      "description": "Configure a deployment that cannot fit on its GPU.",
+      "objective": "Estimate weights + KV cache against device memory.",
+      "initial_config": {
+        "params_billion": 7,
+        "precision": "fp16",
+        "hardware": "consumer_gpu_24gb",
+        "batch_size": 1,
+        "context_length": 4096,
+        "n_layers": 32,
+        "hidden_size": 4096,
+        "run_benchmark": false
+      },
+      "allowed": [
+        "params_billion",
+        "precision",
+        "hardware",
+        "batch_size",
+        "context_length"
+      ],
+      "target": [
+        {
+          "event": "MEMORY_OVERFLOW",
+          "label": "Memory overflow"
+        }
+      ],
+      "hints": [
+        "A 7B model in fp16 needs about 14 GB just for weights."
+      ],
+      "explanation": "Weights scale with parameters x bytes per parameter; the KV cache scales with layers x context x hidden x batch.",
+      "xp": 30
     }
   ]
 }
