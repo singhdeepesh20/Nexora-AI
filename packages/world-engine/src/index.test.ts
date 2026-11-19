@@ -86,6 +86,17 @@ describe('interaction', () => {
   })
 })
 
+describe('extra interactables', () => {
+  it('includes NPCs and machines and picks the nearest', () => {
+    const l = buildLayout(layout.bounds, districts, [], [
+      { id: 'npc:nova', kind: 'npc', label: 'Nova', position: { x: 0, z: 2 }, radius: 3 },
+      { id: 'machine', kind: 'machine', label: 'Machine', position: { x: 2, z: 2 }, radius: 3 },
+    ])
+    expect(nearestInteractable({ x: 0.2, z: 2 }, l)?.id).toBe('npc:nova')
+    expect(nearestInteractable({ x: 1.9, z: 2 }, l)?.kind).toBe('machine')
+  })
+})
+
 describe('scenery', () => {
   it('is deterministic and avoids buildings', () => {
     const r1 = seededRandom(3), r2 = seededRandom(3)
