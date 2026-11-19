@@ -51,6 +51,18 @@ export function Building({ district, highlighted, mastery = 0 }: { district: Dis
         <boxGeometry args={[w + 2.05, 0.08, d + 2.05]} />
         <meshStandardMaterial color={c} emissive={c} emissiveIntensity={1.5} />
       </mesh>
+      {mastery >= 0.5 && (
+        <mesh ref={holo} position-y={h + 4.2}>
+          <icosahedronGeometry args={[1.1, 1]} />
+          <meshStandardMaterial color={c} emissive={c} emissiveIntensity={1.6} wireframe />
+        </mesh>
+      )}
+      {mastery >= 1 && (
+        <mesh position-y={h + 14}>
+          <cylinderGeometry args={[0.35, 0.9, 24, 16, 1, true]} />
+          <meshBasicMaterial color={c} transparent opacity={0.22} depthWrite={false} />
+        </mesh>
+      )}
       {district.number === 2 && (
         <mesh position-y={h + 2.4} rotation-x={Math.PI / 2}>
           <torusGeometry args={[Math.min(w, d) / 3, 0.18, 12, 64]} />
