@@ -99,7 +99,7 @@ export const useApp = create<AppState>((set, get) => ({
     const s = await api.post<Student>('/students', { display_name: name, body_color: body, accent_color: accent })
     set({ students: [...get().students, s] })
     await get().selectStudent(s)
-    get().toast(`Welcome to NEXORA, ${s.display_name}! Walk to a glowing door and press E.`, 'success')
+    get().toast(`Welcome to NEXORA, ${s.display_name}!`, 'success')
   },
 
   leaveCampus: () => {
