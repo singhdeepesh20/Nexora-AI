@@ -71,7 +71,7 @@ export function LessonPanel({ conceptId }: { conceptId: string }) {
 }
 
 export function AssessmentPanel({ conceptId }: { conceptId: string }) {
-  const { student, concepts, refreshLearning, celebrate, toast } = useApp()
+  const { student, concepts, applyResult, toast } = useApp()
   const { data: a, error } = useAsync(() => api.get<Assessment>(`/curriculum/concepts/${conceptId}/assessment`), [conceptId])
   const [answers, setAnswers] = useState<Record<string, string | number>>({})
   const [result, setResult] = useState<AssessmentResult | null>(null)
