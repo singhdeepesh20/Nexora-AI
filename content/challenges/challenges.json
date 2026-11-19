@@ -297,6 +297,54 @@
       ],
       "explanation": "A hidden layer with a nonlinearity lets the network bend its decision boundary into the two diagonal regions XOR requires.",
       "xp": 50
+    },
+    {
+      "id": "nn.overfit",
+      "version": "1",
+      "lab": "neural_network",
+      "difficulty": "hard",
+      "title": "Overfit within 50 epochs",
+      "description": "On the noisy spiral, make training accuracy pull away from test accuracy in at most 50 epochs.",
+      "objective": "Understand that capacity plus noise plus no regularisation produces overfitting.",
+      "initial_config": {
+        "dataset": "spiral",
+        "n_samples": 120,
+        "noise": 0.6,
+        "hidden_layers": [
+          8
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "optimizer": "adam",
+        "learning_rate": 0.01,
+        "epochs": 50,
+        "l2": 0.0,
+        "seed": 3
+      },
+      "allowed": [
+        "hidden_layers",
+        "learning_rate",
+        "activation",
+        "epochs"
+      ],
+      "target": [
+        {
+          "event": "OVERFITTING_DETECTED",
+          "label": "Train/test gap above 12 points"
+        },
+        {
+          "config": "epochs",
+          "op": "<=",
+          "value": 50,
+          "label": "At most 50 epochs"
+        }
+      ],
+      "hints": [
+        "Give the network far more capacity than the data supports.",
+        "Wide layers and a larger learning rate memorise fast."
+      ],
+      "explanation": "A large network fits the noise in a small training set; the memorised quirks do not transfer to the test points, so the gap opens.",
+      "xp": 80
     }
   ]
 }
