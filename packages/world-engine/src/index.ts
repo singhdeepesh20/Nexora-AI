@@ -53,7 +53,9 @@ export function buildingBox(b: BuildingSpec): Box {
   return { minX: b.x - b.w / 2, maxX: b.x + b.w / 2, minZ: b.z - b.d / 2, maxZ: b.z + b.d / 2 }
 }
 
-export function buildLayout(bounds: Bounds, districts: DistrictSpec[], extraColliders: Box[] = []): WorldLayout {
+export function buildLayout(
+  bounds: Bounds, districts: DistrictSpec[], extraColliders: Box[] = [], extraInteractables: Interactable[] = [],
+): WorldLayout {
   return {
     bounds,
     colliders: [...districts.map((d) => buildingBox(d.building)), ...extraColliders],
