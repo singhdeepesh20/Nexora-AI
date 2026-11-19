@@ -216,6 +216,44 @@
       ],
       "explanation": "Heavy-ball momentum effectively uses the square root of the condition number: optimal eta = 4/(sqrt(Lmax)+sqrt(Lmin))^2 and beta = ((sqrt(k)-1)/(sqrt(k)+1))^2, converging several times faster than plain GD.",
       "xp": 80
+    },
+    {
+      "id": "nn.underfit",
+      "version": "1",
+      "lab": "neural_network",
+      "difficulty": "easy",
+      "title": "Demonstrate underfitting",
+      "description": "Configure a model too weak for concentric circles.",
+      "objective": "Recognise underfitting: poor accuracy even on training data.",
+      "initial_config": {
+        "dataset": "circles",
+        "n_samples": 200,
+        "noise": 0.1,
+        "hidden_layers": [
+          8
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "optimizer": "adam",
+        "learning_rate": 0.03,
+        "epochs": 200,
+        "seed": 0
+      },
+      "allowed": [
+        "hidden_layers",
+        "epochs"
+      ],
+      "target": [
+        {
+          "event": "UNDERFITTING_DETECTED",
+          "label": "Model underfits"
+        }
+      ],
+      "hints": [
+        "What can a model with no hidden layer draw?"
+      ],
+      "explanation": "Without a hidden layer the network is logistic regression and can only draw a straight line; circles need a curved boundary.",
+      "xp": 30
     }
   ]
 }
