@@ -27,6 +27,9 @@ class AppContext:
     workspace: Workspace
     schema_revision: str
     known_revisions: list[str]
+    challenges: dict
+    rules: dict
+    daily: dict
 
 
 def get_ctx(request: Request) -> AppContext:
