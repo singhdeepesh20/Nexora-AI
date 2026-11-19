@@ -183,6 +183,8 @@ export function SettingsPanel() {
           </div>
           <p className="mt-1.5 text-[11px] text-ink-400">Low disables shadows and reduces resolution and scenery for integrated graphics.</p>
           <label className="mt-3 flex items-center gap-2 text-sm text-ink-200"><input type="checkbox" className="accent-teal-400" checked={!!s.show_fps} onChange={(e) => void updateSettings({ show_fps: e.target.checked })} /> Show frame rate</label>
+          <label className="mt-2 flex items-center gap-2 text-sm text-ink-200"><input type="checkbox" className="accent-teal-400" checked={!!s.reduced_motion} onChange={(e) => void updateSettings({ reduced_motion: e.target.checked })} /> Reduce motion (no camera shake, sparks or jitter)</label>
+          <Button tone="ghost" className="mt-3" onClick={() => open({ kind: 'onboarding' })}>Replay the first experiment</Button>
         </section>
 
         <section>
