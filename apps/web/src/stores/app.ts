@@ -38,6 +38,7 @@ interface AppState {
   concepts: Record<string, ConceptSummary>
   learning: LearningState | null
   system: SystemInfo | null
+  progression: Progression | null
   overlays: Overlay[]
   toasts: Toast[]
   boot: () => Promise<void>
