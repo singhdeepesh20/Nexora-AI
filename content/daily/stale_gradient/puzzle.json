@@ -1,0 +1,9 @@
+{
+  "id": "stale_gradient",
+  "version": "1",
+  "title": "The gradient that never resets",
+  "topic": "Training loops",
+  "description": "`train` runs mini-batch gradient descent, but the weights drift away instead of converging. Inspect how the gradient is accumulated.",
+  "explanation": "The gradient accumulator was created once, outside the loop, so every step added the new gradient to all previous ones. Reset the gradient each step (the NumPy equivalent of `optimizer.zero_grad()` in PyTorch).",
+  "time_limit_s": 15
+}
