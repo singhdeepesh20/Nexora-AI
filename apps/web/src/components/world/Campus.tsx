@@ -54,6 +54,11 @@ function PlayerRig({ layout, body, accent, highlightedRef }: {
       player.state.z + Math.cos(yaw) * distance * Math.cos(pitch),
     )
     cam.position.lerp(desired, Math.min(1, dt * 10))
+    if (shake.amount > 0.001) { // decaying shake triggered by critical simulation events (disabled in reduced motion)
+      cam.position.x += (Math.random() - 0.5) * shake.amount
+      cam.position.y += (Math.random() - 0.5) * shake.amount
+      shake.amount = Math.max(0, shake.amount - dt * 0.5)
+    }
     cam.lookAt(target)
   })
   return <Avatar ref={avatar} body={body} accent={accent} />
