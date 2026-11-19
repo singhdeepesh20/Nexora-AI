@@ -1,6 +1,6 @@
 # NEXORA - Implementation status
 
-_Last updated: 2026-11-19 · version 0.1.0 (unreleased) · nothing committed yet_
+_Last updated: 2026-11-19 · version 0.2.0 (engagement slice) · v0.1 pushed to GitHub; v0.2 work not yet committed_
 
 ## Milestone report - first vertical slice
 
