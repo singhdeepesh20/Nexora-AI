@@ -87,6 +87,52 @@
       ],
       "explanation": "For L = a x^2 each step multiplies x by (1 - 2 a eta). When |1 - 2 a eta| > 1, i.e. eta > 1/a, the distance to the minimum grows geometrically: divergence.",
       "xp": 30
+    },
+    {
+      "id": "gd.oscillation_onset",
+      "version": "1",
+      "lab": "gradient_descent",
+      "difficulty": "medium",
+      "title": "Find where oscillation begins",
+      "description": "Find a learning rate at which the iterates start flipping sides of the minimum - but only just: at most 0.55.",
+      "objective": "Locate the boundary between monotone convergence and oscillation.",
+      "initial_config": {
+        "function": "quadratic",
+        "a": 1,
+        "b": 1,
+        "optimizer": "gd",
+        "learning_rate": 0.1,
+        "iterations": 100,
+        "start_x": -4,
+        "start_y": 3
+      },
+      "allowed": [
+        "learning_rate"
+      ],
+      "target": [
+        {
+          "metric": "direction_reversals",
+          "op": ">",
+          "value": 0,
+          "label": "Steps reverse direction"
+        },
+        {
+          "config": "learning_rate",
+          "op": "<=",
+          "value": 0.55,
+          "label": "Learning rate at most 0.55"
+        },
+        {
+          "no_event": "LOSS_DIVERGENCE",
+          "label": "No divergence"
+        }
+      ],
+      "hints": [
+        "The multiplier per step is (1 - 2 eta).",
+        "It becomes negative - flipping sign - when eta > 0.5."
+      ],
+      "explanation": "x is multiplied by (1 - 2 eta) each step. For eta < 0.5 the factor is positive (monotone approach); above 0.5 it is negative, so x flips sign every step while still shrinking until eta reaches 1.",
+      "xp": 50
     }
   ]
 }
