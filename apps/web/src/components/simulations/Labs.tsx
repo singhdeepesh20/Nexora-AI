@@ -21,7 +21,7 @@ const TITLES: Record<string, [string, string, string]> = {
 }
 
 function useSim(simId: string) {
-  const { student, celebrate } = useApp()
+  const { student, applyResult } = useApp()
   const [res, setRes] = useState<SimulationResponse<R> | null>(null)
   const [error, setError] = useState<unknown>(null)
   const [busy, setBusy] = useState(false)
