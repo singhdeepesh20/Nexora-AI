@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.requests import Request
 
-from nexora.api import routes_core, routes_learning
+from nexora.api import routes_core, routes_engagement, routes_learning
 from nexora.api.context import AppContext
 from nexora.core.config import API_PREFIX, APP_VERSION, Settings
 from nexora.core.security import LocalAccessMiddleware
