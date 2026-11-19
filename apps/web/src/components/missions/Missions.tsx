@@ -38,7 +38,7 @@ export function MissionBoard() {
 }
 
 export function MissionWorkspace({ missionId }: { missionId: string }) {
-  const { student, refreshLearning, celebrate, toast, concepts } = useApp()
+  const { student, applyResult, toast, concepts } = useApp()
   const detail = useAsync(() => api.get<MissionDetail>(`/missions/${missionId}`), [missionId])
   const board = useAsync(() => api.get<MissionSummary[]>(`/students/${student!.id}/missions`), [student?.id])
   const summary = board.data?.find((m) => m.id === missionId)
