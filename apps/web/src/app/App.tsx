@@ -31,6 +31,14 @@ function CampusShell() {
 
   useEffect(() => bindKeys(), [])
 
+  // A new student meets Professor Nova and the broken network straight away (skippable).
+  useEffect(() => {
+    if (student?.settings.onboarding === 'pending' && useApp.getState().overlays.length === 0) {
+      const t = setTimeout(() => useApp.getState().open({ kind: 'onboarding' }), 1200)
+      return () => clearTimeout(t)
+    }
+  }, [student?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
   // persist world state every few seconds when it changed
   useEffect(() => {
     const t = setInterval(() => {
