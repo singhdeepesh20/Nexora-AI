@@ -75,6 +75,8 @@ function CampusShell() {
           if (d) open(d.status === 'active' ? { kind: 'district', id: d.id } : { kind: 'gate', id: d.id })
         }
       } else if (e.code === 'KeyM') open({ kind: 'map' })
+      else if (e.code === 'KeyB') open({ kind: 'challenges' })
+      else if (e.code === 'KeyP') open({ kind: 'progress' })
       else if (e.code === 'KeyJ') open({ kind: 'dashboard' })
       else if (e.code === 'KeyK') open({ kind: 'missions' })
       else if (e.code === 'KeyL') open({ kind: 'projects' })
