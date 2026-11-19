@@ -64,3 +64,35 @@ def build_config(challenge: dict[str, Any], student_config: dict[str, Any]) -> d
     return {**challenge["initial_config"], **student_config}
 
 
+def evaluate(challenge: dict[str, Any], config: dict[str, Any], result: dict[str, Any], events: list[dict]) -> dict[str, Any]:
+    m = metrics(challenge["lab"], config, result)
+    types = {e["type"] for e in events}
+    checks = []
+    for cond in challenge["target"]:
+        if "event" in cond:
+            ok, actual = cond["event"] in types, sorted(types)
+        elif "no_event" in cond:
+            ok, actual = cond["no_event"] not in types, sorted(types)
+        elif "metric" in cond:
+            actual = m.get(cond["metric"])
+            ok = actual is not None and bool(OPS[cond["op"]](actual, cond["value"]))
+        else:
+            actual = config.get(cond["config"])
+            ok = actual is not None and bool(OPS[cond["op"]](actual, cond["value"]))
+        checks.append({"label": cond["label"], "passed": ok, "actual": actual})
+    return {"passed": all(c["passed"] for c in checks), "checks": checks, "metrics": m}
+
+
+def attempt(challenge: dict[str, Any], student_config: dict[str, Any], ctx: Any = None) -> dict[str, Any]:
+    cfg_in = build_config(challenge, student_config)
+    config, result = run_simulation(challenge["lab"], cfg_in, ctx)
+    events = classify(challenge["lab"], config, result)
+    ev = evaluate(challenge, config, result, events)
+    return {"config": config, "result": result, "events": events, "summary": summarize(challenge["lab"], result), **ev}
+
+
+def public_view(c: dict[str, Any]) -> dict[str, Any]:
+    keep = ("id", "version", "lab", "difficulty", "title", "description", "objective", "initial_config", "allowed", "xp",
+            "achievement")
+    return {k: c.get(k) for k in keep} | {"onboarding": bool(c.get("onboarding")),
+                                         "target": [t["label"] for t in c["target"]], "hint_count": len(c["hints"])}
