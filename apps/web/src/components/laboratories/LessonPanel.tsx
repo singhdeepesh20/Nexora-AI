@@ -83,7 +83,6 @@ export function AssessmentPanel({ conceptId }: { conceptId: string }) {
     try {
       const r = await api.post<AssessmentResult>(`/students/${student!.id}/concepts/${conceptId}/assessment`, { answers })
       setResult(r)
-      celebrate(r.achievements)
       if (r.unlocked.length) toast(`Unlocked: ${r.unlocked.map((u) => concepts[u]?.title).join(', ')}`, 'success')
       await refreshLearning()
     } catch (e) { setSubmitErr(e) } finally { setBusy(false) }
