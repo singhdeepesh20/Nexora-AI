@@ -52,3 +52,27 @@ export function professorLines(id: string, learning: LearningState, prog: Progre
   return lines
 }
 
+export function ProfessorDialog({ id }: { id: string }) {
+  const { student, learning, progression, concepts, world, open } = useApp()
+  const npc = NPCS.find((n) => n.id === id)!
+  const ch = useAsync(() => api.get<ChallengeSummary[]>(`/students/${student!.id}/challenges`), [student?.id])
+  const district = world?.districts.find((d) => d.id === DISTRICT[id])
+  const titles = Object.fromEntries(Object.values(concepts).map((c) => [c.id, c.title]))
+  const lines = learning && ch.data ? professorLines(id, learning, progression, ch.data, titles, student?.settings.onboarding, district?.concepts ?? []) : null
+  const needsOnboarding = id === 'nova' && (student?.settings.onboarding ?? 'pending') === 'pending'
+  return (
+    <Panel title={npc.name} subtitle={npc.role} accent={npc.color}>
+      <div className="space-y-4 p-5">
+        {!lines ? <Spinner /> : lines.map((l, i) => (
+          <p key={i} className="rounded-2xl rounded-tl-sm border px-4 py-3 text-sm text-ink-200" style={{ borderColor: `${npc.color}44`, background: `${npc.color}0d` }}>{l}</p>
+        ))}
+        <div className="flex flex-wrap gap-2">
+          {needsOnboarding && <Button onClick={() => open({ kind: 'onboarding' })}><Play size={15} /> Start the first experiment</Button>}
+          {district && <Button tone="ghost" onClick={() => open({ kind: 'district', id: district.id })}>Enter {district.building.label}</Button>}
+          {LABS[id]?.length > 0 && <Button tone="ghost" onClick={() => open({ kind: 'challenges' })}><Swords size={15} /> Break challenges</Button>}
+          <Button tone="subtle" onClick={() => open({ kind: 'mentor', mentorId: id })}><MessageCircle size={15} /> Ask a question</Button>
+        </div>
+      </div>
+    </Panel>
+  )
+}
