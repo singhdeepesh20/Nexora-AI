@@ -421,6 +421,44 @@
       ],
       "explanation": "Unscaled, proline dominates every distance, so k-NN effectively uses one feature. Standardising gives every feature a voice.",
       "xp": 50
+    },
+    {
+      "id": "ml.f1",
+      "version": "1",
+      "lab": "ml_lab",
+      "difficulty": "medium",
+      "title": "Push macro F1 above 0.97",
+      "description": "On breast cancer data, reach macro F1 of at least 0.97.",
+      "objective": "Improve a balanced metric, not just accuracy.",
+      "initial_config": {
+        "dataset": "breast_cancer",
+        "model": "decision_tree",
+        "standardize": false,
+        "test_size": 0.25,
+        "seed": 42,
+        "max_depth": 1,
+        "C": 1.0
+      },
+      "allowed": [
+        "model",
+        "standardize",
+        "C",
+        "max_depth"
+      ],
+      "target": [
+        {
+          "metric": "macro_f1",
+          "op": ">=",
+          "value": 0.97,
+          "label": "Macro F1 at least 0.97"
+        }
+      ],
+      "hints": [
+        "A depth-1 tree is a single question.",
+        "Try a standardised linear model or SVM."
+      ],
+      "explanation": "Margin-based linear models with standardised inputs separate this dataset well; F1 rewards getting both classes right.",
+      "xp": 50
     }
   ]
 }
