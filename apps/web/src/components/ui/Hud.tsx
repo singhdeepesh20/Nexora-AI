@@ -7,7 +7,7 @@ import { useApp } from '../../stores/app'
 import { Meter } from './primitives'
 
 export function Hud() {
-  const { student, learning, world, open, toasts, overlays } = useApp()
+  const { student, learning, world, open, toasts, overlays, progression } = useApp()
   const [near, setNear] = useState<string | null>(null)
   const [fps, setFps] = useState(0)
   const [help, setHelp] = useState(true)
