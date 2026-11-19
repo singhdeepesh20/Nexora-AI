@@ -1,0 +1,9 @@
+{
+  "id": "shape_mismatch",
+  "version": "1",
+  "title": "The transposed layer",
+  "topic": "Tensor shapes",
+  "description": "`dense_forward` should compute a dense layer for a batch: X has shape (n, inputs), W has shape (inputs, outputs). It crashes. Fix the shapes.",
+  "explanation": "With the row convention the layer is Z = X @ W + b. `W @ X` multiplies (inputs, outputs) by (n, inputs), which only works by accident - and is wrong even when it does.",
+  "time_limit_s": 15
+}
