@@ -282,6 +282,12 @@ def submit_mission(mission_id: str, body: CodeSubmission, student: Student = Dep
     for cid, s in new_states.items():
         if s["status"] == "mastered" and states[cid]["status"] != "mastered":
             learning.touch_progress(session, student.id, cid).mastered_at = utcnow()
+    xp = []
+    if result["passed"]:
+        xp.append(progression.award(session, ctx.rules, student.id, f"mission:{mission_id}", "mission", mission_id,
+                                    ctx.rules["xp"]["mission_pass"].get(m["difficulty"], 100), f"Mission passed: {m['title']}"))
+    xp += _mastery_xp(session, ctx, student.id, states, new_states)
+    result["xp"] = [x for x in xp if x]
     result["submission_id"] = sub.id
     result["achievements"] = achievements.evaluate(session, cat, student.id, new_states)
     result["newly_mastered"] = [c for c, s in new_states.items() if s["status"] == "mastered" and states[c]["status"] != "mastered"]
