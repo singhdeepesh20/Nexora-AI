@@ -5,6 +5,7 @@ import { api } from '../../services/api'
 import { useApp } from '../../stores/app'
 import { Heatmap, LineChart, MatrixTable } from '../ui/charts'
 import { Badge, Button, ErrorNote, Panel, Spinner, inputCls } from '../ui/primitives'
+import { EventBanner } from '../engagement/EventBanner'
 import { Notes, Num, Presets, Select, Stat, Toggle } from './controls'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
