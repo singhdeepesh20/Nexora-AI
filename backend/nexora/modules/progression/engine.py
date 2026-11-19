@@ -52,3 +52,53 @@ def award(session: Session, rules: dict, student_id: str, award_key: str, source
     return {"xp": xp, "reason": reason}
 
 
+def award_experiment(session: Session, rules: dict, student_id: str, experiment_id: str, sim_id: str) -> dict | None:
+    today = utcnow().date().isoformat()
+    cap = rules["xp"]["experiment_daily_cap"]
+    used = session.scalar(select(func.count()).select_from(XPTransaction).where(
+        XPTransaction.student_id == student_id, XPTransaction.award_key.like(f"experiment:{today}:%"))) or 0
+    if used >= cap:
+        return None
+    return award(session, rules, student_id, f"experiment:{today}:{used + 1}", "experiment", experiment_id,
+                 rules["xp"]["experiment"], f"Valid experiment in the {sim_id.replace('_', ' ')} lab")
+
+
+def level_for(xp: int, rules: dict) -> dict[str, Any]:
+    base, growth = rules["levels"]["base"], rules["levels"]["growth"]
+    level, floor, need = 1, 0, base
+    while xp >= floor + need:
+        floor += need
+        level += 1
+        need = round(need * growth)
+    return {"level": level, "level_floor": floor, "next_level_at": floor + need, "into_level": xp - floor, "level_span": need}
+
+
+def evidence(session: Session, student_id: str, states: dict, skills: list[dict]) -> dict[str, Any]:
+    missions = session.scalar(select(func.count(func.distinct(Submission.mission_id))).where(
+        Submission.student_id == student_id, Submission.passed.is_(True))) or 0
+    challenges = session.scalar(select(func.count(func.distinct(ChallengeAttempt.challenge_id))).where(
+        ChallengeAttempt.student_id == student_id, ChallengeAttempt.kind == "break", ChallengeAttempt.passed.is_(True))) or 0
+    daily = session.scalar(select(func.count()).select_from(DailySession).where(
+        DailySession.student_id == student_id, DailySession.solved_at.is_not(None))) or 0
+    xp = session.scalar(select(func.coalesce(func.sum(XPTransaction.xp), 0)).where(XPTransaction.student_id == student_id)) or 0
+    return {"xp": int(xp), "mastered_concepts": sum(s["status"] == "mastered" for s in states.values()),
+            "missions_passed": int(missions), "challenges_passed": int(challenges), "daily_solved": int(daily),
+            "research_reproductions": 0, "skills": {s["skill_id"]: s["level"] for s in skills}}
+
+
+def _check(req: dict, ev: dict) -> list[dict]:
+    checks = []
+    labels = {"xp": "XP", "mastered_concepts": "Concepts mastered", "missions_passed": "Missions passed",
+              "challenges_passed": "Break challenges solved", "daily_solved": "Daily Debug puzzles solved",
+              "research_reproductions": "Research reproductions (research environment not yet available)"}
+    for key, need in req.items():
+        if key == "skills":
+            for sid, lvl in need.items():
+                have = ev["skills"].get(sid, 0.0)
+                checks.append({"label": f"Skill {sid.replace('_', ' ')} at {lvl:.0%}", "have": round(have, 3), "need": lvl,
+                               "met": have >= lvl, "unit": "percent"})
+        else:
+            checks.append({"label": labels[key], "have": ev[key], "need": need, "met": ev[key] >= need, "unit": "count"})
+    return checks
+
+
