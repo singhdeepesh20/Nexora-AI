@@ -128,3 +128,30 @@ def _daily_view(number: int, p: dict, ds: DailySession | None, rows: list[Challe
             "share_text": daily.share_text(number, grid, solved, secs) if solved else None}
 
 
+@router.get("/students/{student_id}/daily")
+def get_daily(date_: str = Query(..., alias="date"), student: Student = Depends(get_student),
+              ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_session)) -> dict[str, Any]:
+    day = _local_day(date_)
+    number, p = daily.puzzle_for(day, ctx.daily)
+    ds, rows = _daily_state(session, student.id, number)
+    return _daily_view(number, p, ds, rows) | {"calendar_note": ctx.daily["calendar"]["note"]}
+
+
+class DailyBody(BaseModel):
+    date: str
+    code: str | None = Field(None, max_length=100_000)
+
+
+@router.post("/students/{student_id}/daily/start")
+def start_daily(body: DailyBody, student: Student = Depends(get_student), ctx: AppContext = Depends(get_ctx),
+                session: Session = Depends(get_session)) -> dict[str, Any]:
+    day = _local_day(body.date)
+    number, p = daily.puzzle_for(day, ctx.daily)
+    ds, _ = _daily_state(session, student.id, number)
+    if ds is None:
+        ds = DailySession(student_id=student.id, puzzle_number=number, puzzle_id=p["id"], local_date=day.isoformat())
+        session.add(ds)
+        session.flush()
+    return {"number": number, "started_at": ds.started_at.isoformat()}
+
+
