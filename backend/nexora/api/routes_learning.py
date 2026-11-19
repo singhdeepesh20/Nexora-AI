@@ -137,6 +137,8 @@ def submit_assessment(concept_id: str, body: AssessmentSubmission, student: Stud
                                     ctx.rules["xp"]["assessment_pass"], f"Passed assessment: {cat.concepts[concept_id]['title']}"))
     if new_states[concept_id]["status"] == "mastered" and p.mastered_at is None:
         p.mastered_at = utcnow()
+    xp += _mastery_xp(session, ctx, student.id, states, new_states)
+    result["xp"] = [x for x in xp if x]
     result["concept_state"] = new_states[concept_id]
     result["unlocked"] = [c for c, s in new_states.items() if states[c]["status"] == "locked" and s["status"] != "locked"]
     result["achievements"] = achievements.evaluate(session, cat, student.id, new_states)
