@@ -148,6 +148,7 @@ function ResultView({ r }: { r: MissionResult }) {
         <div><h4 className="mb-1 text-xs font-semibold text-white">Code quality (static analysis)</h4>
           <ul className="space-y-0.5 text-xs">{r.categories.quality.checks.map((c) => <li key={c.id} className={c.ratio >= 1 ? 'text-ink-400' : 'text-yellow-200'}>{c.ratio >= 1 ? '✓' : '•'} {c.label}{c.ratio < 1 && c.detail.length ? ` - ${c.detail.join(', ')}` : ''}</li>)}</ul></div>
       )}
+      {r.passed && <ShareMission id={r.mission_id} />}
       <p className="flex items-start gap-2 text-[11px] text-ink-400"><ShieldCheck size={13} className="mt-0.5 shrink-0" /> Sandbox: {r.isolation.os_sandbox} ({r.isolation.strength}). {r.isolation.notes}</p>
     </div>
   )
