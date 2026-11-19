@@ -1,6 +1,6 @@
 import { FlaskConical, Play } from 'lucide-react'
 import { useCallback, useState, type ReactNode } from 'react'
-import type { SimulationResponse } from '@nexora/shared-types'
+import type { SimEvent, SimulationResponse, XPAward } from '@nexora/shared-types'
 import { api } from '../../services/api'
 import { useApp } from '../../stores/app'
 import { Heatmap, LineChart, MatrixTable } from '../ui/charts'
