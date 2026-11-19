@@ -19,6 +19,13 @@ export type Overlay =
   | { kind: 'settings' }
   | { kind: 'projects' }
   | { kind: 'pause' }
+  | { kind: 'onboarding' }
+  | { kind: 'challenges'; lab?: string }
+  | { kind: 'challenge'; id: string }
+  | { kind: 'share'; card: 'mission' | 'challenge' | 'daily' | 'rank'; ref?: string; text?: string }
+  | { kind: 'progress' }
+  | { kind: 'daily' }
+  | { kind: 'professor'; id: string }
 
 export interface Toast { id: number; text: string; tone: 'info' | 'success' | 'error' }
 
