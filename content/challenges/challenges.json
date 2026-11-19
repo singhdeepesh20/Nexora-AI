@@ -53,6 +53,40 @@
       "explanation": "With learning rate 20 every update overshoots the minimum and the network saturates into confident wrong answers - the loss explodes. A smaller learning rate takes steps small enough to follow the loss surface downhill. The algorithm never changed; only its configuration did.",
       "xp": 25,
       "achievement": "First Experiment Completed"
+    },
+    {
+      "id": "gd.diverge",
+      "version": "1",
+      "lab": "gradient_descent",
+      "difficulty": "easy",
+      "title": "Make gradient descent diverge",
+      "description": "On the bowl L = x^2 + y^2, choose a learning rate that makes every step overshoot further than the last.",
+      "objective": "Connect divergence to the stability limit 2 / L''.",
+      "initial_config": {
+        "function": "quadratic",
+        "a": 1,
+        "b": 1,
+        "optimizer": "gd",
+        "learning_rate": 0.1,
+        "iterations": 100,
+        "start_x": -4,
+        "start_y": 3
+      },
+      "allowed": [
+        "learning_rate"
+      ],
+      "target": [
+        {
+          "event": "LOSS_DIVERGENCE",
+          "label": "The loss diverges"
+        }
+      ],
+      "hints": [
+        "Here L'' = 2, so the stability limit is 2 / 2.",
+        "Anything above 1.0 diverges."
+      ],
+      "explanation": "For L = a x^2 each step multiplies x by (1 - 2 a eta). When |1 - 2 a eta| > 1, i.e. eta > 1/a, the distance to the minimum grows geometrically: divergence.",
+      "xp": 30
     }
   ]
 }
