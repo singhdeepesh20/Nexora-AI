@@ -1,0 +1,9 @@
+{
+  "id": "broken_bce",
+  "version": "1",
+  "title": "The one-sided loss",
+  "topic": "Loss functions",
+  "description": "`binary_cross_entropy(p, y)` should return the mean binary cross-entropy. A model trained with it learns to predict 1 for everything. Find the missing piece.",
+  "explanation": "BCE has two terms: -[y log p + (1 - y) log(1 - p)]. Dropping the (1 - y) term means negative examples contribute no loss, so predicting 1 everywhere looks perfect. The loss must also clip p away from 0 and 1.",
+  "time_limit_s": 15
+}
