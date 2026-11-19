@@ -69,6 +69,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(LocalAccessMiddleware, settings=settings)
     app.include_router(routes_core.router, prefix=API_PREFIX)
     app.include_router(routes_learning.router, prefix=API_PREFIX)
+    app.include_router(routes_engagement.router, prefix=API_PREFIX)
 
     @app.exception_handler(KeyError)
     async def _key_error(_req: Request, exc: KeyError):  # unknown ids deep inside engines
