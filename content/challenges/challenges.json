@@ -1,0 +1,58 @@
+{
+  "version": "1",
+  "challenges": [
+    {
+      "id": "onboarding.first_experiment",
+      "version": "1",
+      "lab": "neural_network",
+      "onboarding": true,
+      "difficulty": "easy",
+      "title": "Can you fix the learning rate?",
+      "description": "This neural network should learn XOR, but its learning rate is far too large. Train it, watch it fail, then fix the learning rate.",
+      "objective": "See that a correct algorithm can still fail because of its configuration.",
+      "initial_config": {
+        "dataset": "xor",
+        "n_samples": 200,
+        "noise": 0.05,
+        "hidden_layers": [
+          8
+        ],
+        "activation": "tanh",
+        "init": "xavier",
+        "optimizer": "momentum",
+        "learning_rate": 20,
+        "epochs": 150,
+        "seed": 1
+      },
+      "allowed": [
+        "learning_rate"
+      ],
+      "target": [
+        {
+          "metric": "train_acc",
+          "op": ">=",
+          "value": 0.95,
+          "label": "Training accuracy at least 95%"
+        },
+        {
+          "metric": "test_acc",
+          "op": ">=",
+          "value": 0.9,
+          "label": "Test accuracy at least 90%"
+        },
+        {
+          "no_event": "LOSS_DIVERGENCE",
+          "label": "Loss does not diverge"
+        }
+      ],
+      "hints": [
+        "Look at the loss curve: it rises instead of falling. Every step overshoots.",
+        "Learning rates for this network usually work between 0.05 and 1.",
+        "Try 0.3."
+      ],
+      "explanation": "With learning rate 20 every update overshoots the minimum and the network saturates into confident wrong answers - the loss explodes. A smaller learning rate takes steps small enough to follow the loss surface downhill. The algorithm never changed; only its configuration did.",
+      "xp": 25,
+      "achievement": "First Experiment Completed"
+    }
+  ]
+}
