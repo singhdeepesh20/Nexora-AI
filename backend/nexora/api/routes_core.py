@@ -50,6 +50,10 @@ class StudentSettings(BaseModel):
     mentor_model: str | None = Field(None, max_length=120)
     mentor_mode: str | None = Field(None, pattern=r"^(auto|explain|socratic|coding|research)$")
     show_fps: bool | None = None
+    reduced_motion: bool | None = None
+    onboarding: str | None = Field(None, pattern=r"^(pending|done|skipped)$")
+    onboarding_started_at: str | None = Field(None, max_length=40)
+    onboarding_completed_at: str | None = Field(None, max_length=40)
 
 
 def _student_out(s: Student, a: Avatar | None) -> dict[str, Any]:
