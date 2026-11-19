@@ -3,6 +3,7 @@ import type {
   Achievement, ConceptSummary, Progression, SimEvent, XPAward, LearningState, Student, StudentSettings, SystemInfo, WorldResponse,
 } from '@nexora/shared-types'
 import { api } from '../services/api'
+import { emitSimEvents } from '../engine/simEvents'
 
 export type Overlay =
   | { kind: 'district'; id: string }
