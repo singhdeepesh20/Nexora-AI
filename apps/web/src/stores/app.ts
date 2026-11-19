@@ -46,6 +46,9 @@ interface AppState {
   createStudent: (name: string, body: string, accent: string) => Promise<void>
   leaveCampus: () => void
   refreshLearning: () => Promise<void>
+  refreshProgression: () => Promise<void>
+  /** Apply a verified result: emit its events to the world, toast XP/achievements, refresh state. */
+  applyResult: (r: { events?: SimEvent[]; xp?: (XPAward | null)[]; achievements?: Achievement[] }) => Promise<void>
   updateSettings: (patch: StudentSettings) => Promise<void>
   open: (o: Overlay) => void
   replace: (o: Overlay) => void
