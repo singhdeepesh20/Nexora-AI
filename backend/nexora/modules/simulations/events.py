@@ -30,3 +30,28 @@ def classify(sim_id: str, config: dict[str, Any], result: dict[str, Any]) -> lis
     return fn(config, result) if fn else []
 
 
+def _gd(cfg, r):
+    out = []
+    a = r["analysis"]
+    gmax = max((g for g in r["grad_norm"] if g is not None), default=0.0)
+    if r["status"] == "diverged":
+        out.append(_ev("LOSS_DIVERGENCE", "critical", "Loss divergence",
+                       "The loss exploded: each update overshoots the minimum further than the last.",
+                       learning_rate=cfg["learning_rate"], stability_limit=a["stability_limit_lr"], iterations=r["iterations_run"]))
+    if gmax > GRADIENT_EXPLOSION_NORM:
+        out.append(_ev("GRADIENT_EXPLOSION", "critical", "Gradient explosion",
+                       f"Gradient norm reached {gmax:.3g}, above the {GRADIENT_EXPLOSION_NORM:g} threshold.",
+                       max_gradient_norm=gmax, threshold=GRADIENT_EXPLOSION_NORM))
+    if r["status"] != "diverged" and a["direction_reversals_recent"] > 0 and r["iterations_run"] > 2:
+        out.append(_ev("OSCILLATION", "warning", "Oscillation", "Successive steps reverse direction around the minimum.",
+                       reversals=a["direction_reversals_recent"]))
+    if r["status"] == "converged":
+        out.append(_ev("SUCCESSFUL_CONVERGENCE", "success", "Converged",
+                       f"Gradient norm fell below tolerance in {r['iterations_run']} iterations.", iterations=r["iterations_run"]))
+    elif r["status"] == "max_iterations" and not any(e["type"] == "OSCILLATION" for e in out):
+        out.append(_ev("TRAINING_STALLED", "warning", "Not converged yet",
+                       "The iteration budget ran out before convergence - the learning rate may be too small.",
+                       final_loss=r["final"]["loss"]))
+    return out
+
+
