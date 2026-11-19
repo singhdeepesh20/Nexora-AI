@@ -90,3 +90,46 @@ export interface ProjectFile { name: string; size: number }
 export interface Project { id: string; name: string; description: string; kind: string; updated_at: string; files: ProjectFile[] }
 export interface RunResult { stdout: string; stderr: string; timed_out: boolean; exit_code: number | null; duration_ms: number; error: string | null; isolation: Isolation }
 export interface SystemInfo { version: string; data_dir: string; schema_revision: string; curriculum_version: string; sandbox: Isolation & Record<string, unknown>; telemetry: string }
+
+/* ------------------------------------------------------------------ engagement */
+export type SimEventType =
+  | 'LOSS_DIVERGENCE' | 'GRADIENT_EXPLOSION' | 'OVERFITTING_DETECTED' | 'UNDERFITTING_DETECTED' | 'NUMERICAL_INSTABILITY'
+  | 'MEMORY_OVERFLOW' | 'NAN_DETECTED' | 'TRAINING_STALLED' | 'RETRIEVAL_FAILURE' | 'OSCILLATION' | 'SUCCESSFUL_CONVERGENCE'
+export type Severity = 'info' | 'success' | 'warning' | 'critical'
+export interface SimEvent { type: SimEventType; severity: Severity; title: string; message: string; metrics: Record<string, unknown> }
+export interface XPAward { xp: number; reason: string }
+
+export interface ChallengeSummary {
+  id: string; version: string; lab: string; difficulty: 'easy' | 'medium' | 'hard'; title: string; description: string
+  objective: string; initial_config: Record<string, unknown>; allowed: string[]; xp: number; achievement?: string | null
+  onboarding: boolean; target: string[]; hint_count: number; attempts: number; passed: boolean
+}
+export interface ChallengeCheck { label: string; passed: boolean; actual: unknown }
+export interface ChallengeResult {
+  challenge_id: string; passed: boolean; first_pass: boolean; checks: ChallengeCheck[]; metrics: Record<string, unknown>
+  events: SimEvent[]; config: Record<string, unknown>; result: Record<string, unknown>; explanation: string | null
+  attempt_id: string; xp: XPAward[]; achievements: Achievement[]
+}
+
+export interface RankCheck { label: string; have: number; need: number; met: boolean; unit: 'count' | 'percent' }
+export interface Progression {
+  xp: number
+  level: { level: number; level_floor: number; next_level_at: number; into_level: number; level_span: number }
+  rank: { id: string; title: string; index: number; of: number; next: null | { id: string; title: string; checks: RankCheck[] } }
+  evidence: { xp: number; mastered_concepts: number; missions_passed: number; challenges_passed: number; daily_solved: number }
+  streak: { current: number; longest: number; active_today: boolean; total_active_days: number; calendar: { date: string; active: boolean }[] }
+  history: { xp: number; reason: string; source_type: string; created_at: string }[]
+  timezone: string
+}
+
+export interface DailyView {
+  number: number; puzzle_id: string; version: string; title: string; topic: string; description: string; starter_code: string
+  hidden_tests: number; started_at: string | null; solved: boolean; seconds: number | null; attempts: boolean[][]
+  explanation: string | null; share_text: string | null; calendar_note?: string
+  last?: { passed: boolean; outcomes: boolean[]; problem: string | null; failures: { message: string }[] }; xp?: XPAward[]
+}
+
+export interface ShareCard {
+  layout: 'mission' | 'challenge' | 'onboarding' | 'daily' | 'rank'; eyebrow: string; title: string; headline: string
+  stats: { label: string; value: string }[]; grid?: boolean[][]; rank: string; footer: string; name: string | null; verified_at: string | null
+}
