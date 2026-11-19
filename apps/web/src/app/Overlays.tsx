@@ -31,5 +31,12 @@ export default function Overlays() {
     case 'settings': return <SettingsPanel />
     case 'projects': return <ProjectsPanel />
     case 'pause': return <PausePanel />
+    case 'onboarding': return <Onboarding />
+    case 'challenges': return <ChallengeBoard lab={top.lab} />
+    case 'challenge': return <ChallengePanel id={top.id} />
+    case 'share': return <ShareDialog card={top.card} refId={top.ref} text={top.text} />
+    case 'progress': return <ProgressPanel />
+    case 'daily': return <DailyDebug />
+    case 'professor': return <ProfessorDialog id={top.id} />
   }
 }
