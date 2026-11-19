@@ -1,4 +1,5 @@
-import { BookOpen, FolderGit2, Gauge, Map as MapIcon, Settings, Swords } from 'lucide-react'
+import { Bug, BookOpen, Flame, FolderGit2, Gauge, Map as MapIcon, Settings, Swords, Zap } from 'lucide-react'
+import { RANK_COLOR } from '../engagement/Progress'
 import { useEffect, useState } from 'react'
 import { perf } from '../../engine/graphics'
 import { onNearby, player } from '../../engine/player'
