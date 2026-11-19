@@ -67,8 +67,13 @@ function CampusShell() {
       }
       if (state.overlays.length) return
       if (e.code === 'KeyE' && player.nearby && world) {
-        const d = world.districts.find((x) => x.id === player.nearby)
-        if (d) open(d.status === 'active' ? { kind: 'district', id: d.id } : { kind: 'gate', id: d.id })
+        const near = player.nearby
+        if (near.startsWith('npc:')) open({ kind: 'professor', id: near.slice(4) })
+        else if (near === 'machine') open(state.student?.settings.onboarding === 'pending' ? { kind: 'onboarding' } : { kind: 'challenges' })
+        else {
+          const d = world.districts.find((x) => x.id === near)
+          if (d) open(d.status === 'active' ? { kind: 'district', id: d.id } : { kind: 'gate', id: d.id })
+        }
       } else if (e.code === 'KeyM') open({ kind: 'map' })
       else if (e.code === 'KeyJ') open({ kind: 'dashboard' })
       else if (e.code === 'KeyK') open({ kind: 'missions' })
