@@ -25,6 +25,8 @@ export function Hud() {
     { icon: MapIcon, label: 'Map', key: 'M', on: () => open({ kind: 'map' }) },
     { icon: Gauge, label: 'Dashboard', key: 'J', on: () => open({ kind: 'dashboard' }) },
     { icon: Swords, label: 'Missions', key: 'K', on: () => open({ kind: 'missions' }) },
+    { icon: Zap, label: 'Challenges', key: 'B', on: () => open({ kind: 'challenges' }) },
+    { icon: Bug, label: 'Daily', key: '', on: () => open({ kind: 'daily' }) },
     { icon: FolderGit2, label: 'My Lab', key: 'L', on: () => open({ kind: 'projects' }) },
     { icon: Settings, label: 'Settings', key: '', on: () => open({ kind: 'settings' }) },
   ]
