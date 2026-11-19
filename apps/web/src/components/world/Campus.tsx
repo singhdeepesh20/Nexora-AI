@@ -76,7 +76,7 @@ function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: 
   const { layout, trees } = useMemo(() => {
     const base = buildLayout(world.world.bounds, world.districts, EXTRA_COLLIDERS)
     const trees = scatterTrees(g.trees, world.world.bounds, base.colliders, world.world.plaza_radius)
-    return { layout: buildLayout(world.world.bounds, world.districts, [MONUMENT, ...trees.map(treeCollider)]), trees }
+    return { layout: buildLayout(world.world.bounds, world.districts, [...EXTRA_COLLIDERS, ...trees.map(treeCollider)], EXTRA_INTERACTABLES), trees }
   }, [world, g.trees])
   return (
     <>
