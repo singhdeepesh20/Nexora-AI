@@ -7,6 +7,7 @@ import {
 import type { WorldResponse } from '@nexora/shared-types'
 import { GRAPHICS, type GraphicsPreset, sampleFrame } from '../../engine/graphics'
 import { keys, onNearby, player, setNearby } from '../../engine/player'
+import { shake } from '../../engine/simEvents'
 import { useApp } from '../../stores/app'
 import { Avatar } from '../avatar/Avatar'
 import { Building, Gate } from '../buildings/Building'
