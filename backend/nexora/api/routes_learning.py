@@ -197,7 +197,8 @@ def run_sim(sim_id: str, body: SimulationRun, student: Student = Depends(get_stu
         session.flush()
         exp_id = e.id
         earned = achievements.evaluate(session, ctx.catalog, student.id)
-    return {"simulation": sim_id, "version": SIMULATIONS[sim_id].version, "config": config, "result": result,
+        xp = progression.award_experiment(session, ctx.rules, student.id, e.id, sim_id)
+    return {"events": classify(sim_id, config, result), "xp": [xp] if body.save and xp else [], "simulation": sim_id, "version": SIMULATIONS[sim_id].version, "config": config, "result": result,
             "experiment_id": exp_id, "achievements": earned}
 
 
