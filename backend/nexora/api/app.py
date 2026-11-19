@@ -27,6 +27,8 @@ from nexora.infrastructure.storage.workspace import Workspace
 from nexora.modules.challenges.engine import load_challenges
 from nexora.modules.curriculum.catalog import load_catalog
 from nexora.modules.curriculum.sync import sync_catalog
+from nexora.modules.daily.engine import load_daily
+from nexora.modules.progression.engine import load_rules
 
 log = logging.getLogger("nexora")
 
