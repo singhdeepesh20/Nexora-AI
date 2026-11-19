@@ -56,6 +56,7 @@ function LabShell({ simId, controls, onRun, busy, error, res, children }: {
         <section className="min-w-0 space-y-4">
           {busy && !res && <Spinner label="Computing" />}
           {!res && !busy && <div className="grid h-64 place-items-center rounded-xl border border-dashed border-ink-600 text-sm text-ink-400"><span className="flex items-center gap-2"><FlaskConical size={16} /> Configure the experiment and press Run.</span></div>}
+          {res && <EventBanner events={events} />}
           {res && children}
         </section>
       </div>
