@@ -56,7 +56,8 @@ def build_context(settings: Settings) -> AppContext:
         provider = None
     return AppContext(settings=settings, engine=engine, session_factory=factory, catalog=catalog, provider=provider,
                       workspace=Workspace(settings.projects_dir), schema_revision=current_revision(engine) or "base",
-                      known_revisions=known)
+                      known_revisions=known, challenges=load_challenges(settings.content_dir),
+                      rules=load_rules(settings.content_dir), daily=load_daily(settings.content_dir))
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
