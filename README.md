@@ -27,6 +27,8 @@ With **NEXORA** you explore a 3D campus, run real scientific simulations, comple
 | Monaco code editor (bundled offline), sandboxed Python execution | ✅ |
 | AI professors: 8 personas, offline curriculum-grounded answers, optional Ollama | ✅ |
 | Backup export / verified import / complete deletion | ✅ |
+| First-experiment onboarding, failure spectacle, Break Challenges, share cards, XP/ranks/streaks, Debug of the Day, campus professors | ✅ see [docs/ENGAGEMENT.md](docs/ENGAGEMENT.md) |
+| Cosmetics, boss missions | ⏳ planned |
 | Desktop app (Tauri 2) and installers | ⏳ Phase 10 - see [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) |
 
 ## Quick start
