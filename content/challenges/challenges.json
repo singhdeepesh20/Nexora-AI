@@ -386,6 +386,41 @@
       ],
       "explanation": "An unconstrained tree carves a leaf for every corrupted label. It is perfect on training data and wrong on new data.",
       "xp": 30
+    },
+    {
+      "id": "ml.scaling",
+      "version": "1",
+      "lab": "ml_lab",
+      "difficulty": "medium",
+      "title": "Rescue k-NN",
+      "description": "k-NN on wine scores poorly. Reach 95% test accuracy without changing the model.",
+      "objective": "See why distance-based models need feature scaling.",
+      "initial_config": {
+        "dataset": "wine",
+        "model": "knn",
+        "standardize": false,
+        "test_size": 0.25,
+        "seed": 42,
+        "n_neighbors": 5
+      },
+      "allowed": [
+        "standardize",
+        "n_neighbors"
+      ],
+      "target": [
+        {
+          "metric": "test_accuracy",
+          "op": ">=",
+          "value": 0.95,
+          "label": "Test accuracy at least 95%"
+        }
+      ],
+      "hints": [
+        "One wine feature (proline) is in the hundreds; others are below 1.",
+        "After scaling, also try a few values of k."
+      ],
+      "explanation": "Unscaled, proline dominates every distance, so k-NN effectively uses one feature. Standardising gives every feature a voice.",
+      "xp": 50
     }
   ]
 }
