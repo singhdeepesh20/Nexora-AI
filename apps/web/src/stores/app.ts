@@ -103,7 +103,7 @@ export const useApp = create<AppState>((set, get) => ({
   },
 
   leaveCampus: () => {
-    set({ student: null, learning: null, overlays: [] })
+    set({ student: null, learning: null, progression: null, overlays: [] })
     void api.get<Student[]>('/students').then((students) => set({ students }))
   },
 
