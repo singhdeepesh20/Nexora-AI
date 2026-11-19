@@ -70,6 +70,7 @@ export const useApp = create<AppState>((set, get) => ({
   concepts: {},
   learning: null,
   system: null,
+  progression: null,
   overlays: [],
   toasts: [],
 
