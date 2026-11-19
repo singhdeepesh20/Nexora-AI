@@ -46,7 +46,7 @@ Keep that terminal open while you use NEXORA - closing it (or Ctrl+C) stops the 
 
 ### Controls
 
-`W A S D` move · `Shift` run · click + mouse to look · scroll to zoom · `E` interact · `M` map · `J` dashboard · `K` missions · `L` my lab · `Esc` back / pause
+`W A S D` move · `Shift` run · click + mouse to look · scroll to zoom · `E` interact · `M` map · `J` dashboard · `K` missions · `B` break challenges · `P` progress · `L` my lab · `Esc` back / pause
 
 ### Optional: local AI mentor
 
