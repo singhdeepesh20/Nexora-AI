@@ -94,3 +94,29 @@ def test_fixed_settings_cannot_be_changed():
         build_config(CHALLENGES["gd.diverge"], {"function": "rosenbrock"})
 
 
+def test_challenge_api_awards_xp_once_and_hides_explanation_until_pass(client, student):
+    url = f"/api/v1/students/{student}/challenges/gd.diverge/attempt"
+    fail = client.post(url, json={"config": {"learning_rate": 0.1}}).json()
+    assert not fail["passed"] and fail["explanation"] is None and fail["xp"] == []
+    ok = client.post(url, json={"config": {"learning_rate": 1.1}}).json()
+    assert ok["passed"] and ok["first_pass"] and ok["xp"][0]["xp"] == 30 and ok["explanation"]
+    assert any(e["type"] == "LOSS_DIVERGENCE" for e in ok["events"])
+    again = client.post(url, json={"config": {"learning_rate": 1.2}}).json()
+    assert again["passed"] and not again["first_pass"] and again["xp"] == []  # no farming
+    listed = {c["id"]: c for c in client.get(f"/api/v1/students/{student}/challenges").json()}
+    assert listed["gd.diverge"]["passed"] and listed["gd.diverge"]["attempts"] == 3
+    assert "hints" not in listed["gd.diverge"] and listed["gd.diverge"]["hint_count"] == 2
+    assert client.post(url, json={"config": {"iterations": 5}}).status_code == 422
+
+
+def test_onboarding_grants_achievement(client, student):
+    url = f"/api/v1/students/{student}/challenges/onboarding.first_experiment/attempt"
+    first = client.post(url, json={"config": {}}).json()
+    assert not first["passed"] and any(e["type"] == "LOSS_DIVERGENCE" for e in first["events"])
+    fixed = client.post(url, json={"config": {"learning_rate": 0.3}}).json()
+    assert fixed["passed"] and any(a["title"] == "First Experiment Completed" for a in fixed["achievements"])
+    card = client.get(f"/api/v1/students/{student}/share-card", params={"kind": "challenge", "ref": "onboarding.first_experiment"}).json()
+    assert card["eyebrow"] == "FIRST EXPERIMENT COMPLETED" and card["stats"][0] == {"label": "Attempts", "value": "2"}
+    assert card["stats"][1] == {"label": "Learning rate", "value": "0.3"}
+
+
