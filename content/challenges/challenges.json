@@ -500,6 +500,54 @@
       ],
       "explanation": "Eight-word chunks cut the sentence that answers the question into fragments, while b = 1 and k1 = 5 over-reward short fragments that repeat a query word. A Linear Regression fragment wins rank 1. In a RAG system the generator would now answer from the wrong passage.",
       "xp": 30
+    },
+    {
+      "id": "rag.precision",
+      "version": "1",
+      "lab": "rag",
+      "difficulty": "medium",
+      "title": "Sharpen retrieval",
+      "description": "Reach mean reciprocal rank of at least 0.9 on the evaluation set with top_k at most 3.",
+      "objective": "Tune chunking and BM25 for precise retrieval.",
+      "initial_config": {
+        "corpus": "curriculum",
+        "query": "why does a large learning rate diverge",
+        "chunk_size": 400,
+        "overlap": 0,
+        "top_k": 3,
+        "k1": 1.5,
+        "b": 0.2,
+        "remove_stopwords": false,
+        "evaluate": true
+      },
+      "allowed": [
+        "chunk_size",
+        "overlap",
+        "top_k",
+        "k1",
+        "b",
+        "remove_stopwords"
+      ],
+      "target": [
+        {
+          "metric": "mrr",
+          "op": ">=",
+          "value": 0.9,
+          "label": "MRR at least 0.9"
+        },
+        {
+          "config": "top_k",
+          "op": "<=",
+          "value": 3,
+          "label": "top_k at most 3"
+        }
+      ],
+      "hints": [
+        "Smaller focused chunks with some overlap.",
+        "Restore length normalisation (b ~ 0.75) and drop stopwords."
+      ],
+      "explanation": "Focused chunks and length normalisation put the passage that answers the question at rank 1.",
+      "xp": 50
     }
   ]
 }
