@@ -86,7 +86,7 @@ function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: 
       <Trees positions={trees} />
       <Lamps districts={world.districts} lights={g.lampLights} />
       {world.districts.map((d) => d.status === 'active'
-        ? <Building key={d.id} district={d} highlighted={near === d.id} />
+        ? <Building key={d.id} district={d} highlighted={near === d.id} mastery={mastery(d.concepts)} />
         : <Gate key={d.id} district={d} highlighted={near === d.id} />)}
       <PlayerRig layout={layout} body={body} accent={accent} highlightedRef={highlighted} />
     </>
