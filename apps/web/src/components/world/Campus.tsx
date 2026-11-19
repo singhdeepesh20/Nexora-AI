@@ -88,6 +88,8 @@ function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: 
       {world.districts.map((d) => d.status === 'active'
         ? <Building key={d.id} district={d} highlighted={near === d.id} mastery={mastery(d.concepts)} />
         : <Gate key={d.id} district={d} highlighted={near === d.id} />)}
+      <ExperimentMachine highlighted={near === 'machine'} reducedMotion={reducedMotion} />
+      {NPCS.map((n) => <Professor key={n.id} npc={n} highlighted={near === `npc:${n.id}`} />)}
       <PlayerRig layout={layout} body={body} accent={accent} highlightedRef={highlighted} />
     </>
   )
