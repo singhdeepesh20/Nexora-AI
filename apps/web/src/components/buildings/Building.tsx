@@ -5,7 +5,8 @@ import type { Mesh, MeshStandardMaterial } from 'three'
 import type { District } from '@nexora/shared-types'
 
 /** Procedural modern glass academic building. Doors face the central plaza. */
-export function Building({ district, highlighted }: { district: District; highlighted: boolean }) {
+/** `mastery` (0-1) is the verified fraction of this district's concepts the student has mastered. */
+export function Building({ district, highlighted, mastery = 0 }: { district: District; highlighted: boolean; mastery?: number }) {
   const { x, z, w, d, h, door, label } = district.building
   const c = district.color
   const portal = useRef<Mesh>(null)
