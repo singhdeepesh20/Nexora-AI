@@ -135,7 +135,7 @@ export function PausePanel() {
 }
 
 export function SettingsPanel() {
-  const { student, updateSettings, system, toast, leaveCampus } = useApp()
+  const { student, updateSettings, system, toast, leaveCampus, open } = useApp()
   const ai = useAsync(() => api.get<AIStatus>('/ai/status'), [])
   const file = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<unknown>(null)
