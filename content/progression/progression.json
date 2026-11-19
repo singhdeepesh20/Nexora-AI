@@ -1,0 +1,89 @@
+{
+  "version": "1",
+  "xp": {
+    "assessment_pass": 40,
+    "concept_mastered": 60,
+    "mission_pass": {
+      "beginner": 100,
+      "intermediate": 150,
+      "advanced": 200
+    },
+    "daily_debug": 40,
+    "experiment": 5,
+    "experiment_daily_cap": 3
+  },
+  "levels": {
+    "base": 100,
+    "growth": 1.35
+  },
+  "ranks": [
+    {
+      "id": "intern",
+      "title": "Intern Engineer",
+      "requirements": {}
+    },
+    {
+      "id": "junior",
+      "title": "Junior Engineer",
+      "requirements": {
+        "xp": 150,
+        "mastered_concepts": 2,
+        "missions_passed": 1
+      }
+    },
+    {
+      "id": "engineer",
+      "title": "Engineer",
+      "requirements": {
+        "xp": 500,
+        "mastered_concepts": 5,
+        "missions_passed": 2,
+        "challenges_passed": 3,
+        "skills": {
+          "python_programming": 0.5
+        }
+      }
+    },
+    {
+      "id": "senior",
+      "title": "Senior Engineer",
+      "requirements": {
+        "xp": 1200,
+        "mastered_concepts": 9,
+        "missions_passed": 4,
+        "challenges_passed": 8,
+        "skills": {
+          "classical_ml": 0.75,
+          "neural_networks": 0.5
+        }
+      }
+    },
+    {
+      "id": "principal",
+      "title": "Principal Engineer",
+      "requirements": {
+        "xp": 2000,
+        "mastered_concepts": 12,
+        "missions_passed": 5,
+        "challenges_passed": 12,
+        "daily_solved": 5,
+        "skills": {
+          "neural_networks": 0.9,
+          "retrieval_systems": 0.5
+        }
+      }
+    },
+    {
+      "id": "research",
+      "title": "Research Scientist",
+      "requirements": {
+        "xp": 3500,
+        "mastered_concepts": 12,
+        "missions_passed": 5,
+        "challenges_passed": 14,
+        "daily_solved": 15,
+        "research_reproductions": 1
+      }
+    }
+  ]
+}
