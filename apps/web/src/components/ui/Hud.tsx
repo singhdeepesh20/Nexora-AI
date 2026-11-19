@@ -18,6 +18,8 @@ export function Hud() {
   }, [])
   if (!student || !world) return null
   const nearDistrict = world.districts.find((d) => d.id === near)
+  const nearOther = near?.startsWith('npc:') ? `Talk to ${near === 'npc:nova' ? 'Professor Nova' : `Professor ${near.slice(4, 5).toUpperCase()}${near.slice(5)}`}`
+    : near === 'machine' ? 'Use the Experiment Machine' : null
   const totals = learning?.totals
   const buttons = [
     { icon: MapIcon, label: 'Map', key: 'M', on: () => open({ kind: 'map' }) },
