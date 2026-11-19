@@ -50,3 +50,49 @@ class AttemptBody(BaseModel):
     config: dict[str, Any] = Field(default_factory=dict)
 
 
+@router.post("/students/{student_id}/challenges/{challenge_id}/attempt")
+def attempt_challenge(challenge_id: str, body: AttemptBody, student: Student = Depends(get_student),
+                      ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_session)) -> dict[str, Any]:
+    c = ctx.challenges.get(challenge_id)
+    if c is None:
+        raise not_found("Challenge")
+    try:
+        r = challenges.attempt(c, body.config, ctx)
+    except ValueError as exc:  # ChallengeError and pydantic ValidationError
+        raise HTTPException(422, str(exc)) from exc
+    already = session.scalar(select(ChallengeAttempt.id).where(ChallengeAttempt.student_id == student.id,
+                                                               ChallengeAttempt.challenge_id == challenge_id,
+                                                               ChallengeAttempt.passed.is_(True)))
+    exp = Experiment(student_id=student.id, simulation=c["lab"], engine_version=SIMULATIONS[c["lab"]].version,
+                     config=r["config"], summary=r["summary"], note=f"challenge:{challenge_id}")
+    session.add(exp)
+    att = ChallengeAttempt(student_id=student.id, kind="break", challenge_id=challenge_id, challenge_version=c["version"],
+                           payload={k: r["config"][k] for k in c["allowed"]},
+                           result={"checks": r["checks"], "metrics": r["metrics"], "events": [e["type"] for e in r["events"]]},
+                           passed=r["passed"])
+    session.add(att)
+    session.flush()
+    xp, earned = [], []
+    if r["passed"]:
+        a = progression.award(session, ctx.rules, student.id, f"challenge:{challenge_id}", "challenge", challenge_id,
+                              int(c["xp"]), f"Solved: {c['title']}")
+        xp += [a] if a else []
+        if c.get("achievement") and not session.scalar(select(Achievement.id).where(
+                Achievement.student_id == student.id, Achievement.code == f"challenge_{challenge_id}")):
+            session.add(Achievement(student_id=student.id, code=f"challenge_{challenge_id}", title=c["achievement"]))
+            earned.append({"code": f"challenge_{challenge_id}", "title": c["achievement"]})
+    earned += achievements.evaluate(session, ctx.catalog, student.id)
+    return {"challenge_id": challenge_id, "passed": r["passed"], "first_pass": r["passed"] and not already,
+            "checks": r["checks"], "metrics": r["metrics"], "events": r["events"], "config": r["config"],
+            "result": r["result"], "explanation": c["explanation"] if r["passed"] else None,
+            "attempt_id": att.id, "xp": xp, "achievements": earned}
+
+
+# ------------------------------------------------------------------ progression
+@router.get("/students/{student_id}/progression")
+def get_progression(tz: str | None = Query(None, max_length=64), student: Student = Depends(get_student),
+                    ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_session)) -> dict[str, Any]:
+    states = learning.concept_states(session, ctx.catalog, student.id)
+    return progression.summary(session, ctx.rules, student.id, states, learning.skill_levels(ctx.catalog, states), tz)
+
+
