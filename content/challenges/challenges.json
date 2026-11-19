@@ -254,6 +254,49 @@
       ],
       "explanation": "Without a hidden layer the network is logistic regression and can only draw a straight line; circles need a curved boundary.",
       "xp": 30
+    },
+    {
+      "id": "nn.solve_xor",
+      "version": "1",
+      "lab": "neural_network",
+      "difficulty": "medium",
+      "title": "Solve XOR",
+      "description": "Find any configuration that reaches 95% test accuracy on XOR.",
+      "objective": "Combine capacity, activation and optimisation.",
+      "initial_config": {
+        "dataset": "xor",
+        "n_samples": 200,
+        "noise": 0.05,
+        "hidden_layers": [],
+        "activation": "tanh",
+        "init": "xavier",
+        "optimizer": "sgd",
+        "learning_rate": 0.1,
+        "epochs": 100,
+        "seed": 2
+      },
+      "allowed": [
+        "hidden_layers",
+        "activation",
+        "init",
+        "optimizer",
+        "learning_rate",
+        "epochs"
+      ],
+      "target": [
+        {
+          "metric": "test_acc",
+          "op": ">=",
+          "value": 0.95,
+          "label": "Test accuracy at least 95%"
+        }
+      ],
+      "hints": [
+        "XOR is not linearly separable - add a hidden layer.",
+        "Adam with learning rate ~0.03 and a hidden layer of 8 is a good start."
+      ],
+      "explanation": "A hidden layer with a nonlinearity lets the network bend its decision boundary into the two diagonal regions XOR requires.",
+      "xp": 50
     }
   ]
 }
