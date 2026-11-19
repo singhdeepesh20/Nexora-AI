@@ -155,3 +155,58 @@ def start_daily(body: DailyBody, student: Student = Depends(get_student), ctx: A
     return {"number": number, "started_at": ds.started_at.isoformat()}
 
 
+@router.post("/students/{student_id}/daily/submit")
+def submit_daily(body: DailyBody, student: Student = Depends(get_student), ctx: AppContext = Depends(get_ctx),
+                 session: Session = Depends(get_session)) -> dict[str, Any]:
+    if not body.code:
+        raise bad_request("code is required")
+    day = _local_day(body.date)
+    number, p = daily.puzzle_for(day, ctx.daily)
+    ds, rows = _daily_state(session, student.id, number)
+    if ds is None:
+        ds = DailySession(student_id=student.id, puzzle_number=number, puzzle_id=p["id"], local_date=day.isoformat())
+        session.add(ds)
+        session.flush()
+    if ds.solved_at:
+        raise bad_request("Already solved - come back tomorrow for a new puzzle")
+    ev = daily.evaluate(p, body.code)
+    att = ChallengeAttempt(student_id=student.id, kind="daily", challenge_id=f"daily-{number}", challenge_version=p["version"],
+                           payload={"code": body.code}, result={"outcomes": ev["outcomes"], "problem": ev["problem"]},
+                           passed=ev["passed"])
+    session.add(att)
+    session.flush()
+    xp = []
+    if ev["passed"]:
+        ds.solved_at = utcnow()
+        a = progression.award(session, ctx.rules, student.id, f"daily:{number}", "daily", str(number),
+                              int(ctx.rules["xp"]["daily_debug"]), f"Debug of the Day #{number:03d}")
+        xp += [a] if a else []
+    session.flush()
+    ds, rows = _daily_state(session, student.id, number)
+    return _daily_view(number, p, ds, rows) | {"last": {"passed": ev["passed"], "outcomes": ev["outcomes"],
+                                                        "problem": ev["problem"], "failures": ev["failures"]},
+                                               "xp": xp, "isolation": ev["isolation"]}
+
+
+# ------------------------------------------------------------------ verified share cards
+@router.get("/students/{student_id}/share-card")
+def share_card(kind: str = Query(..., pattern="^(mission|challenge|daily|rank)$"), ref: str = Query("", max_length=64),
+               include_name: bool = False, tz: str | None = None, student: Student = Depends(get_student),
+               ctx: AppContext = Depends(get_ctx), session: Session = Depends(get_session)) -> dict[str, Any]:
+    states = learning.concept_states(session, ctx.catalog, student.id)
+    prog = progression.summary(session, ctx.rules, student.id, states, learning.skill_levels(ctx.catalog, states), tz)
+    try:
+        if kind == "mission":
+            card = cards.mission_card(session, ctx.catalog, student.id, ref)
+        elif kind == "challenge":
+            card = cards.challenge_card(session, ctx.challenges, student.id, ref)
+        elif kind == "daily":
+            card = cards.daily_card(session, student.id, int(ref))
+        else:
+            card = cards.rank_card(prog)
+    except (cards.NotVerified, ValueError) as exc:
+        raise HTTPException(409, f"Nothing verified to share yet: {exc}") from exc
+    return cards.finalize(card, session, student.id, prog["rank"]["title"], include_name)
+
+
+__all__ = ["router", "timedelta"]
