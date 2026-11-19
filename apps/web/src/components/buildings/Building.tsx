@@ -10,7 +10,9 @@ export function Building({ district, highlighted, mastery = 0 }: { district: Dis
   const { x, z, w, d, h, door, label } = district.building
   const c = district.color
   const portal = useRef<Mesh>(null)
-  useFrame(({ clock }) => {
+  const holo = useRef<Mesh>(null)
+  useFrame(({ clock }, dt) => {
+    if (holo.current) holo.current.rotation.y += dt * 0.8
     const m = portal.current?.material as MeshStandardMaterial | undefined
     if (m) m.emissiveIntensity = (highlighted ? 2.2 : 1.1) + Math.sin(clock.elapsedTime * 2.2) * 0.35
   })
