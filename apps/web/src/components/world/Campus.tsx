@@ -2,7 +2,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Vector3, type Group } from 'three'
 import {
-  type Box, buildLayout, nearestInteractable, scatterTrees, stepPlayer, treeCollider,
+  type Box, type Interactable, buildLayout, nearestInteractable, scatterTrees, stepPlayer, treeCollider,
 } from '@nexora/world-engine'
 import type { WorldResponse } from '@nexora/shared-types'
 import { GRAPHICS, type GraphicsPreset, sampleFrame } from '../../engine/graphics'
