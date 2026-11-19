@@ -34,7 +34,7 @@ export function Building({ district, highlighted, mastery = 0 }: { district: Dis
       {Array.from({ length: floors }, (_, i) => (
         <mesh key={i} position-y={0.5 + ((i + 1) * h) / (floors + 1)}>
           <boxGeometry args={[w + 0.06, 0.16, d + 0.06]} />
-          <meshStandardMaterial color="#d7e3ea" roughness={0.4} emissive={c} emissiveIntensity={0.15} />
+          <meshStandardMaterial color="#d7e3ea" roughness={0.4} emissive={c} emissiveIntensity={0.15 + 1.6 * mastery * ((i + 1) / floors)} />
         </mesh>
       ))}
       {[-1, 1].flatMap((sx) => [-1, 1].map((sz) => (
