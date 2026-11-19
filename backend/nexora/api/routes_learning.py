@@ -189,7 +189,7 @@ def run_sim(sim_id: str, body: SimulationRun, student: Student = Depends(get_stu
         config, result = run_simulation(sim_id, body.config, ctx)
     except ValueError as exc:  # includes pydantic ValidationError
         raise HTTPException(422, str(exc)) from exc
-    exp_id, earned = None, []
+    exp_id, earned, xp = None, [], None
     if body.save:
         e = Experiment(student_id=student.id, simulation=sim_id, engine_version=SIMULATIONS[sim_id].version,
                        config=config, summary=summarize(sim_id, result), note=body.note)
