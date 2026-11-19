@@ -52,3 +52,30 @@ describe('share card layout', () => {
   })
 })
 
+describe('professor dialogue', () => {
+  const learning = {
+    concepts: {
+      'math.vectors': { concept_id: 'math.vectors', status: 'in_progress', failed_attempts: 2 },
+      'python.basics': { concept_id: 'python.basics', status: 'mastered', failed_attempts: 0 },
+    },
+    recommendations: [{ concept_id: 'math.vectors', kind: 'continue', reason: 'r', title: 'Vectors', district: 'foundation' }],
+    skills: [], totals: { mastered: 1, concepts: 2 },
+  } as unknown as LearningState
+  const challenges = [{ id: 'infra.oom', lab: 'infrastructure', title: 'Run out of GPU memory', passed: false, onboarding: false }] as ChallengeSummary[]
+  it('only states verified facts and is deterministic', () => {
+    const a = professorLines('atlas', learning, null, challenges, { 'math.vectors': 'Vectors' }, 'done', ['python.basics', 'math.vectors'])
+    expect(a).toEqual(professorLines('atlas', learning, null, challenges, { 'math.vectors': 'Vectors' }, 'done', ['python.basics', 'math.vectors']))
+    expect(a.join(' ')).toContain('attempted Vectors 2 time(s)')
+    expect(a.join(' ')).toContain('Run out of GPU memory')
+    expect(a.join(' ')).not.toMatch(/streak/) // no streak data -> no streak claim
+  })
+  it('Nova welcomes a new student', () => {
+    expect(professorLines('nova', learning, null, [], {}, 'pending', [])[0]).toMatch(/^Welcome to NEXORA/)
+  })
+})
+
+describe('daily date', () => {
+  it('uses the local calendar date', () => {
+    expect(localDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05')
+  })
+})
