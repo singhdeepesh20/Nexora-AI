@@ -84,7 +84,7 @@ export function AssessmentPanel({ conceptId }: { conceptId: string }) {
       const r = await api.post<AssessmentResult>(`/students/${student!.id}/concepts/${conceptId}/assessment`, { answers })
       setResult(r)
       if (r.unlocked.length) toast(`Unlocked: ${r.unlocked.map((u) => concepts[u]?.title).join(', ')}`, 'success')
-      await refreshLearning()
+      await applyResult(r as AssessmentResult & { xp: XPAward[] })
     } catch (e) { setSubmitErr(e) } finally { setBusy(false) }
   }
   const byId = Object.fromEntries((result?.results ?? []).map((r) => [r.id, r]))
