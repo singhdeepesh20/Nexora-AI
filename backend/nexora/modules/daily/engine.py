@@ -41,3 +41,26 @@ def test_count(puzzle: dict[str, Any]) -> int:
     return sum(isinstance(n, ast.FunctionDef) and n.name.startswith("test_") for n in ast.parse(puzzle["tests"]).body)
 
 
+def evaluate(puzzle: dict[str, Any], code: str) -> dict[str, Any]:
+    run = run_python({"solution.py": code, "tests.py": puzzle["tests"]}, "tests",
+                     Limits(timeout_s=float(puzzle.get("time_limit_s", 15)), cpu_s=int(puzzle.get("time_limit_s", 15))))
+    if run.timed_out:
+        problem = "Time limit exceeded."
+    elif run.payload is None:
+        problem = "The test process crashed."
+    elif run.payload.get("import_error"):
+        problem = "Your code could not be imported:\n" + run.payload["import_error"]
+    else:
+        problem = None
+    tests = [] if problem else run.payload["tests"]
+    outcomes = [t["status"] == "passed" for t in tests] if tests else [False] * test_count(puzzle)
+    return {"passed": bool(tests) and all(outcomes), "outcomes": outcomes, "problem": problem,
+            "failures": [{"message": t["message"]} for t in tests if t["status"] != "passed"][:3],
+            "isolation": run.isolation}
+
+
+def share_text(number: int, rows: list[list[bool]], solved: bool, seconds: int | None) -> str:
+    grid = "\n".join(" ".join("🟩" if ok else "🟥" for ok in row) for row in rows)
+    time = f"{seconds // 60:02d}:{seconds % 60:02d}" if seconds is not None else "--:--"
+    return (f"NEXORA DEBUG OF THE DAY\nPuzzle #{number:03d}\n\nResult: {'Solved' if solved else 'Not solved yet'}\n"
+            f"Attempts: {len(rows)}\nTime: {time}\n\n{grid}\n\nLEARN AI BY ENGINEERING AI.")
