@@ -1,0 +1,9 @@
+{
+  "id": "chunk_gap",
+  "version": "1",
+  "title": "The chunker that skips words",
+  "topic": "RAG",
+  "description": "`chunk_words` should split words into chunks of `size`, with consecutive chunks sharing `overlap` words. Some sentences vanish from the index. Why?",
+  "explanation": "The step between chunk starts must be size - overlap. Using size + overlap jumps past `overlap` words at every boundary, so those words never reach the index and queries about them fail.",
+  "time_limit_s": 15
+}
