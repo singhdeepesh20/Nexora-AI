@@ -113,6 +113,24 @@ export const useApp = create<AppState>((set, get) => ({
     set({ learning: await api.get<LearningState>(`/students/${s.id}/learning`) })
   },
 
+  refreshProgression: async () => {
+    const s = get().student
+    if (!s) return
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+    set({ progression: await api.get<Progression>(`/students/${s.id}/progression?tz=${encodeURIComponent(tz)}`) })
+  },
+
+  applyResult: async (r) => {
+    if (r.events) emitSimEvents(r.events)
+    const xp = (r.xp ?? []).filter((x): x is XPAward => !!x)
+    if (xp.length) get().toast(`+${xp.reduce((a, x) => a + x.xp, 0)} XP · ${xp.map((x) => x.reason).join(' · ')}`, 'success')
+    get().celebrate(r.achievements)
+    const before = get().progression?.rank.id
+    await Promise.all([get().refreshLearning(), get().refreshProgression()])
+    const after = get().progression?.rank
+    if (before && after && after.id !== before) get().toast(`Promoted to ${after.title}!`, 'success')
+  },
+
   updateSettings: async (patch) => {
     const s = get().student
     if (!s) return
