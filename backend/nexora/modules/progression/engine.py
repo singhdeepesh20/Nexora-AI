@@ -137,3 +137,35 @@ def activity_days(session: Session, student_id: str, tz) -> set[date]:
     return {s.replace(tzinfo=UTC).astimezone(tz).date() for s in stamps}
 
 
+def streaks(days: set[date], today: date) -> dict[str, Any]:
+    longest = run = 0
+    prev = None
+    for d in sorted(days):
+        run = run + 1 if prev and d - prev == timedelta(days=1) else 1
+        longest = max(longest, run)
+        prev = d
+    # Current streak counts back from today, or from yesterday if today has no activity yet (no penalty mid-day).
+    anchor = today if today in days else today - timedelta(days=1)
+    current = 0
+    while anchor in days:
+        current += 1
+        anchor -= timedelta(days=1)
+    calendar = [{"date": (today - timedelta(days=i)).isoformat(), "active": (today - timedelta(days=i)) in days}
+                for i in range(83, -1, -1)]
+    return {"current": current, "longest": longest, "active_today": today in days, "calendar": calendar,
+            "total_active_days": len(days)}
+
+
+def summary(session: Session, rules: dict, student_id: str, states: dict, skills: list[dict], tz_name: str | None,
+            now: datetime | None = None) -> dict[str, Any]:
+    tz = parse_tz(tz_name)
+    now = now or utcnow()
+    today = now.replace(tzinfo=UTC).astimezone(tz).date()
+    ev = evidence(session, student_id, states, skills)
+    history = session.scalars(select(XPTransaction).where(XPTransaction.student_id == student_id)
+                              .order_by(XPTransaction.created_at.desc()).limit(50)).all()
+    return {"xp": ev["xp"], "level": level_for(ev["xp"], rules), "rank": rank(rules, ev), "evidence": ev,
+            "streak": streaks(activity_days(session, student_id, tz), today), "timezone": str(tz),
+            "rule_version": rules["version"],
+            "history": [{"xp": h.xp, "reason": h.reason, "source_type": h.source_type, "created_at": h.created_at.isoformat()}
+                        for h in history]}
