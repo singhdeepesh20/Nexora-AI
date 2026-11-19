@@ -22,7 +22,9 @@ jobs:
           uv sync --frozen
           uv run ruff check nexora tests
           # Surface each failing test as a public annotation (readable without signing in to GitHub).
-          uv run pytest -q -rf -p no:warnings 2>&1 | tee pytest.log
-          status=${PIPESTATUS[0]}
-          grep -E '^(FAILED|ERROR) ' pytest.log | while read -r line; do echo "::error title=pytest::$line"; done
+          set +e  # GitHub runs bash with -e -o pipefail; we need pytest's own exit code
+          uv run pytest -q -rf -p no:warnings > pytest.log 2>&1
+          status=$?
+          cat pytest.log
+          grep -E '^(FAILED|ERROR) ' pytest.log | sed 's/^/::error title=pytest::/' || true
           exit $status
