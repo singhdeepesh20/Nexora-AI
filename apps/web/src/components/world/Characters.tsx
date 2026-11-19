@@ -74,3 +74,99 @@ const STATE_COLOR: Record<MachineState, string> = { idle: '#2dd4bf', success: '#
 const STATE_LABEL: Record<MachineState, string> = { idle: 'Ready', success: 'Stable', warning: 'Warning', critical: 'FAILURE' }
 const SPARKS = 70
 
+/**
+ * The plaza Experiment Machine. It only visualises the classified events of the student's latest
+ * real experiment (via the event bus) - it never decides anything itself.
+ */
+export function ExperimentMachine({ highlighted, reducedMotion }: { highlighted: boolean; reducedMotion?: boolean }) {
+  const [state, setState] = useState<MachineState>(machineState())
+  const core = useRef<Mesh>(null)
+  const lamps = useRef<Group>(null)
+  const sparks = useRef<Points>(null)
+  const reduce = prefersReducedMotion(reducedMotion)
+  useEffect(() => subscribeSimEvents((_ev, s) => {
+    setState(s)
+    if (s === 'critical' && !reduce) triggerShake(0.35)
+  }), [reduce])
+
+  const { geometry, velocities } = useMemo(() => {
+    const g = new BufferGeometry()
+    g.setAttribute('position', new BufferAttribute(new Float32Array(SPARKS * 3), 3))
+    return { geometry: g, velocities: new Float32Array(SPARKS * 3) }
+  }, [])
+  useEffect(() => () => geometry.dispose(), [geometry]) // free GPU buffers on unmount
+
+  useFrame(({ clock }, dt) => {
+    const t = clock.elapsedTime
+    const color = STATE_COLOR[state]
+    const m = core.current?.material as MeshStandardMaterial | undefined
+    if (m) {
+      m.color.set(color)
+      m.emissive.set(color)
+      const pulse = state === 'critical' && !reduce ? 1.4 + Math.abs(Math.sin(t * 8)) * 2 : state === 'success' ? 2.2 : 1.2
+      m.emissiveIntensity = pulse
+    }
+    if (core.current && !reduce) core.current.rotation.y += dt * (state === 'critical' ? 4 : 0.6)
+    lamps.current?.children.forEach((c, i) => {
+      const lm = (c as Mesh).material as MeshStandardMaterial
+      lm.emissive.set(color)
+      lm.emissiveIntensity = state === 'critical' ? (reduce ? 2 : (Math.floor(t * 4 + i) % 2) * 3) : state === 'warning' ? 1.5 : 0.6
+    })
+    const pts = sparks.current
+    if (!pts) return
+    pts.visible = state === 'critical' && !reduce
+    if (!pts.visible) return
+    const pos = geometry.getAttribute('position') as BufferAttribute
+    for (let i = 0; i < SPARKS; i++) {
+      let y = pos.getY(i)
+      if (y <= 0.05 || velocities[i * 3 + 1] === 0) {
+        pos.setXYZ(i, 0, 2.2, 0)
+        velocities[i * 3] = (Math.random() - 0.5) * 4
+        velocities[i * 3 + 1] = 2 + Math.random() * 3
+        velocities[i * 3 + 2] = (Math.random() - 0.5) * 4
+        y = 2.2
+      }
+      velocities[i * 3 + 1] -= 9.8 * dt
+      pos.setXYZ(i, pos.getX(i) + velocities[i * 3] * dt, Math.max(0.04, y + velocities[i * 3 + 1] * dt), pos.getZ(i) + velocities[i * 3 + 2] * dt)
+    }
+    pos.needsUpdate = true
+  })
+  return (
+    <group position={[MACHINE.x, 0, MACHINE.z]}>
+      <mesh position-y={0.4} castShadow receiveShadow>
+        <boxGeometry args={[2.4, 0.8, 2.4]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.6} roughness={0.35} />
+      </mesh>
+      <mesh position-y={1.6}>
+        <cylinderGeometry args={[0.75, 0.75, 1.6, 24, 1, true]} />
+        <meshStandardMaterial color="#bae6fd" transparent opacity={0.18} roughness={0.05} />
+      </mesh>
+      <mesh ref={core} position-y={1.6}>
+        <octahedronGeometry args={[0.45, 0]} />
+        <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={1.2} />
+      </mesh>
+      <mesh position-y={2.5}>
+        <cylinderGeometry args={[0.9, 0.9, 0.2, 24]} />
+        <meshStandardMaterial color="#334155" metalness={0.6} />
+      </mesh>
+      <group ref={lamps}>
+        {[[-1.1, -1.1], [1.1, -1.1], [-1.1, 1.1], [1.1, 1.1]].map(([x, z], i) => (
+          <mesh key={i} position={[x, 0.95, z]}>
+            <sphereGeometry args={[0.13, 10, 8]} />
+            <meshStandardMaterial color="#0f172a" emissive="#2dd4bf" emissiveIntensity={0.6} />
+          </mesh>
+        ))}
+      </group>
+      <points ref={sparks} geometry={geometry} visible={false}>
+        <pointsMaterial color="#fbbf24" size={0.12} transparent opacity={0.95} blending={AdditiveBlending} depthWrite={false} />
+      </points>
+      <Html position={[0, 3.3, 0]} center distanceFactor={11} zIndexRange={[10, 0]}>
+        <div className="pointer-events-none select-none whitespace-nowrap rounded-md px-2 py-0.5 text-center text-[11px]"
+          style={{ background: 'rgba(13,17,23,.85)', border: `1px solid ${STATE_COLOR[state]}`, boxShadow: highlighted ? `0 0 16px ${STATE_COLOR[state]}` : undefined }}>
+          <b className="text-white">Experiment Machine</b>{' '}
+          <span style={{ color: STATE_COLOR[state] }}>{state === 'critical' ? '⚠ ' : ''}{STATE_LABEL[state]}</span>
+        </div>
+      </Html>
+    </group>
+  )
+}
