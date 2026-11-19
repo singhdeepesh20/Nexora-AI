@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 - 2026-11-19 (engagement slice, unreleased)
+
+### Added
+- First-three-minute onboarding with Professor Nova: break and fix a real neural network.
+- Failure spectacle engine: backend event classifier, typed event bus, plaza Experiment Machine, lab event banners, reduced-motion setting.
+- 14 Break Challenges plus the onboarding challenge, evaluated against real simulation output.
+- Verified share cards (PNG export, clipboard, OS share) for missions, challenges, onboarding, Daily Debug and rank.
+- XP ledger with anti-farming keys, levels, evidence-based engineer ranks, time-zone-aware streaks.
+- Debug of the Day: 7 puzzles, deterministic local calendar, hidden tests, honest share grid.
+- Professors Nova, Atlas, Newton and Neural on campus with progress-aware dialogue; buildings that light up with mastery.
+- Migration `0002_engagement`; Alembic now ignores FTS5 tables during autogenerate.
+
 ## 0.1.0 - 2026-11-19 (first vertical slice, unreleased)
 
 ### Added
