@@ -256,4 +256,5 @@ class DailySession(Base):
 STUDENT_TABLES: list[type[Base]] = [
     Student, Avatar, Progress, AssessmentAttempt, Submission, SkillEvidence, Experiment,
     Project, Conversation, ConversationMessage, MentorMemory, Achievement,
+    XPTransaction, ChallengeAttempt, DailySession,
 ]
