@@ -156,3 +156,26 @@ def test_rank_requires_evidence_not_just_xp(app, client, student, catalog):
     assert client.get(f"/api/v1/students/{student}/progression").json()["rank"]["id"] == "junior"
 
 
+def test_research_scientist_is_unreachable_until_research_exists():
+    rules = progression.load_rules(REPO_ROOT / "content")
+    ev = {"xp": 10**6, "mastered_concepts": 99, "missions_passed": 99, "challenges_passed": 99, "daily_solved": 99,
+          "research_reproductions": 0, "skills": {k: 1.0 for k in ("python_programming", "classical_ml", "neural_networks", "retrieval_systems")}}
+    assert progression.rank(rules, ev)["id"] == "principal"
+
+
+def test_levels_monotonic():
+    rules = progression.load_rules(REPO_ROOT / "content")
+    lv = [progression.level_for(x, rules)["level"] for x in range(0, 5000, 50)]
+    assert lv == sorted(lv) and lv[0] == 1 and progression.level_for(100, rules)["level"] == 2
+
+
+def test_streaks_and_breaks():
+    d = date(2026, 3, 10)
+    days = {d - timedelta(days=i) for i in (0, 1, 2, 5, 6, 7, 8)}
+    s = progression.streaks(days, d)
+    assert s["current"] == 3 and s["longest"] == 4 and s["active_today"]
+    s2 = progression.streaks(days - {d}, d)  # nothing yet today: streak from yesterday still stands
+    assert s2["current"] == 2 and not s2["active_today"]
+    assert progression.streaks(set(), d)["current"] == 0 and len(s["calendar"]) == 84
+
+
