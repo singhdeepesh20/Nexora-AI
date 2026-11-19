@@ -25,3 +25,28 @@ from nexora.modules.simulations.registry import SIMULATIONS
 router = APIRouter()
 
 
+# ------------------------------------------------------------------ break challenges
+@router.get("/students/{student_id}/challenges")
+def list_challenges(student: Student = Depends(get_student), ctx: AppContext = Depends(get_ctx),
+                    session: Session = Depends(get_session)) -> list[dict[str, Any]]:
+    rows = session.scalars(select(ChallengeAttempt).where(ChallengeAttempt.student_id == student.id,
+                                                          ChallengeAttempt.kind == "break")).all()
+    out = []
+    for c in ctx.challenges.values():
+        mine = [r for r in rows if r.challenge_id == c["id"]]
+        out.append(challenges.public_view(c) | {"attempts": len(mine), "passed": any(r.passed for r in mine)})
+    return out
+
+
+@router.get("/challenges/{challenge_id}/hints/{n}")
+def hint(challenge_id: str, n: int, ctx: AppContext = Depends(get_ctx)) -> dict[str, Any]:
+    c = ctx.challenges.get(challenge_id)
+    if c is None or not 0 <= n < len(c["hints"]):
+        raise not_found("Hint")
+    return {"index": n, "hint": c["hints"][n], "remaining": len(c["hints"]) - n - 1}
+
+
+class AttemptBody(BaseModel):
+    config: dict[str, Any] = Field(default_factory=dict)
+
+
