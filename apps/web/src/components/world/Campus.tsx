@@ -74,7 +74,7 @@ function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: 
   const [near, setNear] = useState<string | null>(null)
   useEffect(() => onNearby(setNear), [])
   const { layout, trees } = useMemo(() => {
-    const base = buildLayout(world.world.bounds, world.districts, [MONUMENT])
+    const base = buildLayout(world.world.bounds, world.districts, EXTRA_COLLIDERS)
     const trees = scatterTrees(g.trees, world.world.bounds, base.colliders, world.world.plaza_radius)
     return { layout: buildLayout(world.world.bounds, world.districts, [MONUMENT, ...trees.map(treeCollider)]), trees }
   }, [world, g.trees])
