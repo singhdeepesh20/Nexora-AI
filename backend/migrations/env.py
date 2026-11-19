@@ -7,6 +7,11 @@ config = context.config
 target_metadata = Base.metadata
 
 
+def _include(obj, name, type_, reflected, compare_to):
+    # FTS5 virtual tables (and their shadow tables) are managed by hand-written migrations.
+    return not (type_ == "table" and name and name.startswith("content_fts"))
+
+
 def run_migrations_online() -> None:
     engine = config.attributes.get("engine")
     if engine is None:  # CLI usage: alembic -x db=path/to.db
