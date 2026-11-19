@@ -9,6 +9,7 @@ import { GRAPHICS, type GraphicsPreset, sampleFrame } from '../../engine/graphic
 import { keys, onNearby, player, setNearby } from '../../engine/player'
 import { shake } from '../../engine/simEvents'
 import { useApp } from '../../stores/app'
+import { ExperimentMachine, MACHINE, NPCS, Professor } from './Characters'
 import { Avatar } from '../avatar/Avatar'
 import { Building, Gate } from '../buildings/Building'
 import { Ground, Lamps, Lighting, Monument, Trees } from './Environment'
