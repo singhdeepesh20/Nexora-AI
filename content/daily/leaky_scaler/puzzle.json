@@ -1,0 +1,9 @@
+{
+  "id": "leaky_scaler",
+  "version": "1",
+  "title": "The leaky scaler",
+  "topic": "Data leakage",
+  "description": "`split_then_scale` should split the data, then standardise using statistics from the **training split only**. Its test scores look suspiciously good. Find the leak.",
+  "explanation": "The mean and standard deviation were computed on all rows, so test-set information leaked into training. Fit any preprocessing on the training split, then apply it to the test split.",
+  "time_limit_s": 15
+}
