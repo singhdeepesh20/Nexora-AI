@@ -153,3 +153,8 @@ function ResultView({ r }: { r: MissionResult }) {
     </div>
   )
 }
+
+function ShareMission({ id }: { id: string }) {
+  const open = useApp((s) => s.open)
+  return <Button tone="ghost" onClick={() => open({ kind: 'share', card: 'mission', ref: id })}>Create share card</Button>
+}
