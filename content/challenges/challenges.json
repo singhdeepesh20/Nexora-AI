@@ -585,6 +585,44 @@
       ],
       "explanation": "Weights scale with parameters x bytes per parameter; the KV cache scales with layers x context x hidden x batch.",
       "xp": 30
+    },
+    {
+      "id": "infra.fit70b",
+      "version": "1",
+      "lab": "infrastructure",
+      "difficulty": "medium",
+      "title": "Fit a 70B model on one 80 GB GPU",
+      "description": "Keep the 70B model and the 80 GB GPU. Make it fit.",
+      "objective": "Trade precision and context for memory.",
+      "initial_config": {
+        "params_billion": 70,
+        "precision": "fp16",
+        "hardware": "datacenter_80gb",
+        "batch_size": 1,
+        "context_length": 8192,
+        "n_layers": 80,
+        "hidden_size": 8192,
+        "run_benchmark": false
+      },
+      "allowed": [
+        "precision",
+        "batch_size",
+        "context_length"
+      ],
+      "target": [
+        {
+          "metric": "fits",
+          "op": "==",
+          "value": true,
+          "label": "Deployment fits in memory"
+        }
+      ],
+      "hints": [
+        "fp16 weights alone are 140 GB.",
+        "Quantise, then check the KV cache."
+      ],
+      "explanation": "int4 cuts weights to 35 GB; with an 8k context the KV cache still adds about 21 GB, so precision and context length are both levers. Quality impact of quantisation must be measured separately.",
+      "xp": 50
     }
   ]
 }
