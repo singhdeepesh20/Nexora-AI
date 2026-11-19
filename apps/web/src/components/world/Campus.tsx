@@ -66,6 +66,10 @@ function PlayerRig({ layout, body, accent, highlightedRef }: {
 
 function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: GraphicsPreset; body: string; accent: string }) {
   const g = GRAPHICS[preset]
+  const learning = useApp((s) => s.learning)
+  const reducedMotion = useApp((s) => s.student?.settings.reduced_motion)
+  const mastery = (concepts: string[]) =>
+    concepts.length ? concepts.filter((c) => learning?.concepts[c]?.status === 'mastered').length / concepts.length : 0
   const highlighted = useRef<string | null>(null)
   const [near, setNear] = useState<string | null>(null)
   useEffect(() => onNearby(setNear), [])
