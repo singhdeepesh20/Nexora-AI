@@ -31,7 +31,7 @@ function useSim(simId: string) {
     try {
       const r = await api.post<SimulationResponse<R>>(`/students/${student!.id}/simulations/${simId}/run`, { config, save: true })
       setRes(r)
-      celebrate(r.achievements)
+      await applyResult(r as SimulationResponse<R> & { events: SimEvent[]; xp: XPAward[] })
     } catch (e) { setError(e) } finally { setBusy(false) }
   }, [simId, student, celebrate])
   return { res, error, busy, run }
