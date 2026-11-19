@@ -209,6 +209,49 @@ class Achievement(Base):
     earned_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
 
+# ---------------------------------------------------------------- engagement (student-owned)
+class XPTransaction(Base):
+    """Append-only XP ledger. award_key is unique per student, which is the anti-farming guarantee:
+    the same verified accomplishment can never pay out twice."""
+
+    __tablename__ = "xp_transactions"
+    __table_args__ = (UniqueConstraint("student_id", "award_key"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    student_id: Mapped[str] = mapped_column(_fk("students.id"), index=True)
+    award_key: Mapped[str] = mapped_column(String(120))
+    source_type: Mapped[str] = mapped_column(String(24))  # assessment|mastery|mission|challenge|daily|experiment
+    source_id: Mapped[str] = mapped_column(String(64))
+    xp: Mapped[int] = mapped_column(Integer)
+    reason: Mapped[str] = mapped_column(String(200))
+    rule_version: Mapped[str] = mapped_column(String(16))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+
+class ChallengeAttempt(Base):
+    __tablename__ = "challenge_attempts"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    student_id: Mapped[str] = mapped_column(_fk("students.id"), index=True)
+    kind: Mapped[str] = mapped_column(String(16))  # break | daily
+    challenge_id: Mapped[str] = mapped_column(String(64))
+    challenge_version: Mapped[str] = mapped_column(String(16))
+    payload: Mapped[dict[str, Any]] = mapped_column(JSON)  # config (break) or code (daily)
+    result: Mapped[dict[str, Any]] = mapped_column(JSON)
+    passed: Mapped[bool] = mapped_column(Boolean)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+
+class DailySession(Base):
+    __tablename__ = "daily_sessions"
+    __table_args__ = (UniqueConstraint("student_id", "puzzle_number"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    student_id: Mapped[str] = mapped_column(_fk("students.id"), index=True)
+    puzzle_number: Mapped[int] = mapped_column(Integer)
+    puzzle_id: Mapped[str] = mapped_column(String(64))
+    local_date: Mapped[str] = mapped_column(String(10))
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    solved_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
 # Tables that hold student-owned data, in dependency order (parents first). Used by backup/export.
 STUDENT_TABLES: list[type[Base]] = [
     Student, Avatar, Progress, AssessmentAttempt, Submission, SkillEvidence, Experiment,
