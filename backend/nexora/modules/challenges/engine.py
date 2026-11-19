@@ -38,3 +38,29 @@ def load_challenges(content_dir: Path) -> dict[str, dict[str, Any]]:
     return out
 
 
+def metrics(sim_id: str, config: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
+    if sim_id == "gradient_descent":
+        return {"status": result["status"], "iterations": result["iterations_run"], "final_loss": result["final"]["loss"],
+                "direction_reversals": result["analysis"]["direction_reversals_recent"],
+                "stability_limit": result["analysis"]["stability_limit_lr"]}
+    if sim_id == "neural_network":
+        return {**result["final"], "status": result["status"]}
+    if sim_id == "ml_lab":
+        return {k: result[k] for k in ("train_accuracy", "test_accuracy", "macro_f1")}
+    if sim_id == "rag":
+        ev = result["evaluation"] or {}
+        top = result["results"][0]["doc_id"] if result["results"] else None
+        return {"mrr": ev.get("mrr", 0.0), "recall_at_k": ev.get("recall_at_k", 0.0), "n_chunks": result["n_chunks"], "top_doc": top}
+    if sim_id == "infrastructure":
+        e = result["estimate"]
+        return {"fits": e["fits"], "total_gb": e["memory_gb"]["total"], "tokens_per_s": e["throughput_tokens_per_s"]}
+    return {}
+
+
+def build_config(challenge: dict[str, Any], student_config: dict[str, Any]) -> dict[str, Any]:
+    illegal = sorted(set(student_config) - set(challenge["allowed"]))
+    if illegal:
+        raise ChallengeError(f"These settings are fixed in this challenge: {', '.join(illegal)}")
+    return {**challenge["initial_config"], **student_config}
+
+
