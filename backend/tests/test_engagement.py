@@ -179,3 +179,43 @@ def test_streaks_and_breaks():
     assert progression.streaks(set(), d)["current"] == 0 and len(s["calendar"]) == 84
 
 
+def test_streak_uses_local_timezone(app, client, student):
+    # 23:30 UTC on 1 March is 05:00 on 2 March in Kolkata.
+    with app.state.ctx.session_factory() as s, s.begin():
+        s.add(Experiment(student_id=student, simulation="gradient_descent", engine_version="1", config={}, summary={},
+                         created_at=datetime(2026, 3, 1, 23, 30)))
+    with app.state.ctx.session_factory() as s:
+        utc = progression.activity_days(s, student, progression.parse_tz("UTC"))
+        ist = progression.activity_days(s, student, progression.parse_tz("Asia/Kolkata"))
+    assert date(2026, 3, 1) in utc and date(2026, 3, 2) in ist
+    assert progression.parse_tz("Not/AZone").utcoffset(None) == timedelta(0)
+
+
+# ------------------------------------------------------------------ daily debug
+DAILY = daily.load_daily(REPO_ROOT / "content")
+
+
+def test_daily_selection_is_deterministic_and_rotates():
+    n1, p1 = daily.puzzle_for(date(2026, 1, 1), DAILY)
+    assert n1 == 1 and p1["id"] == DAILY["calendar"]["order"][0]
+    assert daily.puzzle_for(date(2026, 5, 17), DAILY) == daily.puzzle_for(date(2026, 5, 17), DAILY)
+    ids = {daily.puzzle_for(date(2026, 1, 1) + timedelta(days=i), DAILY)[1]["id"] for i in range(7)}
+    assert ids == set(DAILY["calendar"]["order"])
+    with pytest.raises(ValueError):
+        daily.puzzle_for(date(2025, 12, 31), DAILY)
+
+
+@pytest.mark.parametrize("pid", DAILY["calendar"]["order"])
+def test_daily_broken_fails_and_fix_passes(pid):
+    p = DAILY["puzzles"][pid]
+    broken = daily.evaluate(p, p["broken"])
+    assert not broken["passed"] and False in broken["outcomes"]
+    fixed = daily.evaluate(p, (FIXES / f"{pid}.py").read_text())
+    assert fixed["passed"] and all(fixed["outcomes"]), fixed
+
+
+def test_share_text_encodes_real_outcomes():
+    t = daily.share_text(42, [[True, True, False], [True, True, True]], True, 252)
+    assert "Puzzle #042" in t and "Attempts: 2" in t and "Time: 04:12" in t and "🟩 🟩 🟥\n🟩 🟩 🟩" in t
+
+
