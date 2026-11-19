@@ -24,6 +24,7 @@ from nexora.infrastructure.database.session import (
 )
 from nexora.infrastructure.local_ai.ollama import OllamaProvider
 from nexora.infrastructure.storage.workspace import Workspace
+from nexora.modules.challenges.engine import load_challenges
 from nexora.modules.curriculum.catalog import load_catalog
 from nexora.modules.curriculum.sync import sync_catalog
 
