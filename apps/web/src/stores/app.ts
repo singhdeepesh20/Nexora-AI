@@ -91,8 +91,8 @@ export const useApp = create<AppState>((set, get) => ({
   selectStudent: async (s) => {
     try { localStorage.setItem(LAST_STUDENT, s.id) } catch { /* storage unavailable */ }
     const fresh = await api.get<Student>(`/students/${s.id}`)
-    set({ student: fresh, overlays: [] })
-    await get().refreshLearning()
+    set({ student: fresh, overlays: [], progression: null })
+    await Promise.all([get().refreshLearning(), get().refreshProgression()])
   },
 
   createStudent: async (name, body, accent) => {
