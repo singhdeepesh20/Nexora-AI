@@ -28,6 +28,8 @@ from nexora.modules.learning import engine as learning
 from nexora.modules.mentors.engine import MentorEngine
 from nexora.modules.mentors.personas import PERSONAS
 from nexora.modules.missions.evaluator import evaluate
+from nexora.modules.progression import engine as progression
+from nexora.modules.simulations.events import classify
 from nexora.modules.simulations.ml_lab import dataset_info
 from nexora.modules.simulations.registry import SIMULATIONS, run_simulation, summarize
 from nexora.workers.sandbox import Limits, run_python
