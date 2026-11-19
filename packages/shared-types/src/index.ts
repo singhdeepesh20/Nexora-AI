@@ -2,7 +2,10 @@
 import type { DistrictSpec, Bounds } from '@nexora/world-engine'
 
 export interface Avatar { body_color: string; accent_color: string; position: { x: number; z: number; heading: number } }
-export interface StudentSettings { graphics?: 'low' | 'medium' | 'high'; mentor_model?: string; mentor_mode?: MentorMode; show_fps?: boolean }
+export interface StudentSettings {
+  graphics?: 'low' | 'medium' | 'high'; mentor_model?: string; mentor_mode?: MentorMode; show_fps?: boolean
+  reduced_motion?: boolean; onboarding?: 'pending' | 'done' | 'skipped'; onboarding_started_at?: string; onboarding_completed_at?: string
+}
 export interface Student { id: string; display_name: string; created_at: string; settings: StudentSettings; avatar: Avatar | null }
 
 export interface District extends DistrictSpec {
