@@ -45,6 +45,19 @@ export function Hud() {
             </div>
           </div>
         </div>
+        {progression && (
+          <button onClick={() => open({ kind: 'progress' })} title="Engineer progression (P)"
+            className="glass pointer-events-auto hidden items-center gap-2 rounded-xl px-3 py-2 text-left sm:flex">
+            <span className="h-7 w-1.5 rounded-full" style={{ background: RANK_COLOR[progression.rank.id] }} />
+            <span>
+              <span className="block text-xs font-semibold text-white">{progression.rank.title}</span>
+              <span className="block text-[11px] text-ink-400">Lv {progression.level.level} · {progression.xp} XP</span>
+            </span>
+            <span className="ml-1 flex items-center gap-0.5 text-xs text-orange-300" aria-label={`${progression.streak.current}-day streak`}>
+              <Flame size={13} />{progression.streak.current}
+            </span>
+          </button>
+        )}
         <nav className="glass pointer-events-auto flex gap-1 rounded-xl p-1">
           {buttons.map((b) => (
             <button key={b.label} onClick={b.on} title={b.key ? `${b.label} (${b.key})` : b.label}
