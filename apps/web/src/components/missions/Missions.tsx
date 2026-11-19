@@ -72,7 +72,6 @@ export function MissionWorkspace({ missionId }: { missionId: string }) {
       setTab('results')
       await applyResult(r as MissionResult & { xp: XPAward[] })
       if (r.newly_mastered.length) toast(`Mastered: ${r.newly_mastered.map((c) => concepts[c]?.title).join(', ')}`, 'success')
-      await refreshLearning()
       board.reload()
     } catch (e) { setError(e) } finally { setBusy(false) }
   }
