@@ -18,7 +18,8 @@ def run_migrations_online() -> None:
         db = context.get_x_argument(as_dictionary=True).get("db", "nexora-dev.db")
         engine = create_engine(f"sqlite:///{db}")
     with engine.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata, render_as_batch=True)
+        context.configure(connection=connection, target_metadata=target_metadata, render_as_batch=True,
+                          include_object=_include)
         with context.begin_transaction():
             context.run_migrations()
         connection.commit()
