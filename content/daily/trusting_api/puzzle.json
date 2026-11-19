@@ -1,0 +1,9 @@
+{
+  "id": "trusting_api",
+  "version": "1",
+  "title": "The trusting API",
+  "topic": "API validation",
+  "description": "`parse_prediction(payload)` turns a model-server response into `(label, confidence)`. It happily accepts garbage. Make it reject invalid responses with `ValueError`.",
+  "explanation": "Never trust a model server's output: check required fields, types, allowed labels and that confidence is a finite number in [0, 1]. Invalid responses must fail loudly instead of flowing into the product.",
+  "time_limit_s": 15
+}
