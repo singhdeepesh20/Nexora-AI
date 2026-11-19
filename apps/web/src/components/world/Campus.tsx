@@ -15,6 +15,12 @@ import { Building, Gate } from '../buildings/Building'
 import { Ground, Lamps, Lighting, Monument, Trees } from './Environment'
 
 const MONUMENT: Box = { minX: -2, maxX: 2, minZ: -2, maxZ: 2 }
+const box = (x: number, z: number, r: number): Box => ({ minX: x - r, maxX: x + r, minZ: z - r, maxZ: z + r })
+const EXTRA_COLLIDERS: Box[] = [MONUMENT, box(MACHINE.x, MACHINE.z, 1.25), ...NPCS.map((n) => box(n.x, n.z, 0.45))]
+const EXTRA_INTERACTABLES: Interactable[] = [
+  { id: 'machine', kind: 'machine', label: 'Experiment Machine', position: { x: MACHINE.x + 2, z: MACHINE.z + 1 }, radius: 3 },
+  ...NPCS.map((n): Interactable => ({ id: `npc:${n.id}`, kind: 'npc', label: n.name, position: { x: n.x, z: n.z }, radius: 2.8 })),
+]
 export const camera = { yaw: 0, pitch: 0.42, distance: 8 }
 
 function PlayerRig({ layout, body, accent, highlightedRef }: {
