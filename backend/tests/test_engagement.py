@@ -120,3 +120,39 @@ def test_onboarding_grants_achievement(client, student):
     assert card["stats"][1] == {"label": "Learning rate", "value": "0.3"}
 
 
+# ------------------------------------------------------------------ progression
+def test_xp_only_for_verified_actions(client, student, catalog):
+    p0 = client.get(f"/api/v1/students/{student}/progression").json()
+    assert p0["xp"] == 0 and p0["rank"]["id"] == "intern"
+    client.post(f"/api/v1/students/{student}/concepts/math.vectors/open")
+    client.post(f"/api/v1/students/{student}/concepts/math.vectors/assessment", json={"answers": {"q1": 1}})
+    assert client.get(f"/api/v1/students/{student}/progression").json()["xp"] == 0  # reading/failing earns nothing
+    r = client.post(f"/api/v1/students/{student}/concepts/math.vectors/assessment",
+                    json={"answers": correct_answers(catalog, "math.vectors")}).json()
+    assert sorted(x["xp"] for x in r["xp"]) == [40, 60]  # pass + mastery
+    r2 = client.post(f"/api/v1/students/{student}/concepts/math.vectors/assessment",
+                     json={"answers": correct_answers(catalog, "math.vectors")}).json()
+    assert r2["xp"] == []
+    assert client.get(f"/api/v1/students/{student}/progression").json()["xp"] == 100
+
+
+def test_experiment_xp_is_capped_per_day(client, student):
+    got = [client.post(f"/api/v1/students/{student}/simulations/gradient_descent/run", json={"config": {}}).json()["xp"]
+           for _ in range(5)]
+    assert [len(x) for x in got] == [1, 1, 1, 0, 0]
+
+
+def test_rank_requires_evidence_not_just_xp(app, client, student, catalog):
+    with app.state.ctx.session_factory() as s, s.begin():
+        s.add(XPTransaction(student_id=student, award_key="test:bulk", source_type="test", source_id="x", xp=5000,
+                            reason="injected", rule_version="1"))
+    p = client.get(f"/api/v1/students/{student}/progression").json()
+    assert p["xp"] == 5000 and p["rank"]["id"] == "intern"  # 5000 XP but no evidence
+    missing = [c for c in p["rank"]["next"]["checks"] if not c["met"]]
+    assert {c["unit"] for c in p["rank"]["next"]["checks"]} == {"count"}  # junior needs counts, not percentages
+    assert {c["label"] for c in missing} >= {"Concepts mastered", "Missions passed"}
+    master(client, catalog, student, "python.basics")
+    master(client, catalog, student, "math.vectors")
+    assert client.get(f"/api/v1/students/{student}/progression").json()["rank"]["id"] == "junior"
+
+
