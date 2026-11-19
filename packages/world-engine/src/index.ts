@@ -65,7 +65,7 @@ export function buildLayout(
       label: d.building.label,
       position: d.building.door,
       radius: INTERACT_RADIUS,
-    })),
+    }))],
   }
 }
 
