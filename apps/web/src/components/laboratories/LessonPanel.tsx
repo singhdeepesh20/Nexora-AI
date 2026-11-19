@@ -1,6 +1,6 @@
 import { CheckCircle2, ClipboardCheck, FlaskConical, Lock, MessageCircle, Swords, XCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import type { Assessment, AssessmentResult, Concept } from '@nexora/shared-types'
+import type { Assessment, AssessmentResult, Concept, XPAward } from '@nexora/shared-types'
 import { useAsync } from '../../hooks/useAsync'
 import { api } from '../../services/api'
 import { useApp } from '../../stores/app'
