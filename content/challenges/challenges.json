@@ -133,6 +133,47 @@
       ],
       "explanation": "x is multiplied by (1 - 2 eta) each step. For eta < 0.5 the factor is positive (monotone approach); above 0.5 it is negative, so x flips sign every step while still shrinking until eta reaches 1.",
       "xp": 50
+    },
+    {
+      "id": "gd.valley_converge",
+      "version": "1",
+      "lab": "gradient_descent",
+      "difficulty": "medium",
+      "title": "Cross the elongated valley",
+      "description": "Plain gradient descent on a stretched valley (a = 0.2, b = 4). Converge within 200 iterations.",
+      "objective": "Balance the steep and flat directions with a single learning rate.",
+      "initial_config": {
+        "function": "quadratic",
+        "a": 0.2,
+        "b": 4,
+        "optimizer": "gd",
+        "learning_rate": 0.05,
+        "momentum": 0.0,
+        "iterations": 400,
+        "start_x": -4,
+        "start_y": 3
+      },
+      "allowed": [
+        "learning_rate"
+      ],
+      "target": [
+        {
+          "event": "SUCCESSFUL_CONVERGENCE",
+          "label": "Converges"
+        },
+        {
+          "metric": "iterations",
+          "op": "<=",
+          "value": 200,
+          "label": "Within 200 iterations"
+        }
+      ],
+      "hints": [
+        "The steep direction caps eta below 2 / 8 = 0.25.",
+        "Too small and the flat direction crawls. The best single rate is 2 / (lambda_min + lambda_max)."
+      ],
+      "explanation": "The optimal fixed rate is 2 / (0.4 + 8) = 0.238. Even then progress along the flat direction is slow: the condition number 20 governs the speed of plain gradient descent.",
+      "xp": 50
     }
   ]
 }
