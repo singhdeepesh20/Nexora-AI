@@ -219,3 +219,43 @@ def test_share_text_encodes_real_outcomes():
     assert "Puzzle #042" in t and "Attempts: 2" in t and "Time: 04:12" in t and "🟩 🟩 🟥\n🟩 🟩 🟩" in t
 
 
+def test_daily_api_flow(client, student, app):
+    today = utcnow().date()
+    number, p = daily.puzzle_for(today, DAILY)
+    base = f"/api/v1/students/{student}/daily"
+    view = client.get(base, params={"date": today.isoformat()}).json()
+    assert view["number"] == number and view["hidden_tests"] >= 2 and "tests" not in view and view["explanation"] is None
+    client.post(base + "/start", json={"date": today.isoformat()})
+    bad = client.post(base + "/submit", json={"date": today.isoformat(), "code": p["broken"]}).json()
+    assert not bad["solved"] and bad["xp"] == [] and len(bad["attempts"]) == 1
+    good = client.post(base + "/submit", json={"date": today.isoformat(), "code": (FIXES / f"{p['id']}.py").read_text()}).json()
+    assert good["solved"] and good["xp"][0]["xp"] == 40 and good["explanation"] and len(good["attempts"]) == 2
+    assert "🟥" in good["share_text"] and good["share_text"].count("\n🟩") >= 1
+    assert client.post(base + "/submit", json={"date": today.isoformat(), "code": "x"}).status_code == 400
+    assert client.get(base, params={"date": "2020-01-01"}).status_code == 400  # only today's puzzle
+    card = client.get(f"/api/v1/students/{student}/share-card", params={"kind": "daily", "ref": str(number)}).json()
+    assert card["stats"][0]["value"] == "2" and len(card["grid"]) == 2
+    with app.state.ctx.session_factory() as s:
+        assert s.scalar(select(DailySession).where(DailySession.student_id == student)).solved_at is not None
+
+
+# ------------------------------------------------------------------ share cards
+def test_share_cards_only_for_verified_results(client, student):
+    get = lambda **p: client.get(f"/api/v1/students/{student}/share-card", params=p)  # noqa: E731
+    assert get(kind="mission", ref="python_fundamentals").status_code == 409
+    assert get(kind="challenge", ref="gd.diverge").status_code == 409
+    assert get(kind="daily", ref="1").status_code == 409
+    rank = get(kind="rank").json()
+    assert rank["title"] == "INTERN ENGINEER" and rank["name"] is None
+
+
+def test_mission_card_reports_real_tests_and_no_private_data(client, student, catalog):
+    master(client, catalog, student, "python.basics")
+    card = client.get(f"/api/v1/students/{student}/share-card",
+                      params={"kind": "mission", "ref": "python_fundamentals", "include_name": True}).json()
+    stats = {s["label"]: s["value"] for s in card["stats"]}
+    assert stats["Hidden tests passed"] == "9/9" and stats["Attempts"] == "1"
+    assert card["name"] == "Test Student"
+    flat = str(card)
+    for leak in ("def ", "@", "/Users", "token", "solution.py"):
+        assert leak not in flat
