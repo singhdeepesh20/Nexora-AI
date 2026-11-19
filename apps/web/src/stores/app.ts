@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type {
-  Achievement, ConceptSummary, LearningState, Student, StudentSettings, SystemInfo, WorldResponse,
+  Achievement, ConceptSummary, Progression, SimEvent, XPAward, LearningState, Student, StudentSettings, SystemInfo, WorldResponse,
 } from '@nexora/shared-types'
 import { api } from '../services/api'
 
