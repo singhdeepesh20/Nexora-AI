@@ -345,6 +345,47 @@
       ],
       "explanation": "A large network fits the noise in a small training set; the memorised quirks do not transfer to the test points, so the gap opens.",
       "xp": 80
+    },
+    {
+      "id": "ml.overfit_tree",
+      "version": "1",
+      "lab": "ml_lab",
+      "difficulty": "easy",
+      "title": "Memorise the noise",
+      "description": "Make a classifier score 100% on training data while test accuracy falls far behind.",
+      "objective": "Diagnose overfitting from a train/test gap.",
+      "initial_config": {
+        "dataset": "wine",
+        "model": "logistic_regression",
+        "standardize": true,
+        "test_size": 0.25,
+        "seed": 42,
+        "max_depth": 3,
+        "label_noise": 0.0
+      },
+      "allowed": [
+        "model",
+        "max_depth",
+        "label_noise"
+      ],
+      "target": [
+        {
+          "event": "OVERFITTING_DETECTED",
+          "label": "Overfitting detected"
+        },
+        {
+          "metric": "train_accuracy",
+          "op": ">=",
+          "value": 1.0,
+          "label": "100% training accuracy"
+        }
+      ],
+      "hints": [
+        "Unlimited-depth trees can memorise anything.",
+        "Corrupting labels gives them something wrong to memorise."
+      ],
+      "explanation": "An unconstrained tree carves a leaf for every corrupted label. It is perfect on training data and wrong on new data.",
+      "xp": 30
     }
   ]
 }
