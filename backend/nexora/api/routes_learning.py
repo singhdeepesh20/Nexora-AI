@@ -145,6 +145,15 @@ def submit_assessment(concept_id: str, body: AssessmentSubmission, student: Stud
     return result
 
 
+def _mastery_xp(session: Session, ctx: AppContext, student_id: str, before: dict, after: dict) -> list:
+    out = []
+    for cid, st in after.items():
+        if st["status"] == "mastered" and before[cid]["status"] != "mastered":
+            out.append(progression.award(session, ctx.rules, student_id, f"mastery:{cid}", "mastery", cid,
+                                         ctx.rules["xp"]["concept_mastered"], f"Mastered: {ctx.catalog.concepts[cid]['title']}"))
+    return out
+
+
 @router.get("/students/{student_id}/assessments")
 def assessment_history(student: Student = Depends(get_student), session: Session = Depends(get_session)) -> list[dict]:
     rows = session.scalars(select(AssessmentAttempt).where(AssessmentAttempt.student_id == student.id)
