@@ -102,3 +102,38 @@ def _check(req: dict, ev: dict) -> list[dict]:
     return checks
 
 
+def rank(rules: dict, ev: dict) -> dict[str, Any]:
+    current, nxt = rules["ranks"][0], None
+    for r in rules["ranks"]:
+        if all(c["met"] for c in _check(r["requirements"], ev)):
+            current = r
+        else:
+            nxt = r
+            break
+    idx = rules["ranks"].index(current)
+    return {"id": current["id"], "title": current["title"], "index": idx, "of": len(rules["ranks"]),
+            "next": None if nxt is None else {"id": nxt["id"], "title": nxt["title"], "checks": _check(nxt["requirements"], ev)}}
+
+
+def parse_tz(tz: str | None) -> ZoneInfo | timezone:
+    if not tz:
+        return UTC
+    try:
+        return ZoneInfo(tz)
+    except (ZoneInfoNotFoundError, ValueError):
+        return UTC
+
+
+def activity_days(session: Session, student_id: str, tz) -> set[date]:
+    """Local dates with a meaningful learning action: an assessment attempt, a passed mission, a passed
+    challenge or solved daily puzzle, or a saved valid experiment."""
+    stamps: list[datetime] = []
+    stamps += session.scalars(select(AssessmentAttempt.created_at).where(AssessmentAttempt.student_id == student_id)).all()
+    stamps += session.scalars(select(Submission.created_at).where(Submission.student_id == student_id,
+                                                                  Submission.passed.is_(True))).all()
+    stamps += session.scalars(select(ChallengeAttempt.created_at).where(ChallengeAttempt.student_id == student_id,
+                                                                        ChallengeAttempt.passed.is_(True))).all()
+    stamps += session.scalars(select(Experiment.created_at).where(Experiment.student_id == student_id)).all()
+    return {s.replace(tzinfo=UTC).astimezone(tz).date() for s in stamps}
+
+
