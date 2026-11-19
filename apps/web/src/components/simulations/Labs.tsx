@@ -44,7 +44,8 @@ function LabShell({ simId, controls, onRun, busy, error, res, children }: {
   const { open } = useApp()
   const events = (res as (SimulationResponse<R> & { events?: SimEvent[] }) | null)?.events ?? []
   return (
-    <Panel title={title} subtitle={subtitle} accent={accent} wide>
+    <Panel title={title} subtitle={subtitle} accent={accent} wide
+      actions={simId !== 'transformer' && <Button tone="ghost" onClick={() => open({ kind: 'challenges', lab: simId })}>Break challenges</Button>}>
       <div className="grid gap-5 p-5 lg:grid-cols-[280px_1fr]">
         <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); onRun() }}>
           {controls}
