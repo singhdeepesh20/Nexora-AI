@@ -62,7 +62,7 @@ export function Hud() {
           {buttons.map((b) => (
             <button key={b.label} onClick={b.on} title={b.key ? `${b.label} (${b.key})` : b.label}
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs text-ink-200 hover:bg-ink-700 hover:text-white">
-              <b.icon size={15} /> <span className="hidden md:inline">{b.label}</span>
+              <b.icon size={15} /> <span className="hidden xl:inline">{b.label}</span>
             </button>
           ))}
         </nav>
