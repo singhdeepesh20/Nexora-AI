@@ -110,6 +110,7 @@ export function Hud() {
               <span className="font-mono text-ink-200">Mouse</span><span>Click to look around · scroll to zoom</span>
               <span className="font-mono text-ink-200">E</span><span>Interact</span>
               <span className="font-mono text-ink-200">M</span><span>Map</span>
+              <span className="font-mono text-ink-200">B · P</span><span>Challenges · Progress</span>
               <span className="font-mono text-ink-200">Esc</span><span>Pause / back</span>
             </div>
           )}
