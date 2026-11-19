@@ -184,6 +184,11 @@ export function SettingsPanel() {
           <p className="mt-1.5 text-[11px] text-ink-400">Low disables shadows and reduces resolution and scenery for integrated graphics.</p>
           <label className="mt-3 flex items-center gap-2 text-sm text-ink-200"><input type="checkbox" className="accent-teal-400" checked={!!s.show_fps} onChange={(e) => void updateSettings({ show_fps: e.target.checked })} /> Show frame rate</label>
           <label className="mt-2 flex items-center gap-2 text-sm text-ink-200"><input type="checkbox" className="accent-teal-400" checked={!!s.reduced_motion} onChange={(e) => void updateSettings({ reduced_motion: e.target.checked })} /> Reduce motion (no camera shake, sparks or jitter)</label>
+          <label className="mt-3 block text-sm text-ink-200">Campus time of day{' '}
+            <select className={`${inputCls} mt-1 w-auto`} value={s.time_of_day ?? 'auto'} onChange={(e) => void updateSettings({ time_of_day: e.target.value as 'auto' })}>
+              <option value="auto">Follow my clock</option><option value="morning">Morning</option><option value="afternoon">Afternoon</option><option value="evening">Evening</option><option value="night">Night</option>
+            </select>
+          </label>
           <Button tone="ghost" className="mt-3" onClick={() => open({ kind: 'onboarding' })}>Replay the first experiment</Button>
         </section>
 

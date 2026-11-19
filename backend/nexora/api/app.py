@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.requests import Request
 
-from nexora.api import routes_core, routes_engagement, routes_learning
+from nexora.api import routes_campus, routes_core, routes_engagement, routes_learning
 from nexora.api.context import AppContext
 from nexora.core.config import API_PREFIX, APP_VERSION, Settings
 from nexora.core.security import LocalAccessMiddleware
@@ -24,6 +24,7 @@ from nexora.infrastructure.database.session import (
 )
 from nexora.infrastructure.local_ai.ollama import OllamaProvider
 from nexora.infrastructure.storage.workspace import Workspace
+from nexora.modules.campus.engine import load_campus
 from nexora.modules.challenges.engine import load_challenges
 from nexora.modules.curriculum.catalog import load_catalog
 from nexora.modules.curriculum.sync import sync_catalog
@@ -57,7 +58,8 @@ def build_context(settings: Settings) -> AppContext:
     return AppContext(settings=settings, engine=engine, session_factory=factory, catalog=catalog, provider=provider,
                       workspace=Workspace(settings.projects_dir), schema_revision=current_revision(engine) or "base",
                       known_revisions=known, challenges=load_challenges(settings.content_dir),
-                      rules=load_rules(settings.content_dir), daily=load_daily(settings.content_dir))
+                      rules=load_rules(settings.content_dir), daily=load_daily(settings.content_dir),
+                      campus=load_campus(settings.content_dir))
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -70,6 +72,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(routes_core.router, prefix=API_PREFIX)
     app.include_router(routes_learning.router, prefix=API_PREFIX)
     app.include_router(routes_engagement.router, prefix=API_PREFIX)
+    app.include_router(routes_campus.router, prefix=API_PREFIX)
 
     @app.exception_handler(KeyError)
     async def _key_error(_req: Request, exc: KeyError):  # unknown ids deep inside engines

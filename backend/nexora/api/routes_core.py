@@ -51,6 +51,7 @@ class StudentSettings(BaseModel):
     mentor_mode: str | None = Field(None, pattern=r"^(auto|explain|socratic|coding|research)$")
     show_fps: bool | None = None
     reduced_motion: bool | None = None
+    time_of_day: str | None = Field(None, pattern=r"^(auto|morning|afternoon|evening|night)$")
     onboarding: str | None = Field(None, pattern=r"^(pending|done|skipped)$")
     onboarding_started_at: str | None = Field(None, max_length=40)
     onboarding_completed_at: str | None = Field(None, max_length=40)

@@ -252,9 +252,36 @@ class DailySession(Base):
     solved_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
 
+# ---------------------------------------------------------------- campus life (student-owned)
+class StudentCard(Base):
+    """Simulated university ID card. Decorative only - not a real credential."""
+
+    __tablename__ = "student_cards"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    student_id: Mapped[str] = mapped_column(_fk("students.id"), unique=True)
+    card_number: Mapped[str] = mapped_column(String(24), unique=True)
+    department: Mapped[str] = mapped_column(String(32))
+    track: Mapped[str] = mapped_column(String(80))
+    enrollment_year: Mapped[int] = mapped_column(Integer)
+    issued_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+
+class CampusRelation(Base):
+    """The student's local history with a simulated classmate (NPC)."""
+
+    __tablename__ = "campus_relations"
+    __table_args__ = (UniqueConstraint("student_id", "npc_id"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    student_id: Mapped[str] = mapped_column(_fk("students.id"), index=True)
+    npc_id: Mapped[str] = mapped_column(String(16))
+    conversations: Mapped[int] = mapped_column(Integer, default=0)
+    met_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
+
+
 # Tables that hold student-owned data, in dependency order (parents first). Used by backup/export.
 STUDENT_TABLES: list[type[Base]] = [
     Student, Avatar, Progress, AssessmentAttempt, Submission, SkillEvidence, Experiment,
     Project, Conversation, ConversationMessage, MentorMemory, Achievement,
-    XPTransaction, ChallengeAttempt, DailySession,
+    XPTransaction, ChallengeAttempt, DailySession, StudentCard, CampusRelation,
 ]

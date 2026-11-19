@@ -1,4 +1,4 @@
-import { Bug, BookOpen, Flame, FolderGit2, Gauge, Map as MapIcon, Settings, Swords, Zap } from 'lucide-react'
+import { Bug, BookOpen, Flame, FolderGit2, Gauge, IdCard, Landmark, Map as MapIcon, Settings, Swords, Zap } from 'lucide-react'
 import { RANK_COLOR } from '../engagement/Progress'
 import { useEffect, useState } from 'react'
 import { perf } from '../../engine/graphics'
@@ -18,7 +18,10 @@ export function Hud() {
   }, [])
   if (!student || !world) return null
   const nearDistrict = world.districts.find((d) => d.id === near)
-  const nearOther = near?.startsWith('npc:') ? `Talk to ${near === 'npc:nova' ? 'Professor Nova' : `Professor ${near.slice(4, 5).toUpperCase()}${near.slice(5)}`}`
+  const classmate = near?.startsWith('student:') ? useApp.getState().campus?.students.find((c) => c.id === near.slice(8)) : null
+  const nearOther = near === 'npc:guard' ? 'Talk to campus security' : near === 'admission' ? 'Enter the Admission & Visitor Centre'
+    : classmate ? `Talk to ${classmate.name}`
+    : near?.startsWith('npc:') ? `Talk to ${near === 'npc:nova' ? 'Professor Nova' : `Professor ${near.slice(4, 5).toUpperCase()}${near.slice(5)}`}`
     : near === 'machine' ? 'Use the Experiment Machine' : null
   const totals = learning?.totals
   const buttons = [
@@ -28,6 +31,8 @@ export function Hud() {
     { icon: Zap, label: 'Challenges', key: 'B', on: () => open({ kind: 'challenges' }) },
     { icon: Bug, label: 'Daily', key: '', on: () => open({ kind: 'daily' }) },
     { icon: FolderGit2, label: 'My Lab', key: 'L', on: () => open({ kind: 'projects' }) },
+    { icon: IdCard, label: 'ID', key: 'I', on: () => open({ kind: 'idcard' }) },
+    { icon: Landmark, label: 'Portal', key: 'O', on: () => open({ kind: 'portal' }) },
     { icon: Settings, label: 'Settings', key: '', on: () => open({ kind: 'settings' }) },
   ]
   return (
@@ -38,6 +43,7 @@ export function Hud() {
             {student.display_name.slice(0, 1).toUpperCase()}
           </div>
           <div className="min-w-0">
+            <div className="text-[9px] font-semibold tracking-[0.25em] text-green-400">NEXORA UNIVERSITY</div>
             <div className="truncate text-sm font-semibold text-white">{student.display_name}</div>
             <div className="flex items-center gap-2 text-[11px] text-ink-400">
               <span className="whitespace-nowrap">{totals ? `${totals.mastered}/${totals.concepts} concepts mastered` : '…'}</span>
@@ -111,6 +117,7 @@ export function Hud() {
               <span className="font-mono text-ink-200">E</span><span>Interact</span>
               <span className="font-mono text-ink-200">M</span><span>Map</span>
               <span className="font-mono text-ink-200">B · P</span><span>Challenges · Progress</span>
+              <span className="font-mono text-ink-200">I · O</span><span>Student ID · Portal</span>
               <span className="font-mono text-ink-200">Esc</span><span>Pause / back</span>
             </div>
           )}

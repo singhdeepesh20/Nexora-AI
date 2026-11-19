@@ -10,6 +10,10 @@ import { keys, onNearby, player, setNearby } from '../../engine/player'
 import { shake } from '../../engine/simEvents'
 import { useApp } from '../../stores/app'
 import { ExperimentMachine, MACHINE, NPCS, Professor } from './Characters'
+import { Crowd, nearestClassmate, talking } from './Crowd'
+import { ADMISSION, BARRIER_COLLIDER, ENTRANCE_AVOID, ENTRANCE_COLLIDERS, Entrance, GUARD } from './Entrance'
+import { phaseFor } from '../../engine/timeOfDay'
+import { prefersReducedMotion } from '../../engine/simEvents'
 import { Avatar } from '../avatar/Avatar'
 import { Building, Gate } from '../buildings/Building'
 import { Ground, Lamps, Lighting, Monument, Trees } from './Environment'
@@ -20,7 +24,12 @@ const EXTRA_COLLIDERS: Box[] = [MONUMENT, box(MACHINE.x, MACHINE.z, 1.25), ...NP
 const EXTRA_INTERACTABLES: Interactable[] = [
   { id: 'machine', kind: 'machine', label: 'Experiment Machine', position: { x: MACHINE.x + 2, z: MACHINE.z + 1 }, radius: 3 },
   ...NPCS.map((n): Interactable => ({ id: `npc:${n.id}`, kind: 'npc', label: n.name, position: { x: n.x, z: n.z }, radius: 2.8 })),
+  { id: 'npc:guard', kind: 'npc', label: 'Campus Security', position: { x: GUARD.x - 1.2, z: GUARD.z + 1.4 }, radius: 3 },
+  // inside the gate: the ID scanner reaches the same checkpoint, so students can also leave campus
+  { id: 'npc:guard', kind: 'npc', label: 'Campus Security', position: { x: 3.4, z: 53.6 }, radius: 2.6 },
+  { id: 'admission', kind: 'building', label: 'Admission & Visitor Centre', position: ADMISSION.door, radius: 3 },
 ]
+const CREW: Record<string, [number, number]> = { low: [8, 6], medium: [14, 10], high: [20, 10] }
 export const camera = { yaw: 0, pitch: 0.42, distance: 8 }
 
 function PlayerRig({ layout, body, accent, highlightedRef }: {
@@ -37,8 +46,11 @@ function PlayerRig({ layout, body, accent, highlightedRef }: {
     player.state = res.state
     player.moving = res.moving
     const near = nearestInteractable(player.state, layout)
-    setNearby(near?.id ?? null)
-    highlightedRef.current = near?.id ?? null
+    const id = near?.id ?? (nearestClassmate(player.state) ? `student:${nearestClassmate(player.state)}` : null)
+    setNearby(id)
+    highlightedRef.current = id
+    const top = useApp.getState().overlays.at(-1)
+    talking.id = top?.kind === 'classmate' ? top.id : null
     if (avatar.current) {
       avatar.current.position.set(player.state.x, 0, player.state.z)
       const cur = avatar.current.rotation.y
@@ -68,23 +80,31 @@ function Scene({ world, preset, body, accent }: { world: WorldResponse; preset: 
   const g = GRAPHICS[preset]
   const learning = useApp((s) => s.learning)
   const reducedMotion = useApp((s) => s.student?.settings.reduced_motion)
+  const gateOpen = useApp((s) => s.gateOpen)
+  const classmates = useApp((s) => s.campus?.students) ?? []
+  const timeSetting = useApp((s) => s.student?.settings.time_of_day)
+  const phase = phaseFor(timeSetting)
   const mastery = (concepts: string[]) =>
     concepts.length ? concepts.filter((c) => learning?.concepts[c]?.status === 'mastered').length / concepts.length : 0
   const highlighted = useRef<string | null>(null)
   const [near, setNear] = useState<string | null>(null)
   useEffect(() => onNearby(setNear), [])
   const { layout, trees } = useMemo(() => {
-    const base = buildLayout(world.world.bounds, world.districts, EXTRA_COLLIDERS)
-    const trees = scatterTrees(g.trees, world.world.bounds, base.colliders, world.world.plaza_radius)
-    return { layout: buildLayout(world.world.bounds, world.districts, [...EXTRA_COLLIDERS, ...trees.map(treeCollider)], EXTRA_INTERACTABLES), trees }
-  }, [world, g.trees])
+    const fixed = [...EXTRA_COLLIDERS, ...ENTRANCE_COLLIDERS, ...(gateOpen ? [] : [BARRIER_COLLIDER])]
+    const base = buildLayout(world.world.bounds, world.districts, fixed)
+    const trees = scatterTrees(g.trees, world.world.bounds, [...base.colliders, ...ENTRANCE_AVOID], world.world.plaza_radius)
+      .filter((t) => Math.abs(t.z - 56) > 3)
+    return { layout: buildLayout(world.world.bounds, world.districts, [...fixed, ...trees.map(treeCollider)], EXTRA_INTERACTABLES), trees }
+  }, [world, g.trees, gateOpen])
   return (
     <>
-      <Lighting g={g} />
+      <Lighting g={g} phase={phase} />
       <Ground plazaRadius={world.world.plaza_radius} districts={world.districts} />
       <Monument />
       <Trees positions={trees} />
-      <Lamps districts={world.districts} lights={g.lampLights} />
+      <Lamps districts={world.districts} lights={g.lampLights || phase === 'night'} glow={phase === 'night' ? 2.6 : phase === 'evening' ? 1.6 : 0.4} />
+      <Entrance gateOpen={gateOpen} near={near} reduce={prefersReducedMotion(reducedMotion)} />
+      <Crowd classmates={classmates as never} walkers={CREW[preset][0]} idlers={CREW[preset][1]} near={near} />
       {world.districts.map((d) => d.status === 'active'
         ? <Building key={d.id} district={d} highlighted={near === d.id} mastery={mastery(d.concepts)} />
         : <Gate key={d.id} district={d} highlighted={near === d.id} />)}

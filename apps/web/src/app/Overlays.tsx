@@ -12,6 +12,7 @@ import { Onboarding } from '../components/engagement/Onboarding'
 import { ProfessorDialog } from '../components/engagement/ProfessorDialog'
 import { ProgressPanel } from '../components/engagement/Progress'
 import { ShareDialog } from '../components/engagement/ShareDialog'
+import { Admission, ClassmateDialog, GuardDialog, IdCardView, Portal } from '../components/campus/CampusPanels'
 
 /** Renders the top-most overlay. 2D professional interfaces layered over the 3D campus. */
 export default function Overlays() {
@@ -38,5 +39,10 @@ export default function Overlays() {
     case 'progress': return <ProgressPanel />
     case 'daily': return <DailyDebug />
     case 'professor': return <ProfessorDialog id={top.id} />
+    case 'guard': return <GuardDialog />
+    case 'admission': return <Admission />
+    case 'idcard': return <IdCardView />
+    case 'portal': return <Portal />
+    case 'classmate': return <ClassmateDialog id={top.id} />
   }
 }

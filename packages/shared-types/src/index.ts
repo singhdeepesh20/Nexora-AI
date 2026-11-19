@@ -4,7 +4,7 @@ import type { DistrictSpec, Bounds } from '@nexora/world-engine'
 export interface Avatar { body_color: string; accent_color: string; position: { x: number; z: number; heading: number } }
 export interface StudentSettings {
   graphics?: 'low' | 'medium' | 'high'; mentor_model?: string; mentor_mode?: MentorMode; show_fps?: boolean
-  reduced_motion?: boolean; onboarding?: 'pending' | 'done' | 'skipped'; onboarding_started_at?: string; onboarding_completed_at?: string
+  reduced_motion?: boolean; time_of_day?: 'auto' | 'morning' | 'afternoon' | 'evening' | 'night'; gate_first_entry_at?: string; onboarding?: 'pending' | 'done' | 'skipped'; onboarding_started_at?: string; onboarding_completed_at?: string
 }
 export interface Student { id: string; display_name: string; created_at: string; settings: StudentSettings; avatar: Avatar | null }
 
@@ -133,3 +133,15 @@ export interface ShareCard {
   layout: 'mission' | 'challenge' | 'onboarding' | 'daily' | 'rank'; eyebrow: string; title: string; headline: string
   stats: { label: string; value: string }[]; grid?: boolean[][]; rank: string; footer: string; name: string | null; verified_at: string | null
 }
+
+/* ------------------------------------------------------------------ campus life */
+export interface Department { id: string; name: string; tracks: string[] }
+export interface UniversityInfo { name: string; motto: string; philosophy: string; disclaimer: string }
+export interface ClassmateInfo { id: string; name: string; archetype: string; department: string; department_name: string; presentation: 'F' | 'M' }
+export interface CampusInfo { university: UniversityInfo; departments: Department[]; students: ClassmateInfo[] }
+export interface IdCard {
+  university: string; card_number: string; name: string; department_id: string; department: string; track: string
+  enrollment_year: number; academic_year: number; semester: number; rank: string; issued_at: string; notice: string
+}
+export interface GateResult { verified: boolean; reason: 'ok' | 'no_card' | 'mismatch'; first_time?: boolean; lines: string[] }
+export interface TalkResult { npc: ClassmateInfo; lines: string[]; relation: { status: 'stranger' | 'acquaintance' | 'friend'; conversations: number; friend_after: number } }

@@ -30,6 +30,7 @@ class AppContext:
     challenges: dict
     rules: dict
     daily: dict
+    campus: dict
 
 
 def get_ctx(request: Request) -> AppContext:

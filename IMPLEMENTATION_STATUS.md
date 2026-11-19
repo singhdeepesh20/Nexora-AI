@@ -1,6 +1,6 @@
 # NEXORA - Implementation status
 
-_Last updated: 2026-11-19 · version 0.2.0 (engagement slice) · v0.1 pushed to GitHub; v0.2 work not yet committed_
+_Last updated: 2026-11-19 · version 0.4.0 (viral loop) · v0.2 pushed to GitHub; v0.3 and v0.4 not yet committed_
 
 ## Milestone report - first vertical slice
 
@@ -56,6 +56,25 @@ _Last updated: 2026-11-19 · version 0.2.0 (engagement slice) · v0.1 pushed to 
 7. No Playwright E2E in CI; CI workflow written but never run (no remote).
 8. Accessibility: keyboard play works, but there is no non-3D navigation mode and screen-reader labels on radio options are partial.
 9. Tauri desktop app, installers, signed releases: not started.
+
+## Milestone report - viral loop (v0.4)
+
+See docs/VIRAL.md. Play page, in-browser simulation, 7 proven daily puzzles, share grid/card/clip, friend links, break-it-first onboarding, chunk split (play page ~225 KB). **Not published** - needs the owner to enable GitHub Pages and run the manual workflow. No metrics are collected (by design); measuring virality needs an opt-in counter decided by the owner.
+
+## Milestone report - NEXORA University arrival (v0.3)
+
+| Phase (campus brief) | Status | Evidence |
+|-------|--------|----------|
+| Audit | ✅ | docs/CAMPUS.md |
+| 1 University arrival | ✅ | Gate, guard, admission, ID card, verified gate opening; browser walkthrough: no ID → admission → card NXU-2026-00001 → guard verifies → walked in to z≈47. Barrier blocking proven in `campus.test.ts` |
+| 2 Central campus | 🟡 partial | 30 classmates (walkers, groups, benches), conversations + local friendships, human faculty, fountain, day/night. Visual check of the crowd pending (browser pane was hidden, which pauses rendering) |
+| 3 Academic buildings (lectures) | ⏳ | |
+| 4 Student life (hostels, library, cafeteria, sports, clubs) | ⏳ | Portal lists these as not yet available |
+| 5-7 | ⏳ | |
+
+**Tests:** backend 136 (7 new campus tests: adult roster, arrival flow, unique IDs, friendships from verified facts, honest portal, backups include campus tables), web 18 (5 new), world-engine 12. Migration `0003_campus` verified up/down.
+
+**Decision needed:** realistic humans and architecture require licensed GLB assets (e.g. CC0 packs) or an artist; nothing was downloaded.
 
 ## Milestone report - engagement slice (v0.2)
 

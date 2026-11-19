@@ -31,8 +31,9 @@ export function Welcome() {
       <main className="relative mx-auto grid min-h-full max-w-6xl items-center gap-10 px-5 py-10 lg:grid-cols-[1.1fr_1fr]">
         <section className="min-w-0">
           <div className="flex items-center gap-3"><Logo size={44} /><span className="text-xl font-bold tracking-[0.3em] text-white">NEXORA</span></div>
-          <h1 className="mt-8 text-4xl font-bold leading-tight text-white sm:text-5xl">The open-world university<br /><span className="text-teal">for AI engineers.</span></h1>
-          <p className="mt-5 max-w-lg text-ink-200">Explore a 3D campus, run real scientific simulations, complete engineering missions with automated tests, and learn from AI professors - entirely on your own computer.</p>
+          <h1 className="mt-8 text-4xl font-bold leading-tight text-white sm:text-5xl">Learn AI by<br /><span className="text-teal">breaking it.</span></h1>
+          <p className="mt-5 max-w-lg text-ink-200">Your first job: a neural network is broken and you have to fix it. Then walk into NEXORA University - real simulations, coding missions graded by hidden tests, and proof of skill you can share. Built for CS students heading into AI engineering.</p>
+          <a href="./play.html" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-teal/50 px-3 py-2 text-sm text-teal hover:bg-teal/10">⚡ Try today&apos;s 60-second Break of the Day</a>
           <ul className="mt-6 space-y-2 text-sm text-ink-400">
             <li className="flex items-center gap-2"><WifiOff size={15} className="text-sky" /> Works offline. No account, no cloud, no AI model required.</li>
             <li className="flex items-center gap-2"><ShieldCheck size={15} className="text-sky" /> Your data stays on this device and can be exported any time.</li>

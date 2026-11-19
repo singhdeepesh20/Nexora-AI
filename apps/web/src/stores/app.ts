@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type {
-  Achievement, ConceptSummary, Progression, SimEvent, XPAward, LearningState, Student, StudentSettings, SystemInfo, WorldResponse,
+  CampusInfo, IdCard, Achievement, ConceptSummary, Progression, SimEvent, XPAward, LearningState, Student, StudentSettings, SystemInfo, WorldResponse,
 } from '@nexora/shared-types'
 import { api } from '../services/api'
 import { emitSimEvents } from '../engine/simEvents'
@@ -26,6 +26,11 @@ export type Overlay =
   | { kind: 'progress' }
   | { kind: 'daily' }
   | { kind: 'professor'; id: string }
+  | { kind: 'guard' }
+  | { kind: 'admission' }
+  | { kind: 'idcard' }
+  | { kind: 'portal' }
+  | { kind: 'classmate'; id: string }
 
 export interface Toast { id: number; text: string; tone: 'info' | 'success' | 'error' }
 
@@ -39,6 +44,12 @@ interface AppState {
   learning: LearningState | null
   system: SystemInfo | null
   progression: Progression | null
+  campus: CampusInfo | null
+  idCard: IdCard | null
+  /** Barrier state for this session; opens only after the guard verifies the stored ID. */
+  gateOpen: boolean
+  setIdCard: (c: IdCard | null) => void
+  openGate: () => void
   overlays: Overlay[]
   toasts: Toast[]
   boot: () => Promise<void>
@@ -71,18 +82,24 @@ export const useApp = create<AppState>((set, get) => ({
   learning: null,
   system: null,
   progression: null,
+  campus: null,
+  idCard: null,
+  gateOpen: false,
+  setIdCard: (c) => set({ idCard: c }),
+  openGate: () => set({ gateOpen: true }),
   overlays: [],
   toasts: [],
 
   boot: async () => {
     try {
-      const [students, world, concepts, system] = await Promise.all([
+      const [students, world, concepts, system, campus] = await Promise.all([
         api.get<Student[]>('/students'),
         api.get<WorldResponse>('/world'),
         api.get<ConceptSummary[]>('/curriculum/concepts'),
         api.get<SystemInfo>('/system'),
+        api.get<CampusInfo>('/campus'),
       ])
-      set({ students, world, system, concepts: Object.fromEntries(concepts.map((c) => [c.id, c])), ready: true })
+      set({ students, world, system, campus, concepts: Object.fromEntries(concepts.map((c) => [c.id, c])), ready: true })
     } catch (e) {
       set({ bootError: e instanceof Error ? e.message : String(e) })
     }
@@ -91,7 +108,8 @@ export const useApp = create<AppState>((set, get) => ({
   selectStudent: async (s) => {
     try { localStorage.setItem(LAST_STUDENT, s.id) } catch { /* storage unavailable */ }
     const fresh = await api.get<Student>(`/students/${s.id}`)
-    set({ student: fresh, overlays: [], progression: null })
+    const card = await api.get<IdCard>(`/students/${s.id}/id-card`).catch(() => null)
+    set({ student: fresh, overlays: [], progression: null, idCard: card, gateOpen: false })
     await Promise.all([get().refreshLearning(), get().refreshProgression()])
   },
 

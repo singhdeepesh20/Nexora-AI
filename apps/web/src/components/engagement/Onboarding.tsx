@@ -127,7 +127,7 @@ export function Onboarding() {
             <p className="mt-3 text-xs text-ink-200">{pass.explanation}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Button tone="ghost" onClick={() => open({ kind: 'share', card: 'challenge', ref: ID })}><Share2 size={14} /> Share card</Button>
-              <Button onClick={closeAll}>Explore the campus</Button>
+              <Button onClick={closeAll}>Enter NEXORA University</Button>
             </div>
           </section>
         )}

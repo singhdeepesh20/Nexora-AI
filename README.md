@@ -4,6 +4,11 @@
 
 Explore. Learn. Experiment. Build. Discover.
 
+> ### ⚡ Can you fix this neural network?
+> A network is broken. You get 6 tries. It trains for real, right in your browser - a new one every day. Run `pnpm start` and open `/play.html`, or play it online once it's published (see [docs/VIRAL.md](docs/VIRAL.md)).
+>
+> `NEXORA Break of the Day #323` `🟥🟨🟩 3/6`
+
 With **NEXORA** you explore a 3D campus, run real scientific simulations, complete engineering missions graded by automated tests, and learn from AI professors - entirely on your own computer.
 
 > Explore → Understand → Experiment → Engineer → Debug → Validate → Master
@@ -28,7 +33,8 @@ With **NEXORA** you explore a 3D campus, run real scientific simulations, comple
 | AI professors: 8 personas, offline curriculum-grounded answers, optional Ollama | ✅ |
 | Backup export / verified import / complete deletion | ✅ |
 | First-experiment onboarding, failure spectacle, Break Challenges, share cards, XP/ranks/streaks, Debug of the Day, campus professors | ✅ see [docs/ENGAGEMENT.md](docs/ENGAGEMENT.md) |
-| Cosmetics, boss missions | ⏳ planned |
+| University arrival: gate, guard, admission, student ID, portal, classmates, day/night | ✅ see [docs/CAMPUS.md](docs/CAMPUS.md) |
+| Lectures, library, hostels, cafeteria, clubs, cosmetics, boss missions | ⏳ planned |
 | Desktop app (Tauri 2) and installers | ⏳ Phase 10 - see [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) |
 
 ## Quick start
@@ -46,7 +52,7 @@ Keep that terminal open while you use NEXORA - closing it (or Ctrl+C) stops the 
 
 ### Controls
 
-`W A S D` move · `Shift` run · click + mouse to look · scroll to zoom · `E` interact · `M` map · `J` dashboard · `K` missions · `B` break challenges · `P` progress · `L` my lab · `Esc` back / pause
+`W A S D` move · `Shift` run · click + mouse to look · scroll to zoom · `E` interact · `M` map · `J` dashboard · `K` missions · `B` break challenges · `P` progress · `I` student ID · `O` portal · `L` my lab · `Esc` back / pause
 
 ### Optional: local AI mentor
 

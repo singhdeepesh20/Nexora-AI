@@ -1,0 +1,82 @@
+{
+  "university": {
+    "name": "NEXORA UNIVERSITY",
+    "motto": "LEARN. EXPERIMENT. INNOVATE.",
+    "philosophy": "Knowledge is not memorized. It is engineered.",
+    "disclaimer": "NEXORA University is an educational simulation. It is not an accredited institution and does not award real degrees, transcripts or credentials."
+  },
+  "departments": [
+    {
+      "id": "cse",
+      "name": "Computer Science and Engineering",
+      "tracks": [
+        "Software Engineering",
+        "Systems"
+      ]
+    },
+    {
+      "id": "math",
+      "name": "Mathematics and Computational Sciences",
+      "tracks": [
+        "Applied Mathematics",
+        "Optimization"
+      ]
+    },
+    {
+      "id": "ml",
+      "name": "Machine Learning",
+      "tracks": [
+        "Statistical Learning",
+        "Applied ML"
+      ]
+    },
+    {
+      "id": "dl",
+      "name": "Deep Learning",
+      "tracks": [
+        "Neural Networks",
+        "Computer Vision"
+      ]
+    },
+    {
+      "id": "genai",
+      "name": "Generative AI",
+      "tracks": [
+        "LLM Engineering",
+        "Retrieval Systems"
+      ]
+    },
+    {
+      "id": "aieng",
+      "name": "AI Engineering",
+      "tracks": [
+        "AI Backend Engineering",
+        "MLOps"
+      ]
+    },
+    {
+      "id": "infra",
+      "name": "AI Infrastructure",
+      "tracks": [
+        "GPU Computing",
+        "Model Serving"
+      ]
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics and Autonomous Systems",
+      "tracks": [
+        "Robot Learning",
+        "Autonomous Navigation"
+      ]
+    },
+    {
+      "id": "research",
+      "name": "Research and Innovation",
+      "tracks": [
+        "AI Research",
+        "Open-Source Engineering"
+      ]
+    }
+  ]
+}

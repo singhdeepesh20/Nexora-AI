@@ -1,0 +1,366 @@
+{
+  "version": "1",
+  "note": "All characters are adults (18+).",
+  "students": [
+    {
+      "id": "s01",
+      "name": "Aisha Khan",
+      "presentation": "F",
+      "archetype": "ai_enthusiast",
+      "department": "genai",
+      "age": 22,
+      "lines": [
+        "Every week there's a new model release - I try to reproduce at least one result myself.",
+        "Have you broken a neural network yet? Watching the loss explode taught me more than any slide."
+      ]
+    },
+    {
+      "id": "s02",
+      "name": "Diego Martínez",
+      "presentation": "M",
+      "archetype": "competitive_programmer",
+      "department": "cse",
+      "age": 21,
+      "lines": [
+        "I practise algorithms every morning before lectures. Big-O thinking makes ML code faster too.",
+        "A bug I found yesterday: an off-by-one in a sliding window. Always test the edges."
+      ]
+    },
+    {
+      "id": "s03",
+      "name": "Mei Chen",
+      "presentation": "F",
+      "archetype": "research_scholar",
+      "department": "dl",
+      "age": 26,
+      "lines": [
+        "I'm reading attention papers this month. The trick is to reproduce one figure, not to read everything.",
+        "My supervisor says: write down your hypothesis before you run the experiment."
+      ]
+    },
+    {
+      "id": "s04",
+      "name": "Arjun Mehta",
+      "presentation": "M",
+      "archetype": "robotics",
+      "department": "robotics",
+      "age": 23,
+      "lines": [
+        "Robotics is just control, perception and patience. Mostly patience.",
+        "Our lab robot keeps drifting. Turns out the sensor noise was never modelled."
+      ]
+    },
+    {
+      "id": "s05",
+      "name": "Fatima Okafor",
+      "presentation": "F",
+      "archetype": "data_science",
+      "department": "ml",
+      "age": 22,
+      "lines": [
+        "Ninety percent of my project was cleaning data. The model was the easy part.",
+        "Did you know accuracy can lie on imbalanced data? Precision and recall saved my last project."
+      ]
+    },
+    {
+      "id": "s06",
+      "name": "Lukas Becker",
+      "presentation": "M",
+      "archetype": "startup_founder",
+      "department": "aieng",
+      "age": 24,
+      "lines": [
+        "I'm building a small RAG assistant for the library. Retrieval quality is everything.",
+        "Shipping beats perfect. But tests come first - learned that the hard way."
+      ]
+    },
+    {
+      "id": "s07",
+      "name": "Priya Sharma",
+      "presentation": "F",
+      "archetype": "quiet_reader",
+      "department": "math",
+      "age": 20,
+      "lines": [
+        "The library is calm in the evening. Best place to work through derivations.",
+        "I keep notes for every concept - writing it down is how I check I really understand it."
+      ]
+    },
+    {
+      "id": "s08",
+      "name": "Kenji Sato",
+      "presentation": "M",
+      "archetype": "music",
+      "department": "genai",
+      "age": 21,
+      "lines": [
+        "I'm trying to generate melodies with a tiny transformer. It's mostly random so far!",
+        "Tokenisation for music is surprisingly tricky - what counts as one token?"
+      ]
+    },
+    {
+      "id": "s09",
+      "name": "Amara Diallo",
+      "presentation": "F",
+      "archetype": "social",
+      "department": "ml",
+      "age": 23,
+      "lines": [
+        "The machine learning workshop this week is great for meeting people.",
+        "Come find me in the plaza if you want a study partner!"
+      ]
+    },
+    {
+      "id": "s10",
+      "name": "Sofia Rossi",
+      "presentation": "F",
+      "archetype": "sports",
+      "department": "cse",
+      "age": 20,
+      "lines": [
+        "Football practice at five, then the GPU lab. Balance keeps the brain sharp.",
+        "Training a model is like training for a match - small steps, consistent effort."
+      ]
+    },
+    {
+      "id": "s11",
+      "name": "Omar Haddad",
+      "presentation": "M",
+      "archetype": "ai_enthusiast",
+      "department": "dl",
+      "age": 22,
+      "lines": [
+        "Every week there's a new model release - I try to reproduce at least one result myself.",
+        "Have you broken a neural network yet? Watching the loss explode taught me more than any slide."
+      ]
+    },
+    {
+      "id": "s12",
+      "name": "Hana Kim",
+      "presentation": "F",
+      "archetype": "competitive_programmer",
+      "department": "cse",
+      "age": 21,
+      "lines": [
+        "I practise algorithms every morning before lectures. Big-O thinking makes ML code faster too.",
+        "A bug I found yesterday: an off-by-one in a sliding window. Always test the edges."
+      ]
+    },
+    {
+      "id": "s13",
+      "name": "Ethan Brooks",
+      "presentation": "M",
+      "archetype": "data_science",
+      "department": "ml",
+      "age": 24,
+      "lines": [
+        "Ninety percent of my project was cleaning data. The model was the easy part.",
+        "Did you know accuracy can lie on imbalanced data? Precision and recall saved my last project."
+      ]
+    },
+    {
+      "id": "s14",
+      "name": "Zara Ahmed",
+      "presentation": "F",
+      "archetype": "robotics",
+      "department": "robotics",
+      "age": 22,
+      "lines": [
+        "Robotics is just control, perception and patience. Mostly patience.",
+        "Our lab robot keeps drifting. Turns out the sensor noise was never modelled."
+      ]
+    },
+    {
+      "id": "s15",
+      "name": "Mateo Silva",
+      "presentation": "M",
+      "archetype": "sports",
+      "department": "infra",
+      "age": 23,
+      "lines": [
+        "Football practice at five, then the GPU lab. Balance keeps the brain sharp.",
+        "Training a model is like training for a match - small steps, consistent effort."
+      ]
+    },
+    {
+      "id": "s16",
+      "name": "Lina Nguyen",
+      "presentation": "F",
+      "archetype": "startup_founder",
+      "department": "aieng",
+      "age": 25,
+      "lines": [
+        "I'm building a small RAG assistant for the library. Retrieval quality is everything.",
+        "Shipping beats perfect. But tests come first - learned that the hard way."
+      ]
+    },
+    {
+      "id": "s17",
+      "name": "Noah Fischer",
+      "presentation": "M",
+      "archetype": "quiet_reader",
+      "department": "math",
+      "age": 21,
+      "lines": [
+        "The library is calm in the evening. Best place to work through derivations.",
+        "I keep notes for every concept - writing it down is how I check I really understand it."
+      ]
+    },
+    {
+      "id": "s18",
+      "name": "Ananya Iyer",
+      "presentation": "F",
+      "archetype": "research_scholar",
+      "department": "research",
+      "age": 27,
+      "lines": [
+        "I'm reading attention papers this month. The trick is to reproduce one figure, not to read everything.",
+        "My supervisor says: write down your hypothesis before you run the experiment."
+      ]
+    },
+    {
+      "id": "s19",
+      "name": "Yusuf Demir",
+      "presentation": "M",
+      "archetype": "social",
+      "department": "infra",
+      "age": 22,
+      "lines": [
+        "The machine learning workshop this week is great for meeting people.",
+        "Come find me in the plaza if you want a study partner!"
+      ]
+    },
+    {
+      "id": "s20",
+      "name": "Chloé Martin",
+      "presentation": "F",
+      "archetype": "music",
+      "department": "dl",
+      "age": 20,
+      "lines": [
+        "I'm trying to generate melodies with a tiny transformer. It's mostly random so far!",
+        "Tokenisation for music is surprisingly tricky - what counts as one token?"
+      ]
+    },
+    {
+      "id": "s21",
+      "name": "Ravi Patel",
+      "presentation": "M",
+      "archetype": "research_scholar",
+      "department": "genai",
+      "age": 25,
+      "lines": [
+        "I'm reading attention papers this month. The trick is to reproduce one figure, not to read everything.",
+        "My supervisor says: write down your hypothesis before you run the experiment."
+      ]
+    },
+    {
+      "id": "s22",
+      "name": "Elena Popescu",
+      "presentation": "F",
+      "archetype": "data_science",
+      "department": "ml",
+      "age": 23,
+      "lines": [
+        "Ninety percent of my project was cleaning data. The model was the easy part.",
+        "Did you know accuracy can lie on imbalanced data? Precision and recall saved my last project."
+      ]
+    },
+    {
+      "id": "s23",
+      "name": "Kwame Mensah",
+      "presentation": "M",
+      "archetype": "robotics",
+      "department": "robotics",
+      "age": 24,
+      "lines": [
+        "Robotics is just control, perception and patience. Mostly patience.",
+        "Our lab robot keeps drifting. Turns out the sensor noise was never modelled."
+      ]
+    },
+    {
+      "id": "s24",
+      "name": "Isabella Costa",
+      "presentation": "F",
+      "archetype": "ai_enthusiast",
+      "department": "genai",
+      "age": 21,
+      "lines": [
+        "Every week there's a new model release - I try to reproduce at least one result myself.",
+        "Have you broken a neural network yet? Watching the loss explode taught me more than any slide."
+      ]
+    },
+    {
+      "id": "s25",
+      "name": "Daniel Cohen",
+      "presentation": "M",
+      "archetype": "competitive_programmer",
+      "department": "cse",
+      "age": 19,
+      "lines": [
+        "I practise algorithms every morning before lectures. Big-O thinking makes ML code faster too.",
+        "A bug I found yesterday: an off-by-one in a sliding window. Always test the edges."
+      ]
+    },
+    {
+      "id": "s26",
+      "name": "Sara Lindqvist",
+      "presentation": "F",
+      "archetype": "quiet_reader",
+      "department": "research",
+      "age": 24,
+      "lines": [
+        "The library is calm in the evening. Best place to work through derivations.",
+        "I keep notes for every concept - writing it down is how I check I really understand it."
+      ]
+    },
+    {
+      "id": "s27",
+      "name": "Tariq Aziz",
+      "presentation": "M",
+      "archetype": "startup_founder",
+      "department": "aieng",
+      "age": 26,
+      "lines": [
+        "I'm building a small RAG assistant for the library. Retrieval quality is everything.",
+        "Shipping beats perfect. But tests come first - learned that the hard way."
+      ]
+    },
+    {
+      "id": "s28",
+      "name": "Mia Wang",
+      "presentation": "F",
+      "archetype": "social",
+      "department": "dl",
+      "age": 22,
+      "lines": [
+        "The machine learning workshop this week is great for meeting people.",
+        "Come find me in the plaza if you want a study partner!"
+      ]
+    },
+    {
+      "id": "s29",
+      "name": "Leo Novak",
+      "presentation": "M",
+      "archetype": "sports",
+      "department": "ml",
+      "age": 20,
+      "lines": [
+        "Football practice at five, then the GPU lab. Balance keeps the brain sharp.",
+        "Training a model is like training for a match - small steps, consistent effort."
+      ]
+    },
+    {
+      "id": "s30",
+      "name": "Nadia Petrova",
+      "presentation": "F",
+      "archetype": "research_scholar",
+      "department": "infra",
+      "age": 26,
+      "lines": [
+        "I'm reading attention papers this month. The trick is to reproduce one figure, not to read everything.",
+        "My supervisor says: write down your hypothesis before you run the experiment."
+      ]
+    }
+  ]
+}

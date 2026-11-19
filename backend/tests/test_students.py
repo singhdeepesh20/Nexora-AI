@@ -5,7 +5,7 @@ def test_profile_lifecycle(client, data_dir):
     r = client.post("/api/v1/students", json={"display_name": "  Grace   Hopper "})
     assert r.status_code == 201
     s = r.json()
-    assert s["display_name"] == "Grace Hopper" and s["avatar"]["position"]["z"] == 18
+    assert s["display_name"] == "Grace Hopper" and s["avatar"]["position"]["z"] == 86  # starts outside the gate
     assert client.post("/api/v1/students", json={"display_name": ""}).status_code == 422
     assert [x["id"] for x in client.get("/api/v1/students").json()] == [s["id"]]
     assert client.patch(f"/api/v1/students/{s['id']}/settings", json={"graphics": "low"}).json()["graphics"] == "low"

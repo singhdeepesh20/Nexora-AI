@@ -31,12 +31,12 @@ function CampusShell() {
 
   useEffect(() => bindKeys(), [])
 
-  // A new student meets Professor Nova and the broken network straight away (skippable).
+  // Viral-first: a new student breaks (and fixes) a real neural network within seconds of arriving.
+  // The campus, gate and admission are the reward that opens up afterwards. Skippable.
   useEffect(() => {
-    if (student?.settings.onboarding === 'pending' && useApp.getState().overlays.length === 0) {
-      const t = setTimeout(() => useApp.getState().open({ kind: 'onboarding' }), 1200)
-      return () => clearTimeout(t)
-    }
+    if (student?.settings.onboarding !== 'pending') return
+    const t = setTimeout(() => { if (!useApp.getState().overlays.length) useApp.getState().open({ kind: 'onboarding' }) }, 900)
+    return () => clearTimeout(t)
   }, [student?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // persist world state every few seconds when it changed
@@ -68,7 +68,10 @@ function CampusShell() {
       if (state.overlays.length) return
       if (e.code === 'KeyE' && player.nearby && world) {
         const near = player.nearby
-        if (near.startsWith('npc:')) open({ kind: 'professor', id: near.slice(4) })
+        if (near === 'npc:guard') open({ kind: 'guard' })
+        else if (near === 'admission') open({ kind: 'admission' })
+        else if (near.startsWith('student:')) open({ kind: 'classmate', id: near.slice(8) })
+        else if (near.startsWith('npc:')) open({ kind: 'professor', id: near.slice(4) })
         else if (near === 'machine') open(state.student?.settings.onboarding === 'pending' ? { kind: 'onboarding' } : { kind: 'challenges' })
         else {
           const d = world.districts.find((x) => x.id === near)
@@ -77,6 +80,8 @@ function CampusShell() {
       } else if (e.code === 'KeyM') open({ kind: 'map' })
       else if (e.code === 'KeyB') open({ kind: 'challenges' })
       else if (e.code === 'KeyP') open({ kind: 'progress' })
+      else if (e.code === 'KeyI') open({ kind: 'idcard' })
+      else if (e.code === 'KeyO') open({ kind: 'portal' })
       else if (e.code === 'KeyJ') open({ kind: 'dashboard' })
       else if (e.code === 'KeyK') open({ kind: 'missions' })
       else if (e.code === 'KeyL') open({ kind: 'projects' })

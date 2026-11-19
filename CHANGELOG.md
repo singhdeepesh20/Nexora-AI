@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.4.0 - 2026-11-19 (viral loop, unreleased)
+
+### Added
+- No-install "Break of the Day" page (`play.html`): real in-browser neural-network training, 7 daily puzzles, 6 tries, Wordle-style honest grid, friend-challenge links, share card and 10-second vertical clip export.
+- New students break and fix a network immediately after creating a profile; welcome copy aimed at CS students.
+- Manual GitHub Pages workflow to publish the play page.
+
+### Changed
+- Build splits React, Three.js and Monaco into separate chunks; the play page loads ~225 KB instead of the 3D engine and editor.
+
+## 0.3.0 - 2026-11-19 (university arrival, unreleased)
+
+### Added
+- NEXORA University entrance: gate, perimeter wall, security booth and guard, admission centre, parking, shuttle, flags, gardens, campus directory.
+- Working security checkpoint verified against the locally stored student ID; simulated student ID cards (`I`).
+- Student portal (`O`) with an explicit non-accreditation disclaimer.
+- 30 adult classmates who walk, chat and sit; local conversations and friendships; human faculty figures.
+- Day/night lighting from the local clock or a setting; fountain replaces the hologram monument.
+- Migration `0003_campus`.
+
 ## 0.2.0 - 2026-11-19 (engagement slice, unreleased)
 
 ### Added
