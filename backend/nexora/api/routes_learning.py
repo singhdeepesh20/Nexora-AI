@@ -131,6 +131,10 @@ def submit_assessment(concept_id: str, body: AssessmentSubmission, student: Stud
             session.add(SkillEvidence(student_id=student.id, skill_id=sk, source_type="assessment",
                                       source_id=attempt.id, score=result["score"]))
     new_states = learning.concept_states(session, cat, student.id)
+    xp = []
+    if result["passed"]:
+        xp.append(progression.award(session, ctx.rules, student.id, f"assessment:{concept_id}", "assessment", concept_id,
+                                    ctx.rules["xp"]["assessment_pass"], f"Passed assessment: {cat.concepts[concept_id]['title']}"))
     if new_states[concept_id]["status"] == "mastered" and p.mastered_at is None:
         p.mastered_at = utcnow()
     result["concept_state"] = new_states[concept_id]
