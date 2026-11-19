@@ -57,7 +57,35 @@ _Last updated: 2026-11-19 · version 0.2.0 (engagement slice) · v0.1 pushed to 
 8. Accessibility: keyboard play works, but there is no non-3D navigation mode and screen-reader labels on radio options are partial.
 9. Tauri desktop app, installers, signed releases: not started.
 
-## Next milestones (in order)
+## Milestone report - engagement slice (v0.2)
+
+| Milestone | Status | Evidence |
+|-----------|--------|----------|
+| 0 Audit | ✅ | Reused catalog, simulations, sandbox, competency engine; new tables via migration `0002_engagement` (FTS-safe) |
+| 1 First three minutes | ✅ | Auto-opening, skippable onboarding with a real diverging network (η = 20) fixed by the student; achievement + card. Browser run: **52 s** |
+| 2 Failure spectacle engine | ✅ | Backend event classifier + typed frontend bus; Experiment Machine (lamps, sparks, shake), lab banners, onboarding network. Reduced-motion setting |
+| 3 Break challenges | ✅ (14 + onboarding) | Every challenge proven unsolved-at-start and solvable in tests. The prompt's "data leakage", "class imbalance", "misleading accuracy" and "embedding vs lexical" ideas are not built (bundled datasets are near-balanced; no embedding model) |
+| 4 Share cards | ✅ | 5 layouts (mission, challenge, onboarding, daily, rank); research layout not built (no research feature). Valid 1200×630 PNG verified in browser |
+| 5 XP, ranks, streaks | ✅ | Ledger with unique award keys, daily experiment cap, evidence-based ranks, tz-aware streaks + calendar. Reminders not built |
+| 6 Debug of the Day | ✅ | 7 puzzles, deterministic calendar, hidden tests, timer, real share grid |
+| 7 Living campus | 🟡 partial | 4 professors with deterministic progress-aware dialogue; mastery-reactive buildings. **Not built:** cosmetic inventory/equip, avatar rank badges, easter eggs, walking NPCs |
+| 8 Boss missions | ⏳ not started | |
+| 9 Desktop distribution | ⏳ blocked | Rust not installed on the build machine; no installers have been built or tested |
+| 10 Full integration | 🟡 | All suites green; no FPS/memory measurements on baseline hardware yet |
+
+**Tests:** backend 129 passed (42 new), world-engine 12, web 13, typecheck + ruff clean.
+
+**Bugs found during browser verification and fixed:** Experiment Machine hidden behind the onboarding panel (moved); stale "walk to a door" toast; HUD labels wrapping; truncated share-card titles (now shrink to fit); rank requirements of 1 shown as "0% / 100%" (requirements now carry a unit). Earlier probing also caught three unfair challenge designs before they shipped (k-NN target, retrieval "break" that BM25 shrugged off, a challenge already solved by its start config).
+
+**Known limitations:** NN challenge runs take ~1-3 s on CPU; mission/daily sandbox strength still varies by OS; share-card fonts depend on installed system fonts; Daily dates trust the local clock.
+
+### Next milestones
+1. Cosmetics inventory + avatar rank badge (Milestone 7 remainder) and two easter eggs.
+2. Boss missions: incident briefing → evidence → hypothesis → deterministic root-cause scoring (start with the GPU-memory incident, which the infrastructure lab already models).
+3. Desktop installers once Rust is available; clean-machine test.
+4. Playwright E2E for onboarding → challenge → share-card flow.
+
+## Next milestones from v0.1 (in order)
 
 1. **Commit + push** the slice; run CI on macOS/Linux/Windows and fix platform issues (Windows paths, sandbox).
 2. **Playwright E2E**: profile → campus → lesson → assessment → mission → backup round trip, against `pnpm start`.
