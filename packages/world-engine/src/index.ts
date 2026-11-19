@@ -29,7 +29,7 @@ export interface DistrictSpec {
 
 export interface Interactable {
   id: string
-  kind: 'building' | 'gate'
+  kind: 'building' | 'gate' | 'npc' | 'machine'
   label: string
   position: Vec2
   radius: number
