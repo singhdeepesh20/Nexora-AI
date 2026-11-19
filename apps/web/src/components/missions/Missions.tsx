@@ -1,6 +1,6 @@
 import { CheckCircle2, CircleAlert, Lock, Play, RotateCcw, ShieldCheck, Swords, XCircle } from 'lucide-react'
 import { lazy, Suspense, useEffect, useState } from 'react'
-import type { MissionDetail, MissionResult, MissionSummary } from '@nexora/shared-types'
+import type { MissionDetail, MissionResult, MissionSummary, XPAward } from '@nexora/shared-types'
 import { useAsync } from '../../hooks/useAsync'
 import { api } from '../../services/api'
 import { useApp } from '../../stores/app'
